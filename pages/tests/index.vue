@@ -1,0 +1,58 @@
+<template>
+   <main class="main">
+      <!-- Основная часть -->
+      <div class="page">
+
+
+         <!-- Психологические тесты  -->
+         <section class="top">
+            <div class="container">
+               <div class="top__inner">
+                  <div class="top__first">
+                     <h1 class="top__h1">Психологические тесты</h1>
+                     <div class="top__desc">
+                        «В основе этих тестов — книги и научные публикации всемирно известных психологов. Результат
+                        теста не является диагнозом; его цель — помочь вам задать себе правильные вопросы, подтолкнуть к
+                        исследованию себя — самостоятельному или с помощью профессионального психолога»
+                     </div>
+
+                  </div>
+                  <div class="top__second">
+
+                     <form class="top__search">
+                        <input class="top__search-input" type="search" name="search" id="search"
+                           placeholder="Найти тест">
+                        <button class="top__search-sbm" type="submit"></button>
+                     </form>
+
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <div class="body">
+            <div class="tests">
+               <div class="container">
+                  <div class="tests__list">
+                     <CardsTest v-for="item in 9" :key="item" />
+                  </div>
+                  <div class="tests__more">
+                     <div class="btn__more">Загрузить еще</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </main>
+</template>
+<script setup>
+useHead({
+   link: [
+      {
+         rel: "stylesheet",
+         href: "/site/css/tests.css",
+      },
+   ],
+})
+</script>
