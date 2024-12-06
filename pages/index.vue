@@ -432,6 +432,7 @@ useHead({
          href: "/site/css/home.css",
       },
    ],
+   title: "Позитолк"
 })
 const howstart = ref([
    {

@@ -32,21 +32,22 @@
             </div>
             <div class="top__second">
                <div class="tariffs">
-                  <div class="tariffs__item" v-for="item in tariffs" :key="item">
+                  <div class="tariffs__item" v-for="item in gifts" :key="item">
                      <div class="tariffs__item-info" v-html="item.info">
                      </div>
                      <div class="tariffs__item__inner">
                         <div class="tariffs__item-img">
-                           <img :src="item.img" :alt="item.sess">
+                           <img src="/site/img/tariffs__item_1.svg" :alt="item.description">
                         </div>
-                        <div class="tariffs__item-sess" v-html="item.sess">
+                        <div class="tariffs__item-sess">
+                           {{ item.quantity }} {{ morph(item.quantity, ['сессия', 'сессии', 'сессий']) }}
                         </div>
                         <div class="tariffs__item-price">
                            <span>
                               {{ item.price }}
                            </span> <span>₽</span>
                         </div>
-                        <div class="tariffs__item-desc" v-html="item.desc">
+                        <div class="tariffs__item-desc" v-html="item.description">
                         </div>
                         <div class="btn__give">Подарить</div>
                      </div>
@@ -58,36 +59,6 @@
    </section>
 </template>
 <script setup>
-const tariffs = ref([
-   {
-      info: 'Выбор 60% клиентов',
-      img: '/site/img/tariffs__item_1.svg',
-      sess: '1 сессия',
-      price: '2 000',
-      desc: 'Хороший способ познакомить близкого человека с психологией',
-   },
-   {
-      info: 'Выбор 60% клиентов',
-      img: '/site/img/tariffs__item_1.svg',
-      sess: '3 сессии',
-      price: '6 000',
-      desc: 'Чуть более углублённое знакомство с психологией и самим собой',
-   },
-   {
-      info: 'Выбор 60% клиентов',
-      img: '/site/img/tariffs__item_1.svg',
-      sess: '5 сессии',
-      price: '10 000',
-      desc: 'Возможность увидеть и понять свои внутренние конфликты',
-   },
-   {
-      info: 'Выбор 60% клиентов',
-      img: '/site/img/tariffs__item_1.svg',
-      sess: '10 сессии',
-      price: '20 000',
-      desc: 'Возможность лучше понять свои проблемы',
-   },
-])
 
 onMounted(() => {
    // Блоки "Самый важный подарок" (top)
@@ -96,4 +67,9 @@ onMounted(() => {
       $(this).addClass('active');
    });
 })
+
+
+const gifts = await useBaseFetch("/gift")
+
+
 </script>

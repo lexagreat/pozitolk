@@ -14,7 +14,8 @@
                         <h2>Сертификат позитолк</h2>
                         <div class="cert__first-info">
                            <ol>
-                              <li>Зайдите на <a href="#">positalk.ru</a></li>
+                              <li>Зайдите на <NuxtLink to="positalk.ru" target="_blank">positalk.ru</NuxtLink>
+                              </li>
                               <li>Введите промокод при регистрации или в личном кабинете</li>
                            </ol>
                         </div>
@@ -58,6 +59,6 @@ useHead({
          href: "/site/css/gift-relative.css",
       },
    ],
+   title: "Подарок близким"
 })
-
 </script>

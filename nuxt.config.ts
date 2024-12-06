@@ -28,6 +28,11 @@ export default defineNuxtConfig({
          ],
       },
    },
+   runtimeConfig: {
+      public: {
+         baseURL: process.env.BASE_URL || "http://195.133.77.136:8000",
+      },
+   },
    vite: {
       plugins: [
          svgLoader(), // Добавляем плагин для работы с SVG как с Vue компонентами

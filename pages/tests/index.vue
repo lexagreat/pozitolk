@@ -54,5 +54,6 @@ useHead({
          href: "/site/css/tests.css",
       },
    ],
+   title: "Позитолк тесты"
 })
 </script>

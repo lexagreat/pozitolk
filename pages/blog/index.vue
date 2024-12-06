@@ -34,7 +34,7 @@
             <div class="knowledge">
                <div class="container">
                   <div class="knowledge__list">
-                     <CardsArticle v-for="item in 9" :key="item" />
+                     <CardsArticle v-for="item in blog" :article="item" :key="item" />
                   </div>
                   <div class="knowledge__more">
                      <div class="btn__more">Загрузить еще</div>
@@ -53,5 +53,7 @@ useHead({
          href: "/site/css/knowledge-base.css",
       },
    ],
+   title: "База знаний"
 })
+let blog = await useBaseFetch("/wellness/articles/")
 </script>

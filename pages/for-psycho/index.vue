@@ -148,6 +148,7 @@ useHead({
          href: "/site/css/for-psychologists.css",
       },
    ],
+   title: "Для психологов"
 })
 
 

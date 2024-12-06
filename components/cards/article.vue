@@ -1,15 +1,15 @@
 <template>
-   <NuxtLink to="" class="knowledge__item">
+   <NuxtLink :to="'/blog/' + article?.slug" class="knowledge__item">
       <div class="knowledge__item-img">
-         <img src="" alt="Понимание тревожных расстройств">
+         <img :src="article?.cover" alt="Понимание тревожных расстройств">
 
       </div>
       <div class="knowledge__item-body">
          <h2 class="knowledge__item-title">
-            Понимание тревожных расстройств
+            {{ article?.title }}
          </h2>
-         <div class="knowledge__item-desc">
-            Обзор основных типов тревожных расстройст и эффективных методов их лечения
+         <div class="knowledge__item-desc" v-html="article?.description">
+
          </div>
          <div class="knowledge__item-info">
             <div class="knowledge__item-info-item">
@@ -17,11 +17,30 @@
                   <div class="clock"></div>
                </div>
                <div class="knowledge__item-info-item-text">
-                  15 минут
+                  {{ article?.time_for_reading }}
                </div>
             </div>
          </div>
       </div>
    </NuxtLink>
 </template>
-<script setup></script>
+<script setup>
+const props = defineProps({
+   article: Object
+})
+</script>
+
+
+<style lang="scss" scoped>
+.knowledge__item-desc {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -moz-box;
+   -moz-box-orient: vertical;
+   display: -webkit-box;
+   -webkit-line-clamp: 4;
+   -webkit-box-orient: vertical;
+   line-clamp: 4;
+   box-orient: vertical;
+}
+</style>
