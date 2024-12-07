@@ -42,7 +42,10 @@
                      <li>
                         <NuxtLink to="">Для бизнеса</NuxtLink>
                      </li>
-                     <li class="mark">
+                     <!-- <li class="mark">
+                        <NuxtLink to="/gift">Подарок близким</NuxtLink>
+                     </li> -->
+                     <li>
                         <NuxtLink to="/gift">Подарок близким</NuxtLink>
                      </li>
                      <li>
@@ -82,14 +85,19 @@
    </header>
 </template>
 <script setup>
-
+const route = useRoute()
 onMounted(() => {
    // Моб меню из шапки
    $(".header__burger").on("click", function () {
       $(this).toggleClass("active");
       $(".header__menu_mob-wrap").toggleClass("active");
    });
+   watch(() => route.params, () => {
+      $(".header__burger").removeClass("active");
+      $(".header__menu_mob-wrap").removeClass("active");
+   })
 })
+
 </script>
 
 

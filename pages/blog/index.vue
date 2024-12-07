@@ -19,10 +19,10 @@
                   </div>
                   <div class="top__second">
 
-                     <form class="top__search">
-                        <input class="top__search-input" type="search" name="search" id="search"
-                           placeholder="Найти статью">
-                        <button class="top__search-sbm" type="submit"></button>
+                     <form class="top__search" @submit.prevent>
+                        <input class="top__search-input" type="text" name="search" id="search"
+                           placeholder="Найти статью" v-model="search" v-on:keyup.enter="getArticles">
+                        <button class="top__search-sbm" type="button" @click.prevent="getArticles"></button>
                      </form>
 
                   </div>
@@ -36,8 +36,8 @@
                   <div class="knowledge__list">
                      <CardsArticle v-for="item in blog" :article="item" :key="item" />
                   </div>
-                  <div class="knowledge__more">
-                     <div class="btn__more">Загрузить еще</div>
+                  <div class="knowledge__more" v-if="isNextPageExist">
+                     <div class="btn__more" @click="currentPageSize += startSize">Загрузить еще</div>
                   </div>
                </div>
             </div>
@@ -55,5 +55,19 @@ useHead({
    ],
    title: "База знаний"
 })
-let blog = await useBaseFetch("/wellness/articles/")
+const search = ref("")
+const startSize = 18;
+const blog = ref([])
+const currentPageSize = ref(startSize)
+const isNextPageExist = ref(false)
+const getArticles = async () => {
+   let response = await useBaseFetch(`/wellness/articles/?search=${search.value}&page_size=${currentPageSize.value}&page=1`)
+   blog.value = response.results
+   isNextPageExist.value = Boolean(response.next);
+}
+await getArticles()
+
+watch(currentPageSize, async () => {
+   await getArticles()
+})
 </script>
