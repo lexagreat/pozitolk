@@ -46,4 +46,5 @@ export default defineNuxtConfig({
       // оптимизация
       compressPublicAssets: true, // Включить сжатие
    },
+   modules: ["@pinia/nuxt"],
 });

@@ -1,7 +1,7 @@
 <template>
    <NuxtLink :to="'/blog/' + article?.slug" class="knowledge__item">
       <div class="knowledge__item-img">
-         <img :src="article?.cover" alt="Понимание тревожных расстройств">
+         <img :src="article?.cover" :alt="article?.title">
 
       </div>
       <div class="knowledge__item-body">

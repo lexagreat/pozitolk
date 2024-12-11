@@ -15,7 +15,7 @@
                   <div class="question"></div>
                </div>
                <div class="tests__item-info-item-text">
-                  {{ test?.questions.length }} {{ morph(test?.questions.length, ['вопрос', 'вопроса', 'вопросов']) }}
+                  {{ test?.questions?.length }} {{ morph(test?.questions?.length, ['вопрос', 'вопроса', 'вопросов']) }}
                </div>
             </div>
             <div class="tests__item-info-item">
