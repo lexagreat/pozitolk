@@ -376,8 +376,8 @@
                               <img :src="item.img" :alt="item.lbl">
                            </div>
                            <div class="stillquest__item-lbl" v-html="item.lbl"></div>
-                           <a href="#" target="_blank" rel="noopener noreferrer nofollow"
-                              class="stillquest__item-link">Перейти</a>
+                           <NuxtLink :to="item.link" target="_blank" rel="noopener noreferrer nofollow"
+                              class="stillquest__item-link">Перейти</NuxtLink>
                         </div>
                      </div>
                   </div>
@@ -463,29 +463,35 @@ const howstart = ref([
 
 
 const stillquest = ref([
-   {
-      img: '/site/img/stillquest_img_1.svg',
-      lbl: 'Чат с ПозиТолк',
-   },
+   // {
+   //    img: '/site/img/stillquest_img_1.svg',
+   //    lbl: 'Чат с ПозиТолк',
+   //    link: ""
+   // },
    {
       img: '/site/img/stillquest_img_2.svg',
       lbl: 'Instagram',
+      link: "https://www.instagram.com/pozi_tolk?igsh=aXpvcTdwYjZ4aWk0"
    },
    {
       img: '/site/img/stillquest_img_3.svg',
       lbl: 'Группа ВК',
+      link: "https://vk.com/club226735405"
    },
    {
       img: '/site/img/stillquest_img_4.svg',
       lbl: 'Facebook',
+      link: "https://www.facebook.com/share/7Kt61mVnBiA3sfQP/?mibextid=K35XfP"
    },
    {
       img: '/site/img/stillquest_img_5.svg',
       lbl: 'Яндекс Дзен',
+      link: "https://dzen.ru/id/66a6f3d7b58e526106986a4e"
    },
    {
       img: '/site/img/stillquest_img_6.svg',
       lbl: 'Telegram канал',
+      link: "https://t.me/+j343I9IJYcBhMThi"
    },
 ])
 

@@ -11,24 +11,29 @@
                   <ul>
                      <li><span> Соц. сети</span>
                         <ul>
-                           <li>
+                           <!-- <li>
                               <NuxtLink to="" target="_blank" rel="noopener noreferrer nofollow">Чат с ПозиТолк
                               </NuxtLink>
+                           </li> -->
+                           <li>
+                              <NuxtLink to="https://www.instagram.com/pozi_tolk?igsh=aXpvcTdwYjZ4aWk0" target="_blank"
+                                 rel="noopener noreferrer nofollow">Instagram</NuxtLink>
                            </li>
                            <li>
-                              <NuxtLink to="" target="_blank" rel="noopener noreferrer nofollow">Instagram</NuxtLink>
+                              <NuxtLink to="https://vk.com/club226735405" target="_blank"
+                                 rel="noopener noreferrer nofollow">ВКонтакте</NuxtLink>
                            </li>
                            <li>
-                              <NuxtLink to="" target="_blank" rel="noopener noreferrer nofollow">ВКонтакте</NuxtLink>
+                              <NuxtLink to="https://www.facebook.com/share/7Kt61mVnBiA3sfQP/?mibextid=K35XfP"
+                                 target="_blank" rel="noopener noreferrer nofollow">Facebook</NuxtLink>
                            </li>
                            <li>
-                              <NuxtLink to="" target="_blank" rel="noopener noreferrer nofollow">Facebook</NuxtLink>
+                              <NuxtLink to="https://dzen.ru/id/66a6f3d7b58e526106986a4e" target="_blank"
+                                 rel="noopener noreferrer nofollow">Яндекс Дзен</NuxtLink>
                            </li>
                            <li>
-                              <NuxtLink to="" target="_blank" rel="noopener noreferrer nofollow">Яндекс Дзен</NuxtLink>
-                           </li>
-                           <li>
-                              <NuxtLink to="" target="_blank" rel="noopener noreferrer nofollow">Telegram</NuxtLink>
+                              <NuxtLink to="https://t.me/+j343I9IJYcBhMThi" target="_blank"
+                                 rel="noopener noreferrer nofollow">Telegram</NuxtLink>
                            </li>
                         </ul>
                      </li>
