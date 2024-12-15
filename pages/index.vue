@@ -332,7 +332,8 @@
                               Наши специалисты подготовили для Вас необходимую информацию на разные темы для самопомощи.
                               Изучать её можно в своем темпе и в удобное для Вас время.
                            </div>
-                           <div class="btn__buysubscribe">Купить подписку</div>
+                           <NuxtLink to="/docs/polz-sogl.pdf" target="_blank" class="btn__buysubscribe">Купить подписку
+                           </NuxtLink>
                         </div>
                      </div>
 
