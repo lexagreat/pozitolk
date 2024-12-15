@@ -4,8 +4,24 @@
          <div class="footer__inner">
             <div class="footer__first">
                <div class="footer__logo">
-                  <img src="/site/img/Logo.svg" alt="Позитолк">
+                  <NuxtLink to="/"><img src="/site/img/Logo.svg" alt="Позитолк"></NuxtLink>
+                  <div class="footer__info">
+                     <p>
+                        ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ
+                        «ПОЗИТОЛК»
+                     </p>
+                     <p>
+                        ОГРН: 1246100029977 <br>
+                        ИНН: 6163234327 <br>
+                        КПП: 616301001 <br>
+                     </p>
+                     <p>
+                        344006, г. Ростов-на-Дону, Ростовская область,
+                        ул. Большая Садовая, д.102, офис 12А
+                     </p>
+                  </div>
                </div>
+
                <nav class="footer__menu">
 
                   <ul>
@@ -97,3 +113,37 @@
    </footer>
 </template>
 <script setup></script>
+
+
+
+
+<style lang="scss" scoped>
+.footer {
+   &__logo {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      margin-right: 32px;
+
+      @media(max-width: 750px) {
+         gap: 32px;
+      }
+   }
+
+   &__info {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: -0.02em;
+      color: #4D4D4D;
+   }
+
+   &__menu {
+      padding-top: 45px;
+
+      @media(max-width: 768px) {
+         padding-top: 0;
+      }
+   }
+}
+</style>
