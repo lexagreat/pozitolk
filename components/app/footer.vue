@@ -83,7 +83,7 @@
                      <li><span>Другое</span>
                         <ul>
                            <li>
-                              <NuxtLink to="">Условия использования </NuxtLink>
+                              <NuxtLink to="/docs/pol-conf.docx" target="_blank">Условия использования </NuxtLink>
                            </li>
                            <li>
                               <NuxtLink to="">Договор оказания услуг</NuxtLink>
@@ -92,7 +92,7 @@
                               <NuxtLink to="">Правила акций</NuxtLink>
                            </li>
                            <li>
-                              <NuxtLink to="">Пользовательское соглашение</NuxtLink>
+                              <NuxtLink to="/docs/polz-sogl.docx" target="_blank">Пользовательское соглашение</NuxtLink>
                            </li>
                         </ul>
                      </li>
@@ -103,8 +103,8 @@
             </div>
             <div class="footer__second">
                <div class="footer__info">
-                  Заходя на сайт, вы даёте согласие на использование файлов cookie и иных данных в соответствии c <a
-                     href="#">условиями использования</a>
+                  Заходя на сайт, вы даёте согласие на использование файлов cookie и иных данных в соответствии c
+                  <NuxtLink to="/docs/pol-conf.docx" target="_blank">условиями использования</NuxtLink>
                </div>
                <div class="footer__copyright"> © позитолк 2024</div>
             </div>
