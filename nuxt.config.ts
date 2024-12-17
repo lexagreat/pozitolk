@@ -30,7 +30,7 @@ export default defineNuxtConfig({
    },
    runtimeConfig: {
       public: {
-         baseURL: process.env.BASE_URL || "http://195.133.77.136:8000",
+         baseURL: process.env.BASE_URL || "https://backend.позитолк.рф",
       },
    },
    vite: {
