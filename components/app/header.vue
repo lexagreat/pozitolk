@@ -54,9 +54,9 @@
                   </ul>
 
                   <ul>
-                     <li>
+                     <!-- <li>
                         <NuxtLink to="/">Чат с позитолк</NuxtLink>
-                     </li>
+                     </li> -->
                      <li>
                         <NuxtLink to="https://t.me/+j343I9IJYcBhMThi" target="_blank"
                            rel="noopener noreferrer nofollow">Канал в Telegram</NuxtLink>
