@@ -62,9 +62,9 @@
                            <li>
                               <NuxtLink to="/for-psycho">Для психологов</NuxtLink>
                            </li>
-                           <li>
+                           <!-- <li>
                               <NuxtLink to="">Для бизнеса</NuxtLink>
-                           </li>
+                           </li> -->
                            <li>
                               <NuxtLink to="/tests">Тесты</NuxtLink>
                            </li>

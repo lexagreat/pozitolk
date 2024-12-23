@@ -39,11 +39,8 @@
                      <li>
                         <NuxtLink to="/for-psycho">Для психологов</NuxtLink>
                      </li>
-                     <li>
+                     <!-- <li>
                         <NuxtLink to="">Для бизнеса</NuxtLink>
-                     </li>
-                     <!-- <li class="mark">
-                        <NuxtLink to="/gift">Подарок близким</NuxtLink>
                      </li> -->
                      <li>
                         <NuxtLink to="/gift">Подарок близким</NuxtLink>
@@ -61,16 +58,20 @@
                         <NuxtLink to="/">Чат с позитолк</NuxtLink>
                      </li>
                      <li>
-                        <NuxtLink to="/">Канал в Telegram</NuxtLink>
+                        <NuxtLink to="https://t.me/+j343I9IJYcBhMThi" target="_blank"
+                           rel="noopener noreferrer nofollow">Канал в Telegram</NuxtLink>
                      </li>
                      <li>
-                        <NuxtLink to="/">Группа ВКонтакте</NuxtLink>
+                        <NuxtLink to="https://vk.com/club226735405" target="_blank" rel="noopener noreferrer nofollow">
+                           Группа ВКонтакте</NuxtLink>
                      </li>
                      <li>
-                        <NuxtLink to="/">Канал на YouTube</NuxtLink>
+                        <NuxtLink to="https://www.youtube.com/@%D0%9F%D0%BE%D0%B7%D0%B8%D0%A2%D0%BE%D0%BB%D0%BA"
+                           target="_blank" rel="noopener noreferrer nofollow">Канал на YouTube</NuxtLink>
                      </li>
                      <li>
-                        <NuxtLink to="/">Яндекс Дзен</NuxtLink>
+                        <NuxtLink to="https://dzen.ru/id/66a6f3d7b58e526106986a4e" target="_blank"
+                           rel="noopener noreferrer nofollow">Яндекс Дзен</NuxtLink>
                      </li>
                   </ul>
                </nav>
