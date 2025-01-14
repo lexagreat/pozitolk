@@ -1,5 +1,4 @@
 <template lang="">
-   header
    <app-header />
    <slot />
    <app-footer />

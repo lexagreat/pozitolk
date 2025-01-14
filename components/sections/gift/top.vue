@@ -69,7 +69,7 @@ onMounted(() => {
 })
 
 
-const gifts = await useBaseFetch("/gift")
+const gifts = await useBaseFetch("/store/gifts-list/")
 
 
 </script>

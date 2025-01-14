@@ -15,12 +15,6 @@ export default defineNuxtConfig({
                content: "telephone=no",
             },
          ],
-         link: [
-            {
-               rel: "stylesheet",
-               href: "/site/css/main.css",
-            },
-         ],
          script: [
             {
                src: "/site/js/jquery-3.7.1.min.js",
@@ -38,6 +32,7 @@ export default defineNuxtConfig({
          svgLoader(), // Добавляем плагин для работы с SVG как с Vue компонентами
       ],
    },
+   plugins: ["~/plugins/initAuth.client.js"],
    experimental: {
       typedPages: true,
       payloadExtraction: true, // Уменьшает объём передаваемых данных // оптимизация

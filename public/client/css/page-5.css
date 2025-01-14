@@ -1,0 +1,244 @@
+.sidebar {
+  padding: 28px 24px;
+  width: 25.4%;
+}
+
+.schedule__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 15px 30px 10px 23px;
+  border: 1px solid rgba(77, 77, 77, 0.1019607843);
+  border-radius: 15px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.schedule__item-first {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 23px;
+}
+.schedule__item-first .schedule__item-text {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.schedule__item-img {
+  width: 76px;
+  height: 76px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.schedule__item-img img {
+  width: 100%;
+}
+
+.schedule__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 20px;
+}
+
+.schedule__item-label {
+  font-size: 14px;
+  color: #4D4D4D;
+  margin-bottom: 7px;
+}
+
+.schedule__item-second {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 50px;
+}
+.schedule__item-second .schedule__item-text {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.schedule__item-third {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.schedule__btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 9px;
+  color: #FF6900;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.schedule__btn::after {
+  content: "";
+  display: inline-block;
+  min-width: 10px;
+  width: 10px;
+  height: 20px;
+  background-image: url(../img/schedule__btn-arrow.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.consultation__title {
+  font-size: 22px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.consultation__info {
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+.consultation__btn {
+  font-size: 16px;
+  padding: 16px;
+  text-align: center;
+  color: #fff;
+  background: #FF6900;
+  cursor: pointer;
+  border-radius: 12px;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.consultation__btn:hover {
+  background: #cc5400;
+}
+
+@media (max-width: 1190px) {
+  .schedule__item {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    gap: 16px;
+  }
+  .schedule__item-second {
+    gap: 32px;
+  }
+  .schedule__list {
+    gap: 32px;
+  }
+  .schedule__item-img {
+    width: 48px;
+    height: 48px;
+  }
+  .schedule__item-first {
+    gap: 20px;
+  }
+  .schedule__item-first .schedule__item-text {
+    font-size: 20px;
+  }
+  .schedule__item-label {
+    margin-bottom: 4px;
+  }
+  .schedule__item-second .schedule__item-text {
+    font-size: 16px;
+  }
+  .schedule__btn {
+    font-size: 14px;
+  }
+  .schedule__btn::after {
+    width: 7px;
+    min-width: 7px;
+    height: 10px;
+  }
+  .wrapper {
+    gap: 6px;
+  }
+}
+@media (max-width: 1050px) {
+  .sidebar {
+    display: none;
+  }
+  .dashboard {
+    margin-right: 0;
+  }
+}
+@media (max-width: 800px) {
+  .schedule__item {
+    border: none;
+    padding: 0;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .schedule__item-third {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+  }
+}
+@media (max-width: 700px) {
+  main.main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    gap: 4px;
+  }
+  .dashboard {
+    background: #fafafa;
+    padding: 0;
+    padding-bottom: 68px;
+  }
+  .dashboard__title {
+    display: none;
+  }
+  .sidebar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    padding: 16px;
+  }
+  .consultation__title {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  .consultation__info {
+    margin-bottom: 16px;
+  }
+  .consultation__btn {
+    padding: 8px 12px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    font-weight: 600;
+  }
+  .schedule__list {
+    gap: 4px;
+  }
+  .schedule__item {
+    padding: 16px;
+    background: #fff;
+    border-radius: 16px;
+  }
+}

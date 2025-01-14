@@ -8,3 +8,12 @@
 <style lang="scss">
 @import "@/assets/scss/style";
 </style>
+
+<script setup>
+import { useClientStore } from './stores/client/store';
+
+const clientStore = useClientStore()
+onMounted(() => {
+   // clientStore.init()
+})
+</script>

@@ -26,7 +26,7 @@
 
             <div class="header__btns">
                <div class="btn__choose">Подобрать психолога</div>
-               <div class="btn__login">Войти</div>
+               <div class="btn__login" @click="onLogin">Войти</div>
             </div>
 
             <!-- Кнопка вызова моб меню -->
@@ -77,7 +77,7 @@
                </nav>
                <div class="header__btns_mob">
                   <div class="btn__choose">Подобрать психолога</div>
-                  <div class="btn__login">Войти</div>
+                  <div class="btn__login" @click="onLogin">Войти</div>
                </div>
             </div>
 
@@ -86,7 +86,11 @@
    </header>
 </template>
 <script setup>
+import { useClientStore } from '@/stores/client/store'
 const route = useRoute()
+const router = useRouter()
+
+const store = useClientStore()
 onMounted(() => {
    // Моб меню из шапки
    $(".header__burger").on("click", function () {
@@ -98,7 +102,13 @@ onMounted(() => {
       $(".header__menu_mob-wrap").removeClass("active");
    })
 })
-
+const onLogin = () => {
+   if (store.token) {
+      router.push("/account/client/onboard/choose")
+   } else {
+      router.push("/account/client/onboard")
+   }
+}
 </script>
 
 

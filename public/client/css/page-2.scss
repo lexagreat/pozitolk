@@ -1,0 +1,172 @@
+#sms-code {
+    display: flex;
+    gap: 6px;
+}
+
+.login__input {
+    position: relative;
+    margin-bottom: 24px;
+
+    input {
+        border: none;
+        width: 65px;
+        height: 62px;
+        outline: none;
+        background: transparent;
+        font-size: 24px;
+        font-weight: 500;
+        color: #4D4D4D;
+        background-color: #F4F4F4;
+        border-radius: 16px;
+        text-align: center;
+        padding: 0;
+
+        &::placeholder {
+            color: #BABABA;
+            font-size: 24px;
+            line-height: 1;
+        }
+    }
+}
+
+.login__repeat {
+    color: #BABABA;
+    font-size: 24px;
+    margin-bottom: 48px;
+    font-weight: 500;
+}
+
+
+form.login {
+    max-width: 425px;
+    margin: 0 auto;
+    padding: 2px 0;
+}
+
+.login__title {
+    font-size: 32px;
+    font-weight: 500;
+    color: #4D4D4D;
+    margin-bottom: 12px;
+}
+
+.login__info {
+    font-size: 20px;
+    font-weight: 500;
+    color: #4D4D4D;
+    margin-bottom: 24px;
+}
+
+
+.dashboard {
+    padding-right: 250px;
+}
+
+.login__inner-second {
+    display: flex;
+    justify-content: center;
+    padding-right: 35px;
+}
+
+a.btn__back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #FF6900;
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    width: fit-content;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-image: url(../img/arrow-left.svg);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+
+@media(max-width: 1190px) {
+    .dashboard {
+        padding: 40px 16px 20px;
+    }
+}
+
+
+@media(max-width: 700px) {
+    form.login {
+        display: flex;
+        flex: 1;
+
+        .container {
+            display: flex;
+            flex: 1;
+
+            .login__inner {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    .login__input {
+        margin-bottom: 16px;
+    }
+
+    .login__repeat {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .login__inner-second {
+        justify-content: flex-start;
+    }
+
+    a.btn__back {
+        font-size: 16px;
+    }
+
+    a.btn__back::before {
+        width: 16px;
+        height: 16px;
+    }
+
+    .login__inner-second {
+        margin-top: auto;
+    }
+
+
+    .login__input input {
+        font-size: 20px;
+        width: 54px;
+        height: 49px;
+    }
+
+    #sms-code {
+        gap: 3px;
+    }
+
+    .login__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .login__info {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+
+}
+
+@media(max-width: 365px) {
+    .login__input input {
+        width: 42px;
+        height: 40px;
+    }
+}

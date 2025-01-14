@@ -1,0 +1,139 @@
+.wrapper {
+    gap: 6px;
+}
+
+.dashboard {
+    padding: 26px 24px;
+    margin-right: 0;
+}
+
+.single {
+    max-width: 1200px;
+}
+
+a.single__prev {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    font-weight: 500;
+    color: #9B4500;
+    margin-bottom: 40px;
+    text-decoration: none;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        background-image: url(../img/single__prev.svg);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 24px;
+        min-width: 24px;
+        height: 24px;
+    }
+}
+
+.single__title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+.single__first {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.single__first-img {
+    display: flex;
+    width: 256px;
+    min-width: 256px;
+    height: 256px;
+
+    img {
+        width: 100%;
+        border-radius: 14px;
+    }
+}
+
+.single__first-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.single__first-body-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.single__first-lbl {
+    color: #FF6900;
+}
+
+.single__first-body-desc,
+.single__second {
+    font-size: 24px;
+    line-height: 1.45;
+    font-weight: 500;
+    color: #423935;
+
+    p {
+        margin-top: 0;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.single__second {
+    font-size: 20px;
+}
+
+@media(max-width: 1190px) {
+    .dashboard {
+        background: transparent;
+        padding: 16px 4px;
+    }
+
+    .single__inner {
+        background: #fff;
+        border-radius: 16px;
+        padding: 16px;
+    }
+
+    a.single__prev {
+        margin-bottom: 16px;
+    }
+
+    .single__title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .single__first {
+        flex-direction: column-reverse;
+        margin-bottom: 24px;
+    }
+
+    .single__first-body-desc {
+        font-size: 20px;
+    }
+
+    .single__second {
+        font-size: 16px;
+    }
+
+    main.main {
+        top: 50px;
+    }
+
+    .single__second ul {
+        padding-left: 20px;
+    }
+}

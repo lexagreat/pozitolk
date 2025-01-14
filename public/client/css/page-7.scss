@@ -1,0 +1,510 @@
+.sidebar {
+    padding: 28px 24px;
+    width: 25.4%;
+}
+
+.consultation__title {
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.consultation__info {
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+.consultation__btn {
+    font-size: 16px;
+    padding: 16px;
+    text-align: center;
+    color: #fff;
+    background: #FF6900;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #cc5400;
+    }
+}
+
+.calendar__header-img {
+    display: none;
+}
+
+.calendar__header-inf {
+    font-weight: 500;
+}
+
+// -----------
+.nosign-wrp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(100vh - 80px);
+    position: sticky;
+    top: 40px;
+}
+
+.nosign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.nosign__icon {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../img/pop_camera.svg);
+    width: 88px;
+    height: 88px;
+}
+
+.nosign__text {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+}
+
+// -----------
+
+// start popup-1 (page-6, page-7)
+.popup {
+    display: flex;
+}
+
+.popup__body {
+    height: fit-content;
+    margin: auto;
+}
+
+.popup.available_time {
+    .popup__close {
+        top: 30px;
+    }
+}
+
+.popup.available_time .popup__body {
+    width: 500px;
+    padding: 24px 16px 16px;
+}
+
+.available_time__plus,
+.available_time__info-icon {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.available_time__plus {
+    background-image: url(../img/plus.svg);
+    min-width: 48px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    margin-bottom: 28px;
+}
+
+.available_time__info-icon {
+    background-image: url(../img/info.svg);
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+}
+
+.available_time__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 28px;
+}
+
+.person__first {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+    margin-bottom: 32px;
+}
+
+.person__first-first {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.person__img {
+    display: flex;
+    width: 54px;
+    height: 54px;
+
+    img {
+        width: 100%;
+    }
+}
+
+.person__name {
+    font-weight: 500;
+}
+
+.person__time {
+    font-size: 14px;
+    color: #423935;
+    display: flex;
+}
+
+.person__time-hour {
+    margin-left: 2px;
+}
+
+.person__price {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.available_time__info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 16px;
+    color: #FF6900;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.available_time__btns {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    div {
+        border-radius: 12px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 229px;
+        height: 56px;
+        color: #fff;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+    .available_time__btn-cancel {
+        background: #ABD29B;
+
+        &:hover {
+            background: #789a6b;
+        }
+    }
+
+    .available_time__btn-pay {
+        background: #FF6900;
+
+        &:hover {
+            background: #cc5400;
+        }
+    }
+}
+
+// end popup-1 (page-6, page-7)
+
+
+// ===================================================================================
+@media(max-width: 1190px) {
+
+    // start popup-1 (page-6, page-7)
+    .available_time__plus {
+        display: none;
+    }
+
+    .popup.available_time .popup__close {
+        top: 16px;
+    }
+
+    .available_time__title {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .person__first {
+        padding: 0;
+    }
+
+    .person__price {
+        font-size: 16px;
+    }
+
+    .available_time__info {
+        gap: 6px;
+        font-size: 14px;
+        margin-bottom: 28px;
+    }
+
+    .popup.available_time .popup__body {
+        width: 343px;
+    }
+
+    .available_time__btns {
+        gap: 8px;
+    }
+
+    .available_time__btns div {
+        width: 150px;
+        height: 40px;
+        border-radius: 16px;
+    }
+
+    .available_time__btns .available_time__btn-cancel {
+        background: #F7F7F7;
+        color: #363636;
+
+        &:hover {
+            background: #F7F7F7;
+        }
+    }
+
+    // end popup-1 (page-6, page-7)
+
+
+    .schedule__item {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .schedule__item-second {
+        gap: 32px;
+    }
+
+    .schedule__list {
+        gap: 32px;
+    }
+
+    .schedule__item-img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .schedule__item-first {
+        gap: 20px;
+    }
+
+    .schedule__item-first .schedule__item-text {
+        font-size: 20px;
+    }
+
+    .schedule__item-label {
+        margin-bottom: 4px;
+    }
+
+    .schedule__item-second .schedule__item-text {
+        font-size: 16px;
+    }
+
+    .schedule__btn {
+        font-size: 14px;
+    }
+
+    .schedule__btn::after {
+        width: 7px;
+        min-width: 7px;
+        height: 10px;
+    }
+
+    .wrapper {
+        gap: 4px;
+    }
+
+    main.main {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .consultation__btn {
+        width: fit-content;
+        font-weight: 600;
+        padding: 8px 12px;
+    }
+
+    .consultation__info {
+        margin-bottom: 16px;
+    }
+
+    .consultation__title {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .dashboard {
+        margin-right: 0;
+    }
+
+    .dashboard {
+        padding: 16px;
+    }
+
+    .calendar__header-back:before {
+        display: none;
+    }
+
+    .calendar__header-back {
+        font-size: 20px;
+    }
+
+    .calendar__header-first {
+        flex-direction: column;
+        align-items: flex-start;
+        flex: none;
+        gap: 6px;
+    }
+
+    .calendar__header-name {
+        margin: 0;
+        font-size: 16px;
+        color: #4D4D4D;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .calendar__header-img {
+        display: block;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        min-width: 24px;
+        height: 24px;
+    }
+
+    .calendar__header-nav {
+        height: fit-content;
+        gap: 14px;
+    }
+
+    .calendar__header-inf {
+        font-size: 14px;
+    }
+
+    .calendar-table {
+        max-height: calc(100vh - 300px);
+        max-width: calc(100vw - 165px);
+        overflow: auto;
+        padding-right: 16px;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #f2f2f2;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #FF6900;
+            border-radius: 0;
+            border: none;
+        }
+    }
+
+    .table__row {
+        min-width: 83px;
+    }
+
+    .table__cell .table__cell-inner {
+        padding: 3px;
+    }
+
+    .nosign-wrp {
+        height: auto;
+        align-items: flex-start;
+    }
+
+    .nosign {
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .nosign__icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .nosign__text {
+        font-size: 20px;
+    }
+
+    .calendar__header {
+        margin-bottom: 16px;
+    }
+}
+
+@media(max-width: 800px) {
+    .schedule__item {
+        border: none;
+        padding: 0;
+        flex-direction: column;
+    }
+
+    .schedule__item-third {
+        justify-content: flex-start;
+    }
+}
+
+@media(max-width: 700px) {
+
+
+    .calendar-table {
+        max-width: calc(100vw - 32px);
+        max-height: calc(100vh - 305px);
+        padding-right: 10px;
+        margin-right: -20px;
+    }
+
+    .table__cell .table__cell-inner {
+        height: 34px;
+    }
+
+    .table__cell.title .table__cell-inner {
+        height: 38px;
+    }
+
+    main.main {
+        flex-direction: column-reverse;
+        gap: 4px;
+    }
+
+    .calendar__header {
+        margin-bottom: 16px;
+    }
+
+    .sidebar {
+        display: flex;
+        width: 100%;
+        padding: 16px;
+    }
+
+    .consultation__title {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .consultation__info {
+        margin-bottom: 16px;
+    }
+
+    .consultation__btn {
+        padding: 8px 12px;
+        width: fit-content;
+        font-weight: 600;
+    }
+
+}
