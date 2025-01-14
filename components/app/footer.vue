@@ -48,8 +48,8 @@
                                  rel="noopener noreferrer nofollow">Яндекс Дзен</NuxtLink>
                            </li>
                            <li>
-                              <NuxtLink to="https://t.me/+j343I9IJYcBhMThi" target="_blank"
-                                 rel="noopener noreferrer nofollow">Telegram</NuxtLink>
+                              <NuxtLink to="https://t.me/pozi_tolk" target="_blank" rel="noopener noreferrer nofollow">
+                                 Telegram</NuxtLink>
                            </li>
                         </ul>
                      </li>

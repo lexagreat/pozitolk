@@ -492,7 +492,7 @@ const stillquest = ref([
    {
       img: '/site/img/stillquest_img_6.svg',
       lbl: 'Telegram канал',
-      link: "https://t.me/+j343I9IJYcBhMThi"
+      link: "https://t.me/pozi_tolk"
    },
 ])
 

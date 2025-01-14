@@ -58,8 +58,9 @@
                         <NuxtLink to="/">Чат с позитолк</NuxtLink>
                      </li> -->
                      <li>
-                        <NuxtLink to="https://t.me/+j343I9IJYcBhMThi" target="_blank"
-                           rel="noopener noreferrer nofollow">Канал в Telegram</NuxtLink>
+
+                        <NuxtLink to="https://t.me/pozi_tolk" target="_blank" rel="noopener noreferrer nofollow">Канал в
+                           Telegram</NuxtLink>
                      </li>
                      <li>
                         <NuxtLink to="https://vk.com/club226735405" target="_blank" rel="noopener noreferrer nofollow">

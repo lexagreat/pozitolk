@@ -1,7 +1,6 @@
 ARG NODE_VERSION=18.14.2
 
 # FROM node:${NODE_VERSION}-slim as base
-# FROM node:18.19.1-alpine3.19
 FROM node:18.20.5-slim as base
 ENV NODE_ENV=production
 
