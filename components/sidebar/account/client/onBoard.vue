@@ -4,9 +4,9 @@
          <div class="nav__first">
             <div class="nav__first-inner">
                <div class="nav__first-left">
-                  <div class="nav__logo">
+                  <NuxtLink to="/" class="nav__logo">
                      <img src="/site/img/Logo.svg" alt="Позитолк">
-                  </div>
+                  </NuxtLink>
                   <div class="nav__menu">
                      <ul>
                         <li class="active"><a href="#">Вход в аккаунт</a></li>

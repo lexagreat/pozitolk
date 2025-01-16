@@ -1,5 +1,5 @@
 
-FROM node:18.20.5 as base
+FROM node:18 as base
 ENV NODE_ENV=production
 
 WORKDIR /root/frontend
