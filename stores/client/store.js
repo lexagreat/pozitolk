@@ -3,13 +3,17 @@ import { defineStore } from "pinia";
 export const useClientStore = defineStore("client", {
    state: () => ({
       phone: "89616587909",
-      token: "",
+      token: "97e56056ccb772d8672180148a3cf350bc14577e",
       user: null,
    }),
    actions: {
       init() {
          if (localStorage.token) {
             this.token = localStorage.token;
+            return;
+         }
+         if (this.token) {
+            localStorage.token = this.token;
          }
       },
       setPhone(phone) {

@@ -391,7 +391,7 @@
                   <div class="helpbanner__inner">
                      <div class="helpbanner__center">
                         <h2>Помогаем строить гармоничные отношения с собой и окружающими</h2>
-                        <div class="btn__choose">Подобрать психолога</div>
+                        <NuxtLink to="/account/client/onboard/choose" class="btn__choose">Подобрать психолога</NuxtLink>
                      </div>
                   </div>
                </div>

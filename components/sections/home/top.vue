@@ -39,7 +39,9 @@
                   </div>
                </div>
                <div class="top__btns">
-                  <div class="btn__choose">Подобрать психолога</div>
+                  <NuxtLink to="/account/client/onboard/choose" class="btn__choose"
+                     style="color: white; border-bottom: 0; text-decoration: none;">Подобрать
+                     психолога</NuxtLink>
                   <div class="btn__buysubscribe">Подписка «Самопомощь»</div>
                </div>
             </div>

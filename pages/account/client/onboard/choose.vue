@@ -203,9 +203,9 @@ const store = useClientStore()
 //    router.push('/account/client/onboard')
 // }
 
-definePageMeta({
-   middleware: "auth"
-})
+// definePageMeta({
+//    middleware: "auth"
+// })
 useHead({
    link: [
       {
