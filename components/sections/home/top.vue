@@ -40,9 +40,10 @@
                </div>
                <div class="top__btns">
                   <NuxtLink to="/account/client/onboard/choose" class="btn__choose"
-                     style="color: white; border-bottom: 0; text-decoration: none;">Подобрать
+                     style="color: white;text-decoration: none;">Подобрать
                      психолога</NuxtLink>
-                  <div class="btn__buysubscribe">Подписка «Самопомощь»</div>
+                  <NuxtLink class="btn__buysubscribe" to="/gift" style="text-decoration: none;">
+                     Подписка «Самопомощь»</NuxtLink>
                </div>
             </div>
             <div class="top__second">
