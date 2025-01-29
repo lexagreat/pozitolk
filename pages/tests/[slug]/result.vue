@@ -494,7 +494,9 @@
                            <div class="top__title">
                               <span style="color:#FF6900;font-weight:600;">Интерпретация результатов</span>
                            </div>
-                           <div class="top__desc">
+                           <div class="top__desc" v-html="info.description">
+                           </div>
+                           <!-- <div class="top__desc">
                               <p>
                                  <strong>Барашек - это вы.</strong>
                               </p>
@@ -595,7 +597,7 @@
                               <p style="font-size:24px;font-weight:500;max-width:600px;line-height: 1.2;">
                                  Обсудите ваш результат с профессиональным психологом. Скидка на первую сессию 20%
                               </p>
-                           </div>
+                           </div> -->
                            <div class="discount">
                               <div class="discount__name">TEST-XXXXXX</div>
                               <div class="discount__percent">20%</div>

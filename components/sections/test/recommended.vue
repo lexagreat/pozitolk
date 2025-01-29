@@ -4,9 +4,9 @@
          <div class="recommend__inner">
             <h2>рекомендуем пройти</h2>
             <div class="recommend__list">
-               <NuxtLink to="/" class="recommend__item" v-for="item in items" :key="item">
+               <NuxtLink :to="'/tests/' + item.slug" class="recommend__item" v-for="item in items" :key="item">
                   <div class="recommend__item-img">
-                     <img :src="item.img" :alt="item.title">
+                     <img :src="item.cover" :alt="item.title">
                   </div>
                   <div class="recommend__item-body">
                      <h2 class="recommend__item-title">
