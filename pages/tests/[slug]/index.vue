@@ -57,8 +57,7 @@
                         {{ index + 1 }}
                      </div>
                      <div class="question__item-body">
-                        <div class="question__title">
-                           {{ quest.title }}
+                        <div class="question__title" v-html="quest.title">
                         </div>
                         <div class="question__answers" v-if="info.test_type == 1">
                            <label class="question__answer" v-for="answer in quest.answers">
