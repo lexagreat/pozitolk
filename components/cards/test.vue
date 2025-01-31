@@ -7,7 +7,8 @@
          <h2 class="tests__item-title">
             {{ test?.title }}
          </h2>
-         <div class="tests__item-desc" v-html="test?.description">
+         <div class="tests__item-desc" v-html="test?.description"
+  @vue:mounted="removeImages">
          </div>
          <div class="tests__item-info">
             <div class="tests__item-info-item">
@@ -31,9 +32,17 @@
    </NuxtLink>
 </template>
 <script setup>
+import { onMounted } from 'vue';
+
 const props = defineProps({
    test: Object
 })
+
+const removeImages = () => {
+  document.querySelectorAll('.tests__item-desc img').forEach(img => img.remove());
+};
+
+onMounted(removeImages);
 </script>
 
 
