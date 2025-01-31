@@ -667,3 +667,10 @@ useHead({
 
 
 </script>
+
+
+<style lang="scss" scoped>
+.top__img>img.__desk{
+   max-height: 328px;
+}
+</style>

@@ -220,10 +220,8 @@ const isHiddenColor = (ans, i) => {
    opacity: 0;
    pointer-events: none;
 }
-.top__img{
-   max-height: 328px;
-}
 .top__img>img.__desk{
-   object-fit: cover;
+   max-height: 328px;
+   // object-fit: cover;
 }
 </style>
