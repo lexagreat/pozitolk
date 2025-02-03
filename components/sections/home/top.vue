@@ -42,8 +42,10 @@
                   <NuxtLink to="/account/client/onboard/choose" class="btn__choose"
                      style="color: white;text-decoration: none;">Подобрать
                      психолога</NuxtLink>
-                  <NuxtLink class="btn__buysubscribe" to="/gift" style="text-decoration: none;">
-                     Подписка «Самопомощь»</NuxtLink>
+                  <!-- <NuxtLink class="btn__buysubscribe" to="/gift" style="text-decoration: none;">
+                     Подписка «Самопомощь»</NuxtLink> -->
+                  <a id="popup-maintenance" class="btn__buysubscribe"  style="text-decoration: none;">
+                     Подписка «Самопомощь»</a>
                </div>
             </div>
             <div class="top__second">
@@ -54,11 +56,19 @@
    </section>
 </template>
 <script setup>
+
 onMounted(() => {
    // Блоки "Поможем найти психолога" (top)
    $(".top .tariff-toggle .tariff-item").on("click", function () {
       $(".top .tariff-toggle .tariff-item").removeClass("active");
       $(this).addClass("active");
+   });
+   $('#popup-maintenance').on('click', function (e) {
+      e.preventDefault();
+      $('.popup-maintenance').addClass('active');
+   });
+   $('.popup-maintenance__layer, .popup-maintenance__close').on('click', function (e) {
+      $('.popup-maintenance').removeClass('active');
    });
 })
 </script>

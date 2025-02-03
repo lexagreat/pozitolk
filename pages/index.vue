@@ -1,4 +1,5 @@
 <template>
+         <PopupClientSelfHelp />
    <main class="main">
       <div class="page">
          <SectionsHomeTop />
