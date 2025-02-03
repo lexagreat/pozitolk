@@ -84,6 +84,30 @@
                               </div>
                            </label>
                         </div>
+                        <div class="question__answers" v-if="info.test_type == 4">
+                           <label class="question__answer" v-for="answer in quest.answers">
+                              <div class="question__answer-radio">
+                                 <input type="radio" v-model="answers[index]"
+                                    :name="'question__answer-radio' + quest.id + answer.title" :value="answer.id">
+                                 <div class="question__answer-radio-input"></div>
+                              </div>
+                              <div class="question__answer-answer">
+                                 {{ answer.title }}
+                              </div>
+                           </label>
+                        </div>
+                        <div class="question__answers" v-if="info.test_type == 5">
+                           <label class="question__answer" v-for="answer in quest.answers">
+                              <div class="question__answer-radio">
+                                 <input type="radio" v-model="answers[index]"
+                                    :name="'question__answer-radio' + quest.id + answer.title" :value="answer.id">
+                                 <div class="question__answer-radio-input"></div>
+                              </div>
+                              <div class="question__answer-answer">
+                                 {{ answer.title }}
+                              </div>
+                           </label>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -179,6 +203,14 @@ let styles = [
       rel: "stylesheet",
       href: "/site/css/taking-test-3.css",
    },
+   {
+      rel: "stylesheet",
+      href: "/site/css/taking-test.css",
+   },
+   {
+      rel: "stylesheet",
+      href: "/site/css/taking-test.css",
+   },
 ]
 let styleObj = styles[info.test_type - 1]
 useHead({
@@ -188,7 +220,7 @@ useHead({
    title: "Позитолк тесты"
 })
 onMounted(() => {
-   if (info.test_type == 1) {
+   if (info.test_type == 1 || info.test_type == 4 || info.test_type == 5) {
       $(document).ready(function () {
 
          // Для переключения цвета radio 

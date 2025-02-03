@@ -603,6 +603,50 @@
                               <div class="discount__percent">20%</div>
                            </div>
                         </div>
+                        <div class="top__body" v-if="testStore.lastTestObject?.type == 4">
+                           <!-- <div class="top__title">Обычный пользователь</div> -->
+                           <div class="top__desc">
+                              <p v-html="info?.description">
+                              </p>
+                              
+                              <div class="progress-bar" v-for="([key, value]) in Object.entries(info)">
+                                 <div class="progress-bar__header">
+                                    <div class="progress-bar__title">{{key}}:</div>
+                                    <div class="progress-bar__lbl"></div>
+                                 </div>
+                                 <div class="progress-bar__line">
+                                    <div class="progress-bar__item" v-for="item in 20"
+                                       :style="{ background: item <= value ? '#CB7A00' : '#FAF9F9' }">
+                                       <div class="progress-bar__count"
+                                          :style="{ color: item < 4 ? '#008000' : item < 7 ? '#CB7A00' : '#CB1800' }">
+                                          {{ item }}
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <p>
+                                 Обсудите ваш результат с профессиональным психологом. Скидка на первую сессию 20%
+                              </p>
+                           </div>
+                           <div class="discount">
+                              <div class="discount__name">TEST-XXXXXX</div>
+                              <div class="discount__percent">20%</div>
+                           </div>
+                        </div>
+                        <div class="top__body" v-if="testStore.lastTestObject?.type == 5">
+                           <!-- <div class="top__title">Обычный пользователь</div> -->
+                           <div class="top__desc">
+                              <p v-html="info?.description.replace('Ответы пользователя:','')">
+                              </p>
+                              <p>
+                                 Обсудите ваш результат с профессиональным психологом. Скидка на первую сессию 20%
+                              </p>
+                           </div>
+                           <div class="discount">
+                              <div class="discount__name">TEST-XXXXXX</div>
+                              <div class="discount__percent">20%</div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <SidebarTestResult />
@@ -624,7 +668,7 @@ let info = await useBaseFetch("/wellness/tests/check/", {
    method: "POST",
    body: testStore.lastTestObject,
 })
-
+console.log(info)
 if (testStore.lastTestObject == null) {
    router.push('/')
 }
@@ -652,6 +696,14 @@ let styles = [
    {
       rel: "stylesheet",
       href: "/site/css/test-result-3.css",
+   },
+   {
+      rel: "stylesheet",
+      href: "/site/css/test-result-2.css",
+   },
+   {
+      rel: "stylesheet",
+      href: "/site/css/test-result.css",
    },
 ]
 let styleObj = styles[testStore.lastTestObject?.type - 1]
