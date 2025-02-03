@@ -96,6 +96,6 @@ console.log(info);
 
 .top__img img {
    width: 100%;
-   object-fit: contain;
+   object-fit: cover;
 }
 </style>
