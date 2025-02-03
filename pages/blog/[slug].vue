@@ -47,7 +47,7 @@
             <div class="container-small">
                <div class="desc__inner">
                   <section v-for="section in info.body" :key="section" :id="'articleBlock' + section.id">
-                     <h2 v-if="section.title.length">{{ section.title }}</h2>
+                     <h2 v-if="section.title?.length">{{ section.title }}</h2>
                      <div v-html="section.description"></div>
                   </section>
                </div>
