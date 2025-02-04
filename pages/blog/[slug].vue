@@ -70,6 +70,7 @@
 </template>
 <script setup>
 
+const isMobile = ref(false);
 const route = useRoute()
 let info = await useBaseFetch(`/wellness/articles/${route.params.slug}/`)
 useHead({
@@ -85,7 +86,25 @@ useHead({
    ],
    title: info.title
 })
-console.log(info);
+
+onMounted(() => {
+   isMobile.value = window.matchMedia('(max-width: 700px)').matches;
+   const handleResize = () => {
+      isMobile.value = window.matchMedia('(max-width: 700px)').matches;
+   };
+   if(isMobile.value){
+      const video = document.getElementsByTagName("iframe")
+      Array.from(video).forEach((el) => {
+         el.width = 220;
+         el.height = 140;
+      });
+   }
+   
+   onUnmounted(() => {
+    window.removeEventListener('resize', handleResize);
+  });
+})
+
 </script>
 
 
