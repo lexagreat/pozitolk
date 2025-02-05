@@ -176,6 +176,16 @@ const finishTest = async () => {
          return
       }
    }
+   if (info.test_type == 4) {
+      let temp = 0;
+      answers.value.forEach((item) => {
+         temp++
+      })
+      if (temp !== answers.value.length || temp == 0) {
+         console.log('вы не ответили на все вопросы');
+         return
+      }
+   }
 
    console.log('Тест пройден ');
 
@@ -255,5 +265,8 @@ const isHiddenColor = (ans, i) => {
 .top__img>img.__desk{
    max-height: 328px;
    // object-fit: cover;
+}
+.question__answer {
+   user-select: none; 
 }
 </style>
