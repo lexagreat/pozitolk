@@ -99,7 +99,10 @@ onMounted(() => {
          el.height = 140;
       });
    }
-   
+   const img = document.getElementsByTagName("img")
+   Array.from(img).forEach((el) => {
+         el.style = 'height:auto;';
+      });
    onUnmounted(() => {
     window.removeEventListener('resize', handleResize);
   });
