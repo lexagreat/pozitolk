@@ -611,14 +611,17 @@
                                     <div class="progress-bar__title">{{key}}:</div>
                                     <div class="progress-bar__lbl"></div>
                                  </div>
-                                 <div class="progress-bar__line">
-                                    <div class="progress-bar__item" v-for="item in value.max"
-                                       :style="{ background: item <= value.score ? '#CB7A00' : '#FAF9F9' }">
-                                       <div class="progress-bar__count"
-                                          :style="{ color: item < 4 ? '#008000' : item < 7 ? '#CB7A00' : '#CB1800' }">
-                                          {{ item }}
+                                 <div>
+                                    <div class="progress-bar__line">
+                                       <div class="progress-bar__item" v-for="item in Array.from({ length: value.max - value.min + 1 }, (_, i) => i + value.min)"
+                                          :style="{ background: item <= value.score ? '#CB7A00' : '#FAF9F9' }">
+                                          <div class="progress-bar__count"
+                                             :style="{ color: item < 4 ? '#008000' : item < 7 ? '#CB7A00' : '#CB1800' }">
+                                             {{ (item === value.min || item === value.max) ? item : '' }}
+                                          </div>
                                        </div>
                                     </div>
+                                    <p>{{ value.score }}</p>
                                  </div>
                               </div>
                               <p v-html="info?.result">
@@ -723,5 +726,15 @@ useHead({
 <style lang="scss" scoped>
 .top__img>img.__desk{
    max-height: 328px;
+}
+.progress-bar > div{
+   display: flex;
+   align-items: center;
+}
+.progress-bar>div> .progress-bar__line{
+   width: 90%;
+}
+.progress-bar>div>p{
+   margin: 0 0 0 10px;
 }
 </style>
