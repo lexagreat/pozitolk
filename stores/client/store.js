@@ -57,6 +57,32 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
+      },async getMyPsychologists() {
+         try {
+            const response = await useBaseFetch("/session/psychologists-list/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },async getSchedulePsychologist(id,start_date,end_date) {
+         try {
+            const response = await useBaseFetch("/session/schedule/"+id+"/?start_date="+start_date+"&end_date="+end_date, {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
       },
    },
 });
