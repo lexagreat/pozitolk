@@ -10,7 +10,7 @@
                         <NuxtLink to="/account/client/onboard/schedule" class="calendar__header-back">Расписание</NuxtLink>
                          <div class="calendar__header-name">
                                <div class="calendar__header-img" style="background-image: url(./assets/img/calendar__header-img.png);"></div>
-                               Даниил
+                               {{psychologistName}}
                          </div>
                       </div>
                       <div class="calendar__header-nav">
@@ -26,10 +26,11 @@
                                 {{ day }}
                               </div>
                             </div>
-                            <div class="table__cell" :class="getSlotClass(day, hour)" v-for="hour in hours" :key="hour">
-                              <div class="table__cell-inner">
+                            <div class="table__cell" :class="getSlotClass(day, hour) + ' ' + day.slice(0, 2) + index2" v-for="(hour, index2) in hours" :key="hour">
+                              <div class="table__cell-inner" @click="changeCosenTime(getSlotSessionId(day, hour),getSlotDateTime(day, hour))">
                                 {{ hour }}
                               </div>
+                              <PopupClientMenuEditEntryToSchedule :id="day.slice(0, 2) + index2" />
                             </div>
                         </div>
                    </div>
@@ -43,13 +44,21 @@
                    <div class="consultation__btn">Запустить консультацию</div>
                 </div>
              </div>
+             <PopupClientRescheduleAnAppointment :sessionId="chosen_session_id" />
+             <PopupClientAddEntryToSchedule :psychologistName="psychologistName" :psychologistId="psychologistId" :psychologistAvatar="psychologistAvatar" :time="chosen_session_time" />
+             <PopupClientDeleteScheduleEntry :sessionId="chosen_session_id" />
           </main>
         <!-- <PopupClientAddCart />
         <PopupClientTopay /> -->
     </div>
   </template>
+<style scoped>
+.wrapper{
+  width: 100%;
+}
+</style>
  <script setup>
- import { useClientStore } from '~/stores/client/store';
+import { useClientStore } from '~/stores/client/store';
  useHead({
     link: [
        {
@@ -60,11 +69,21 @@
           rel: "stylesheet",
           href: "/client/css/page-5.css",
        },
+       {
+          rel: "stylesheet",
+          href: "/client/css/page-7.css",
+       },
     ],
  })
 const store = useClientStore()
 const route = useRoute();
 const psychologistId = route.query.id;
+const psychologistName = ref();
+const chosen_session_id = ref();
+const chosen_session_time = ref();
+const slotsAndPsychologist = ref();
+const psychologistAvatar = ref();
+
 
 const hours = ref([
   "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00",
@@ -95,6 +114,10 @@ monday.setDate(now.getDate() + diffToMonday);
 const sunday = new Date(monday);
 sunday.setDate(monday.getDate() + 6);
 
+const changeCosenTime = (sId,sTime) => {
+  chosen_session_id.value =sId
+  chosen_session_time.value =sTime
+};
 const getCurrentWeek = () => {
   return `${formatDate(monday)} - ${formatDate(sunday)}`;
 };
@@ -117,16 +140,18 @@ const goToNextWeek = () => {
   // Обновляем данные для текущей недели
   weekDays.value = getCurrentWeekDays();
   formattedWeek.value = getCurrentWeek();
+  console.log(schedule.value)
 
   const mondayFormatted = formatDateQuery(monday);
   const sundayFormatted = formatDateQuery(sunday);
   store.getSchedulePsychologist(psychologistId, mondayFormatted, sundayFormatted).then(response => {
-    schedule.value = response;
+    schedule.value = response.slots;
   });
 };
 const goToPreviousWeek = () => {
   monday.setDate(monday.getDate() - 7);
   sunday.setDate(sunday.getDate() - 7);
+  console.log(schedule.value)
 
   // Обновляем данные для предыдущей недели
   weekDays.value = getCurrentWeekDays();
@@ -135,23 +160,21 @@ const goToPreviousWeek = () => {
   const mondayFormatted = formatDateQuery(monday);
   const sundayFormatted = formatDateQuery(sunday);
   store.getSchedulePsychologist(psychologistId, mondayFormatted, sundayFormatted).then(response => {
-    schedule.value = response;
+    schedule.value = response.slots;
   });
 };
 
 const weekDays = ref(getCurrentWeekDays());
 const formattedWeek = ref(getCurrentWeek());
 const schedule = ref([]);
-onMounted(async () => {
-      const mondayFormatted = formatDateQuery(monday); // Форматируем как 'YYYY-MM-DD'
-      const sundayFormatted = formatDateQuery(sunday);
-      schedule.value = await store.getSchedulePsychologist(psychologistId,mondayFormatted,sundayFormatted);
-})
  
 
 const getSlotClass = (day, hour) => {
       const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
       if(slot){
+        if(slot.session_id){
+          console.log(slot.session_id)
+        }
             if(slot.status && slot.status === "free"){
                   return "available"; 
             }else if(slot.status === "busy"){
@@ -164,5 +187,88 @@ const getSlotClass = (day, hour) => {
       }
       return "empty"; 
 }
+const getSlotSessionId = (day, hour) => {
+  const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
+  if(slot){
+    if(slot.session_id){
+      console.log(slot.session_id)
+      return slot.session_id; 
+    }else{
+      return undefined; 
+    }
+  }
+  return undefined; 
+}
+const getSlotDateTime = (day, hour) => {
+  const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
+  if(slot){
+    if(slot.datetime){
+      console.log(slot.datetime)
+      return slot.datetime; 
+    }else{
+      return undefined; 
+    }
+  }
+  return undefined; 
+}
+onMounted(async () => {
+      const mondayFormatted = formatDateQuery(monday); // Форматируем как 'YYYY-MM-DD'
+      const sundayFormatted = formatDateQuery(sunday);
+      slotsAndPsychologist.value = await store.getSchedulePsychologist(psychologistId,mondayFormatted,sundayFormatted);
+      schedule.value = slotsAndPsychologist.value.slots
+      console.log(schedule.value)
+      psychologistName.value = slotsAndPsychologist.value.psychologist_info.psychologist_name;
+      psychologistAvatar.value = slotsAndPsychologist.value.psychologist_info.psychologist_avatar;
+      console.log(psychologistName.value)
+      $(document).ready(function () {
+        
+      // START PopUp общее 
+      $(document).on("click", ".popup__layer, .popup__close", function () {
+          $(".popup").removeClass("active");
+          $("html").removeClass("hidden");
+      });
+      // END PopUp общее 
+
+      // START  PopUp при клике по доступному времени в календаре
+      $(document).on("click", ".table__cell.available", function () {
+          $(".popup.available_time").addClass("active");
+      });
+        // END  PopUp при клике по доступному времени в календаре
+
+        // START  PopUp при клике по доступному времени в календаре
+        $(document).on("click", ".table__cell.chosen", function (e) {
+          console.log('Клик по выбранному слоту');
+          console.log(e.currentTarget.classList[2]);
+            e.stopPropagation();
+            var popup = $(".popup_2.chosen_time."+e.currentTarget.classList[2]);
+            console.log(popup);
+            $(this).append(popup);
+            popup.addClass("active");
+        });
+        $(document).on("click", function () {
+            $(".popup_2.chosen_time").removeClass("active");
+        });
+        $(document).on("click", ".popup_2.chosen_time", function (e) {
+            e.stopPropagation();
+        });
+        // END  PopUp при клике по доступному времени в календаре
+
+        // START "PopUp при клике по кнопке "Перенести""
+        $(document).on("click", ".chosen_time__btn-switch", function () {
+            $(".popup.reschedule_time").addClass("active");
+        });
+        $(document).on("click", ".calendar-date__item", function () {
+            $(".calendar-date__item").removeClass("active");
+            $(this).addClass("active");
+        });
+        // END "PopUp при клике по кнопке "Перенести""
+
+        // START "PopUp при клике по кнопке "Отменить""
+        $(document).on("click", ".chosen_time__btn-delete", function () {
+            $(".popup.delete_time").addClass("active");
+        });
+        // END "PopUp при клике по кнопке "Отменить""
+      });
+})
 </script>
  

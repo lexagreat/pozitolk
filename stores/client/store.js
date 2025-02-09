@@ -84,5 +84,20 @@ export const useClientStore = defineStore("client", {
             console.log("err", err);
          }
       },
+      async closeSession(sessionId) {
+         try {
+            const response = await useBaseFetch(`/session/cancel/${sessionId}/`, {
+               method: "POST",
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },
    },
 });
