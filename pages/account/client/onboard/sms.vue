@@ -40,6 +40,8 @@ const router = useRouter()
 if (!store.phone.length) {
    router.push('/account/client/onboard')
 }
+const route = useRoute();
+const message = route.query.message;
 useHead({
    link: [
       {
@@ -53,6 +55,11 @@ useHead({
    ],
 })
 onMounted(() => {
+   console.log("message")
+   console.log(message)
+   if (message.length == 6) {
+      fields.value = message.slice(0, 6).split('');
+   }
    // START обраобтка input "SMS-код"
    $('#sms-code input').on('input', function () {
       const $this = $(this);

@@ -73,7 +73,10 @@ const onSend = async () => {
    })
    console.log(response);
    store.setPhone(pre + input.value)
-   router.push('/account/client/onboard/sms')
+   router.push({ 
+      path: '/account/client/onboard/sms', 
+      query: { message: response.message } 
+   });
 }
 
 onMounted(() => {
