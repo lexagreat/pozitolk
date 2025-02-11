@@ -1,10 +1,30 @@
 <template>
     <div class="form-container">
         <div class="form-group">
-            <label>Темы:</label>
-            <input v-model="form.psycho_topic" type="text">
+            <label>Имя:</label>
+            <input v-model="form.name" type="text">
+        </div>
+        <div class="form-group">
+            <label>Возраст:</label>
+            <input v-model.number="form.age" type="number">
+        </div>
+        <div class="form-group">
+            <label>Пол:</label>
+            <select v-model="form.sex">
+                <option value="woman">Женщина</option>
+                <option value="man">Мужчина</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Описание:</label>
+            <textarea rows="4" v-model="form.description"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Фото:</label>
+            <input type="file" @change="handleFileUpload">
         </div>
         <div class="sub-form">
+            <h2>Образование</h2>
             <div class="form-group">
                 <label>Год выпуска:</label>
                 <input v-model.number="educationYear" type="number">
@@ -22,41 +42,23 @@
             </ul>
         </div>
         <div class="form-group">
-            <label>Фото:</label>
-            <input type="file" @change="handleFileUpload">
-        </div>
-        <div class="form-group">
-            <label>Имя:</label>
-            <input v-model="form.name" type="text">
-        </div>
-        <div class="form-group">
-            <label>Возраст:</label>
-            <input v-model.number="form.age" type="number">
-        </div>
-        <div class="form-group">
-            <label>Лейбл:</label>
-            <input v-model="form.label" type="text">
-        </div>
-        <div class="form-group">
             <label>Опыт (лет):</label>
             <input v-model.number="form.experience" type="number">
         </div>
         <div class="form-group">
-            <label>Описание:</label>
-            <textarea rows="4" v-model="form.description"></textarea>
+            <label>Лейбл:(например:позитивная психотерапия)</label>
+            <input v-model="form.label" type="text">
         </div>
         <div class="form-group">
-            <label>Пол:</label>
-            <select v-model="form.sex">
-                <option value="woman">Женщина</option>
-                <option value="man">Мужчина</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Цена:</label>
+            <label>Цена:(за сессию)</label>
             <input v-model.number="form.price" type="number">
         </div>
-        <button class="submit-button" @click="submitForm">Отправить</button>
+        <div class="form-group">
+            <label>Темы(через запятую):</label>
+            <input v-model="form.psycho_topic" type="text">
+        </div>
+        <button class="submit-button" :class="isFormValid?'':'grayBg'" @click="submitForm" :disabled="!isFormValid">Отправить</button>
+
     </div>
 </template>
 
@@ -66,7 +68,7 @@ import { useClientStore } from '~/stores/client/store';
 const store = useClientStore()
 
 const form = ref({
-    psycho_topic: [],
+    psycho_topic: '',
     education_psychologist: [],
     photo: null,
     name: '',
@@ -92,7 +94,18 @@ const addEducation = () => {
         educationText.value = '';
     }
 };
-
+const isFormValid = computed(() => {
+    return form.value.name &&
+        form.value.age !== null &&
+        form.value.label &&
+        form.value.experience !== null &&
+        form.value.description &&
+        form.value.sex &&
+        form.value.price !== null &&
+        form.value.psycho_topic &&
+        form.value.education_psychologist.length > 0 &&
+        photoFile.value;
+});
 const removeEducation = (index) => {
     form.value.education_psychologist.splice(index, 1);
 };
@@ -112,7 +125,7 @@ const submitForm = async () => {
         formData.append('description', form.value.description);
         formData.append('sex', form.value.sex);
         formData.append('price', form.value.price);
-        formData.append('psycho_topic', JSON.stringify(form.value.psycho_topic));
+        formData.append('psycho_topic', form.value.psycho_topic);
         formData.append('education_psychologist', JSON.stringify(form.value.education_psychologist));
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
@@ -215,5 +228,11 @@ button:hover {
 }
 .submit-button:hover {
     background-color: #0056b3;
+}
+.grayBg{
+    background-color: gray !important;
+}
+.grayBg:hover{
+    background-color: gray !important;
 }
 </style>

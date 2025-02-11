@@ -85,4 +85,7 @@ const formatDate = (dateString) => {
    text-decoration: none;
    color: #FF6900;
 }
+.wrapper{
+   width: 100%;
+}
 </style>

@@ -86,7 +86,7 @@ const submitForm = async () => {
             attach_answers: form.value.attach_answers.map(Number) // Преобразуем в массив чисел
         };
         
-        const response = await useBaseFetch('/api/submit-form/', {
+        const response = await useBaseFetch('/wellness/abuse/', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
