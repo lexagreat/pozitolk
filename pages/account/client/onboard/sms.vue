@@ -122,7 +122,7 @@ const verifyCode = async () => {
    if (!response.user.has_survey) {
       router.push('/account/client/onboard/ankete')
    } else {
-      console.log('user существует');
+      router.push('/account/client/onboard/schedule')
    }
 }
 watch(code, async () => {
