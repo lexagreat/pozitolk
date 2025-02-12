@@ -24,10 +24,12 @@ const store = useClientStore()
 const props = defineProps({
   sessionId: Number
 });
+const router = useRouter()
 
 const moveSession = async () => {
     store.closeSession(props.sessionId).then(response => {
         if(response.status=="success"){
+            router.go(0);
             $(document).ready(function () {
                     $(".popup").removeClass("active");
                     $("html").removeClass("hidden");

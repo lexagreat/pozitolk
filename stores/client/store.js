@@ -2,8 +2,10 @@ import { defineStore } from "pinia";
 
 export const useClientStore = defineStore("client", {
    state: () => ({
-      phone: "89616587909",
-      token: "97e56056ccb772d8672180148a3cf350bc14577e",
+      phone: "",
+      token: "",
+      // phone: "89616587909",
+      // token: "97e56056ccb772d8672180148a3cf350bc14577e",
       user: null,
    }),
    actions: {

@@ -45,7 +45,7 @@
   
           <div class="reschedule_time__btns">
             <div class="reschedule_time__btn-cancel" @click="closePopup">Отмена</div>
-            <div class="reschedule_time__btn-pay" @click="submitReschedule">Оплатить</div>
+            <div class="reschedule_time__btn-pay" @click="submitReschedule">Подтвердить</div>
           </div>
         </form>
       </div>
@@ -66,10 +66,11 @@ const store = useClientStore()
   const schedule = ref([]);
   const weekDays = ref([]);
   const chooseDay = ref("");
+  const router = useRouter()
+  const route = useRoute();
   
   const today = new Date();
   const formattedToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}T${String(today.getHours()).padStart(2, '0')}:${String(today.getMinutes()).padStart(2, '0')}:${String(today.getSeconds()).padStart(2, '0')}`.split("T")[0];
-  
   // Получение ближайших 7 дней
   const getWeekDays = () => {
     const days = [];
@@ -96,14 +97,14 @@ const allHours = computed(() => {
 // Функция для определения CSS-класса
 const getHourClass = (hour) => {
     
-//console.log(schedule.value.slots)
   if (!Array.isArray(schedule.value.slots) || schedule.value.slots.length === 0) {
     return "unavailable";
   }
-//   schedule.value.some(
-//     (slot) => console.log(slot.time + " " + slot.status + " " + slot.day_of_week.toLowerCase())
-//   )
-//console.log(chooseDay.value)
+  if (selectedTime.value === hour) {
+    return "selected";
+  }
+
+  
   return schedule.value.slots.some(
     (slot) => slot.time === hour && slot.status === "free" && slot.day_of_week.toLowerCase() === chooseDay.value
   )
@@ -134,12 +135,31 @@ const getHourClass = (hour) => {
   };
   
   const selectTime = (time) => {
+    
+  if (getHourClass(time) === "availible") {
     selectedTime.value = time;
+  }
   };
   
   const closePopup = () => {
     selectedDate.value = null;
     selectedTime.value = null;
+    let popups  = document.getElementsByClassName("popup")
+    console.log(popups )
+    
+    // Loop through the HTMLCollection and remove the "active" class from each element
+    for (let i = 0; i < popups.length; i++) {
+        popups[i].classList.remove("active");
+    }
+
+    // Remove the "hidden" class from the element with the class "html"
+    let htmlElement = document.getElementsByClassName("html")[0];
+    if (htmlElement) {
+        htmlElement.classList.remove("hidden");
+    } else {
+        console.log("Element with class 'html' not found.");
+    }
+
   };
   
   const submitReschedule = async() => {
@@ -169,13 +189,24 @@ const getHourClass = (hour) => {
     })
     if (response.status==="success") {
         console.log(response)
+        router.go(0);
+        //router.replace({ path: '/account/client/onboard/calendar', query: { id: 2 } })
     }
     closePopup();
   };
   
   onMounted(async () => {
+    psychologistId.value = route.query.id;
     weekDays.value = getWeekDays();
     selectedDate.value = formattedToday;
     await fetchSchedule();
   });
   </script>
+  <style scoped>
+.selected{
+  outline: solid;
+  outline-color: #d5d5d4;
+  background: #daf9da;
+  color: #4b4b4b;
+}
+</style>
