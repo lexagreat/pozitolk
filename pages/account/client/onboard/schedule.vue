@@ -9,7 +9,7 @@
                      <div class="schedule__item" v-for="p in psychologistsList">
                         <div class="schedule__item-first">
                            <div class="schedule__item-img">
-                              <img :src="p.photo" alt="Даниил">
+                              <img :src="p.photo">
                            </div>
                            <div class="schedule__item-name">
                               <div class="schedule__item-label">Имя/Псевдоним</div>
@@ -64,7 +64,8 @@ useHead({
    ],
 })
  
-let psychologistsList = await store.getMyPsychologists()
+let psychologistsList = []
+psychologistsList = await store.getMyPsychologists()
 console.log('response', psychologistsList);
 onMounted(() => {
    
