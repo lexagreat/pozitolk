@@ -54,8 +54,17 @@
             <input v-model.number="form.price" type="number">
         </div>
         <div class="form-group">
-            <label>Темы(через запятую):</label>
-            <input v-model="form.psycho_topic" type="text">
+            <label>Темы:</label>
+            <div class="topics-container">
+                <button 
+                    v-for="topic in topics" 
+                    :key="topic" 
+                    @click="toggleTopic(topic)"
+                    :class="{'selected': selectedTopics.includes(topic)}"
+                >
+                    {{ topic }}
+                </button>
+            </div>
         </div>
         <button class="submit-button" :class="isFormValid?'':'grayBg'" @click="submitForm" :disabled="!isFormValid">Отправить</button>
 
@@ -66,6 +75,7 @@
 import { useClientStore } from '~/stores/client/store';
   
 const store = useClientStore()
+const router = useRouter()
 
 const form = ref({
     psycho_topic: '',
@@ -83,6 +93,8 @@ const form = ref({
 const educationYear = ref(null);
 const educationText = ref('');
 const photoFile = ref(null);
+const topics = ref([]);
+const selectedTopics = ref([]);
 
 const addEducation = () => {
     if (educationYear.value && educationText.value) {
@@ -94,6 +106,38 @@ const addEducation = () => {
         educationText.value = '';
     }
 };
+
+const fetchTopics = async () => {
+    try {
+        const response = await useBaseFetch("/cabinet/survey-info/", {
+            headers: {
+                Authorization: "Token " + store.token,
+            },
+        });
+        console.log(response)
+        
+        const allTopics = [
+            ...response.feeling.map(item => item.name),
+            ...response.relation.map(item => item.name),
+            ...response.work_study.map(item => item.name),
+            ...response.life_event.map(item => item.name),
+            ...response.couple_therapy.map(item => item.name),
+        ];
+
+        topics.value = allTopics; // Предположим, что ответ содержит массив тем в поле 'topics'
+    } catch (err) {
+        console.log("err", err);
+    }
+};
+const toggleTopic = (topic) => {
+    const index = selectedTopics.value.indexOf(topic);
+    if (index === -1) {
+        selectedTopics.value.push(topic);
+    } else {
+        selectedTopics.value.splice(index, 1);
+    }
+    form.value.psycho_topic = selectedTopics.value.join(', ');
+};
 const isFormValid = computed(() => {
     return form.value.name &&
         form.value.age !== null &&
@@ -102,19 +146,32 @@ const isFormValid = computed(() => {
         form.value.description &&
         form.value.sex &&
         form.value.price !== null &&
-        form.value.psycho_topic &&
+        selectedTopics.value.length > 0 &&
         form.value.education_psychologist.length > 0 &&
         photoFile.value;
 });
 const removeEducation = (index) => {
     form.value.education_psychologist.splice(index, 1);
 };
-
 const handleFileUpload = (event) => {
-    photoFile.value = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+        const fileSizeInMB = file.size / (1024 * 1024); // Размер файла в МБ
+        if (fileSizeInMB > 2.5) {
+            alert("Размер файла не должен превышать 2.5 МБ.");
+            event.target.value = ""; // Очищаем поле выбора файла
+            photoFile.value = null; // Сбрасываем значение файла
+        } else {
+            photoFile.value = file; // Сохраняем файл, если размер допустим
+        }
+    }
 };
 
 const submitForm = async () => {
+    if (!photoFile.value) {
+        alert("Пожалуйста, выберите файл размером не более 2.5 МБ.");
+        return;
+    }
     try {
         const formData = new FormData();
         formData.append('photo', photoFile.value);
@@ -145,9 +202,14 @@ const submitForm = async () => {
         });
         return response;
     } catch (err) {
+        console.log(err);
         console.log("err", err);
     }
+    router.go(0);
 };
+onMounted(() => {
+    fetchTopics();
+});
 </script>
 
 
@@ -234,5 +296,33 @@ button:hover {
 }
 .grayBg:hover{
     background-color: gray !important;
+}
+.topics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.topics-container button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.topics-container button.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.topics-container button:hover {
+    background-color: #ddd;
+}
+
+.topics-container button.selected:hover {
+    background-color: #0056b3;
 }
 </style>
