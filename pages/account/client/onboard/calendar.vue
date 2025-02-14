@@ -86,7 +86,12 @@ import { useClientStore } from '~/stores/client/store';
  })
 const store = useClientStore()
 const route = useRoute();
+const router = useRouter()
 const psychologistId = route.query.id;
+console.log(psychologistId)
+if (!psychologistId || isNaN(Number(psychologistId))) {
+    router.push("/");
+}
 const psychologistName = ref();
 const chosen_session_id = ref();
 const chosen_session_time = ref();

@@ -1,7 +1,7 @@
 // middleware/auth.js
 import { useClientStore } from "~/stores/client/store";
 
-export default function () {
+export default defineNuxtRouteMiddleware (async (to) => {
    const store = useClientStore();
    const router = useRouter();
    // Предположим, что токен хранится в Vuex store
@@ -10,4 +10,4 @@ export default function () {
    if (!token) {
       router.push("/account/client/onboard");
    }
-}
+})
