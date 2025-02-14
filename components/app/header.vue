@@ -105,9 +105,23 @@ onMounted(() => {
       $(".header__menu_mob-wrap").removeClass("active");
    })
 })
-const onLogin = () => {
+const onLogin =async () => {
    if (store.token) {
-      router.push("/account/client/onboard/choose")
+      //router.push("/account/client/onboard/schedule")
+
+      
+      let psychologistsList = []
+      psychologistsList = await store.getMyPsychologists()
+      console.log(psychologistsList[0])
+
+      if(!psychologistsList[0]){
+         router.push('/account/client/onboard/ankete')
+         //console.log("ankete")
+      }else{
+         router.push('/account/client/onboard/schedule')
+         //console.log("scedule")
+      }
+
    } else {
       router.push("/account/client/onboard")
    }
