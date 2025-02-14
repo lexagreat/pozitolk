@@ -70,17 +70,17 @@ import { useClientStore } from '~/stores/client/store';
        {
           rel: "stylesheet",
           href: "/client/css/main-2.css",
-          id: "calendar-main-2.css",
+          id: "calendar-main-2",
        },
        {
           rel: "stylesheet",
           href: "/client/css/page-5.css",
-          id: "calendar-page-5.css",
+          id: "calendar-page-5",
        },
        {
           rel: "stylesheet",
           href: "/client/css/page-7.css",
-          id: "calendar-page-7.css",
+          id: "calendar-page-7",
        },
     ],
  })
@@ -225,6 +225,16 @@ const getSlotDateTime = (day, hour) => {
   }
   return undefined; 
 }
+
+onBeforeUnmount(() => {
+   const styleIds = ["calendar-main-2", "calendar-page-5", "calendar-page-7"];
+    styleIds.forEach(id => {
+      const link = document.getElementById(id);
+      if (link) {
+        link.remove();
+      }
+    });
+    });
 onMounted(async () => {
       const mondayFormatted = formatDateQuery(monday); // Форматируем как 'YYYY-MM-DD'
       const sundayFormatted = formatDateQuery(sunday);

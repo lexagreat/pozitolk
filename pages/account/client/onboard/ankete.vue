@@ -349,10 +349,12 @@ useHead({
       {
          rel: "stylesheet",
          href: "/client/css/main.css",
+         id: "ankete-main",
       },
       {
          rel: "stylesheet",
          href: "/client/css/page-3.css",
+         id: "ankete-page-3",
       },
    ],
 })

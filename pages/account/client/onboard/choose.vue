@@ -211,10 +211,12 @@ useHead({
       {
          rel: "stylesheet",
          href: "/client/css/main.css",
+         id: "choose-main",
       },
       {
          rel: "stylesheet",
          href: "/client/css/page-4.css",
+         id: "choose-page-4",
       },
    ],
 })

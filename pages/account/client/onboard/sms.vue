@@ -42,15 +42,18 @@ if (!store.phone.length) {
 }
 const route = useRoute();
 const message = route.query.message;
+const isPsychologist = route.query.isPsychologist;
 useHead({
    link: [
       {
          rel: "stylesheet",
          href: "/client/css/main.css",
+         id: "sms-main",
       },
       {
          rel: "stylesheet",
          href: "/client/css/page-2.css",
+         id: "sms-page-2",
       },
    ],
 })
@@ -109,7 +112,8 @@ const verifyCode = async () => {
       method: "POST",
       body: {
          code: code.value,
-         phone: store.phone
+         phone: store.phone,
+         is_psychologist:isPsychologist
       }
    })
    if (!response?.user?.id) {

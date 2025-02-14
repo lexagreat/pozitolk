@@ -14,6 +14,10 @@
                               <input id="phone" name="phone" type="tel" value="" placeholder="999 999 99 99">
                               <span id="valid-msg" class="hide"></span>
                               <span id="error-msg" class="hide"></span>
+                              <div class="checkbox_flex">
+                                 <input type="checkbox" id="checkbox" v-model="isPsychologist">
+                                 <label for="checkbox">я психолог</label>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -38,19 +42,23 @@ import { useClientStore } from '~/stores/client/store';
 
 const router = useRouter()
 const store = useClientStore()
+const isPsychologist = ref(false);
 useHead({
    link: [
       {
          rel: "stylesheet",
          href: "/client/css/main.css",
+         id: "index-main",
       },
       {
          rel: "stylesheet",
          href: "/client/css/intlTelInput.min.css",
+         id: "index-intlTelInput",
       },
       {
          rel: "stylesheet",
          href: "/client/css/page-1.css",
+         id: "index-page-1",
       },
    ],
    script: [
@@ -75,7 +83,7 @@ const onSend = async () => {
    store.setPhone(pre + input.value)
    router.push({ 
       path: '/account/client/onboard/sms', 
-      query: { message: response.message } 
+      query: { message: response.message,isPsychologist: isPsychologist.value} 
    });
 }
 
@@ -143,4 +151,20 @@ onMounted(() => {
 </script>
 
 
-<style scoped></style>
+<style scoped>
+
+.checkbox_flex{
+   display: flex;
+   color: black;
+   align-items: center;
+}
+.checkbox_flex >input{
+   width: auto;
+}
+.checkbox_flex >label{
+   font-size: 20px;
+   margin-left: 10px;
+   user-select: none;
+}
+
+</style>
