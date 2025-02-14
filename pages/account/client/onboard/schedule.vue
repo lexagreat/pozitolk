@@ -9,7 +9,9 @@
                      <div class="schedule__item" v-for="p in psychologistsList">
                         <div class="schedule__item-first">
                            <div class="schedule__item-img">
-                              <img :src="p.photo">
+                              
+                           <img v-if="p.photo" :src="p.photo" alt="Фото психолога">
+                           <div v-else>Фото отсутствует</div>
                            </div>
                            <div class="schedule__item-name">
                               <div class="schedule__item-label">Имя/Псевдоним</div>
@@ -82,7 +84,8 @@ if(store.token==""){
 }
 psychologistsList = await store.getMyPsychologists()
 console.log('response', psychologistsList);
-onMounted(() => {
+onMounted(async() => {
+   //psychologistsList = await store.getMyPsychologists()
 })
 
 const formatDate = (dateString) => {
