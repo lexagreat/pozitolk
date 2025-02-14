@@ -11,11 +11,19 @@ export default defineNuxtRouteMiddleware(async(to) => {
             },
          ],
       });
+   }
+   else if (to.path.startsWith("/account/client/onboard")) {
+      
+      // Clear the head elements related to the site layout
+      useHead({
+         link: [],
+      });
    } else {
       // Clear the head elements related to the site layout
       useHead({
          link: [],
-      });const store = useClientStore();
+      });
+      const store = useClientStore();
 
       // Если выполняется на клиенте
       if (process.client) {
