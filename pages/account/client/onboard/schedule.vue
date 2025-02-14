@@ -51,24 +51,38 @@
 <script setup>
 import { useClientStore } from '~/stores/client/store';
 const store = useClientStore()
+const router = useRouter()
 useHead({
    link: [
       {
          rel: "stylesheet",
          href: "/client/css/main-2.css",
+         id: "schedule-main-2",
       },
       {
          rel: "stylesheet",
          href: "/client/css/page-5.css",
+         id: "schedule-page-5",
       },
    ],
 })
- 
+onBeforeUnmount(() => {
+   const styleIds = ["schedule-main-2", "schedule-page-5"];
+  styleIds.forEach(id => {
+    const link = document.getElementById(id);
+    if (link) {
+      link.remove();
+    }
+  });
+    });
 let psychologistsList = []
+
+if(store.token==""){
+   router.push('/account/client/onboard/ankete')
+}
 psychologistsList = await store.getMyPsychologists()
 console.log('response', psychologistsList);
 onMounted(() => {
-   
 })
 
 const formatDate = (dateString) => {

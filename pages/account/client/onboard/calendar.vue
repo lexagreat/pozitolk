@@ -64,14 +64,17 @@ import { useClientStore } from '~/stores/client/store';
        {
           rel: "stylesheet",
           href: "/client/css/main-2.css",
+          id: "calendar-main-2.css",
        },
        {
           rel: "stylesheet",
           href: "/client/css/page-5.css",
+          id: "calendar-page-5.css",
        },
        {
           rel: "stylesheet",
           href: "/client/css/page-7.css",
+          id: "calendar-page-7.css",
        },
     ],
  })
