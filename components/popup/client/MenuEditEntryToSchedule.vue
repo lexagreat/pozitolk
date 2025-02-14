@@ -22,3 +22,12 @@
     id: String
   });
 </script>
+<style scoped>
+@media (max-width: 1190px) {
+    .popup_2 {
+        transform: none;
+        top: 50%;
+        left: 10px;
+    }
+}
+</style>

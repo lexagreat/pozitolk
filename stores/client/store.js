@@ -20,6 +20,7 @@ export const useClientStore = defineStore("client", {
       },
       setPhone(phone) {
          this.phone = phone;
+         localStorage.phone = phone;
       },
       saveToken(token) {
          this.token = token;

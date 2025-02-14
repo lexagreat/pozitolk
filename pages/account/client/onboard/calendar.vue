@@ -56,6 +56,12 @@
 .wrapper{
   width: 100%;
 }
+
+@media (max-width: 1190px) {
+    .table__cell { 
+        position: static;
+    }
+}
 </style>
  <script setup>
 import { useClientStore } from '~/stores/client/store';

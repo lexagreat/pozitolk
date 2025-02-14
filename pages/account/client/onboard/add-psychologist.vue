@@ -208,7 +208,7 @@ const submitForm = async () => {
         formData.append('sex', form.value.sex);
         formData.append('price', form.value.price);
         formData.append('psycho_topics', form.value.psycho_topic);
-        formData.append('education_psychologist', JSON.stringify(form.value.education_psychologist));
+        formData.append('education_psychologist_write', JSON.stringify(form.value.education_psychologist));
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
         }

@@ -103,7 +103,7 @@
                                  <div class="lbltagsmore__lbl-txt">Темы:</div>
                               </div>
                               <div class="lbltagsmore__item" v-for="item in currentPsycho?.psycho_topic" :key="item">
-                                 {{ item }}
+                                 {{ item.name }}
                               </div>
                            </div>
                            <!-- <div class="lbltagsmore__btn-wrp">
@@ -463,6 +463,7 @@ const showMoreEducation = ref(false)
 
 
 const pay = async () => {
+   console.log(store.phone)
    const response = await useBaseFetch('/sales/payment-link', {
       method: "POST",
       body: {

@@ -117,6 +117,7 @@ const verifyCode = async () => {
       return
    }
    console.log(response);
+   console.log(store.phone);
    store.saveToken(response.token)
    store.user = response.user
    if (!response.user.has_survey) {
