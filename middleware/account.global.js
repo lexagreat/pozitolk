@@ -21,7 +21,7 @@ export default defineNuxtRouteMiddleware(async(to) => {
          ],
       });
    }
-   else if (to.path === "/account/client/onboard") {
+   else if (to.path === "/account/client/onboard" ||to.path === "/account/client/onboard/sms" ) {
       
       // Clear the head elements related to the site layout
       
