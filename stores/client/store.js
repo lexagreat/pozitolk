@@ -60,6 +60,19 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
+      },async getSelfPsychologist() {
+         try {
+            const response = await useBaseFetch("/cabinet/self-psychologist/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
       },async getMyPsychologists() {
          try {
             const response = await useBaseFetch("/session/psychologists-list/", {
