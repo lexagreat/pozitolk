@@ -1,10 +1,611 @@
-<template></template>
-<!-- <style scoped>
-.wrapper{
-  width: 100%;
-}
-</style> -->
- <!-- <script setup>
+<template>
+
+<div class="wrapper">
+        <nav class="nav">
+            <div class="nav__inner">
+                <a href="#" class="nav__logo">
+                    <img src="/site/img/Logo.svg" alt="Позитолк">
+                </a>
+                                <div class="nav__menu">
+                    <ul class="nav__menu-first">
+                        <li>
+                            <a href="#"><span class="icon psy-schedule"></span>Расписание</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-chats"></span>Чаты</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-clients"></span>Клиенты</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-payments"></span>Оплата</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-statistics"></span>Статистика</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-events"></span>События</a>
+                        </li>
+                    </ul>
+                    <ul class="nav__menu-second">
+                        <li>
+                            <a href="#"><span class="icon help"></span>Помощь</a>
+                        </li>
+                        <li class="__desk active">
+                            <a href="#"><span class="icon settings"></span>Настройки</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav__mob">
+                    <a href="#" class="nav__settings_mob"></a>
+                    <div class="nav__burger"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="nav__mob_layer"></div>
+        <main class="main">
+<div class="dashboard">
+
+    <div class="profile">
+        <div class="profile__ethical-btn-mob">
+            <div class="profile__ethical">Прочитать этический кодекс</div>
+        </div>
+        <div class="profile__body">
+            <div class="profile__header">
+                <div class="profile__title">Ваш личный профиль</div>
+                <div class="profile__btns">
+                    <div class="profile__ethical-btn">Этический кодекс</div>
+                    <div class="profile__save-btn" @click="send">Сохранить изменения</div>
+                    <div class="profile__exit-btn">
+                        <div class="icon-exit-btn"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile__tabs">
+                <div class="profile__tabs-ctrl">
+                    <div class="tab-ctrl active" data-tab-ctrl="1">Личные данные</div>
+                    <div class="tab-ctrl" data-tab-ctrl="2">Контактные данные</div>
+                    <div class="tab-ctrl" data-tab-ctrl="3">Клиенты</div>
+                    <div class="tab-ctrl" data-tab-ctrl="4">Специализация</div>
+                    <div class="tab-ctrl" data-tab-ctrl="5">Образование</div>
+                    <div class="tab-ctrl" data-tab-ctrl="6">Договор</div>
+                </div>
+                <div class="profile__tabs-body">
+
+                    <!-- Личные данные -->
+                    <div class="tab-body active" data-tab-body="1">
+                        <div class="tab-personal">
+
+                            <div class="profile__second">
+                              
+  <div class="profcards">
+    <div class="profcards-title">Фотография</div>
+    <div class="profcards__inner">
+      <div class="profcards__item">
+        <div class="profcards__item-header">
+          <!-- Отображение фотографии -->
+          <div class="profcards__item-img">
+            <img :src="photoPreview" alt="фото" v-if="photoPreview" />
+            <div v-else class="placeholder">Фото отсутствует</div>
+          </div>
+          <!-- Кнопка "Заменить" -->
+          <div class="profcards__item-btn" @click="triggerFileInput">Заменить</div>
+          <!-- Скрытый input для загрузки файла -->
+          <input
+            type="file"
+            ref="fileInput"
+            style="display: none"
+            accept="image/*"
+            @change="handleFileUpload"
+          />
+        </div>
+
+        <!-- Поля для ввода имени и даты рождения -->
+        <div class="profcards__item-inputs">
+          <label class="profgeneral__input">
+            <div class="profgeneral__input-label">Имя/Псевдоним</div>
+            <input type="text" name="profname" v-model="psychologistData.name" />
+          </label>
+          <label class="profgeneral__input">
+            <div class="profgeneral__input-label">Дата рождения</div>
+            <div class="date-container">
+              <input
+                type="date"
+                name="birthdate"
+                v-model="psychologistData.date_of_birth"
+              />
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+                                <div class="profgeneral">
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Пол</div>
+                                        <div class="select-container">
+                                            <select name="sex" v-model="psychologistData.sex">
+                                                <option value="man">Мужской</option>
+                                                <option value="woman">Женский</option>
+                                            </select>
+                                        </div>
+                                    </label>
+
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Язык</div>
+                                        <div class="select-container">
+                                            <select name="language" v-model="psychologistData.language">
+                                                <option value="Русский, Английский">Русский, Английский</option>
+                                                <option value="Русский">Русский</option>
+                                                <option value="Английский">Английский</option>
+                                            </select>
+                                        </div>
+                                    </label>
+
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">О себе</div>
+                                        <div class="textarea-container">
+                                            <textarea name="about" v-model="psychologistData.description"></textarea>
+                                        </div>
+                                    </label>
+
+                                </div>
+                                <div class="profile__btn-save">Сохранить</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Контактные данные -->
+                    <div class="tab-body" data-tab-body="2">
+                        <div class="tab-contact">
+
+                            <div class="profile__second">
+                                <div class="profgeneral">
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Телефон</div>
+                                        <input type="text" name="phone" value="88005553535">
+                                        <div class="profgeneral__input-info">Для смены номера напишите на электронную почту <a href="mailto:pozitalk@mail.ru">pozitalk@mail.ru</a></div>
+                                        <div class="subscribe">
+                                            <label class="subscribe__item">
+                                                <input type="checkbox" name="subscribe-phone">
+                                                <div class="subscribe__item-checkbox"></div>
+                                                <div class="subscribe__item-text">Получать сообщения от клиентов на этот номер</div>
+                                            </label>
+                                        </div>
+                                    </label>
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Электроная почта</div>
+                                        <input type="text" name="email" :value="psychologistData.email">
+                                        <div class="subscribe">
+                                            <label class="subscribe__item">
+                                                <input type="checkbox" name="subscribe-mail">
+                                                <div class="subscribe__item-checkbox"></div>
+                                                <div class="subscribe__item-text">Получать сообщения от клиентов на эту почту</div>
+                                            </label>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="profile__btn-save">Сохранить</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Клиенты -->
+                    <div class="tab-body" data-tab-body="3">
+                        <div class="tab-clients">
+
+                            <div class="profile__second">
+                                <div class="profgeneral">
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Часовой пояс</div>
+                                        <div class="select-container">
+                                            <select name="timezone">
+                                                <option value="МСК (+3 GMT)">МСК (+3 GMT)</option>
+                                                <option value="МСК (+4 GMT)">МСК (+4 GMT)</option>
+                                                <option value="МСК (+5 GMT)">МСК (+5 GMT)</option>
+                                            </select>
+                                        </div>
+                                    </label>
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Минимальное количество часов для записи</div>
+                                        <div class="select-container">
+                                            <select name="timezone">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                    </label>
+                                    <label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Свободные слоты для записи клиентов</div>
+                                        <div class="calendar-container">
+
+                                            <div id="reschedule_time">
+
+                                                <div class="reschedule_time__calendar">
+
+                                                    <div class="reschedule_time__calendar-first">
+                                                        <div class="reschedule_time__calendar-date">
+                                                                                                                            <div class="calendar-date__item active">
+                                                                    <div class="calendar-date__item-day">пн</div>
+                                                                </div>
+                                                                                                                            <div class="calendar-date__item ">
+                                                                    <div class="calendar-date__item-day">вт</div>
+                                                                </div>
+                                                                                                                            <div class="calendar-date__item ">
+                                                                    <div class="calendar-date__item-day">ср</div>
+                                                                </div>
+                                                                                                                            <div class="calendar-date__item ">
+                                                                    <div class="calendar-date__item-day">чт</div>
+                                                                </div>
+                                                                                                                            <div class="calendar-date__item ">
+                                                                    <div class="calendar-date__item-day">пт</div>
+                                                                </div>
+                                                                                                                            <div class="calendar-date__item ">
+                                                                    <div class="calendar-date__item-day">сб</div>
+                                                                </div>
+                                                                                                                            <div class="calendar-date__item ">
+                                                                    <div class="calendar-date__item-day">вс</div>
+                                                                </div>
+                                                                                                                    </div>
+                                                    </div>
+                                                    <div class="reschedule_time__calendar-second">
+                                                        <div class="reschedule_time-label">Время</div>
+                                                        <div class="reschedule_time__calendar-table">
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    0:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    1:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    2:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    3:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    4:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    5:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-1">
+                                                                    6:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    7:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    8:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-1">
+                                                                    9:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    10:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    11:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    12:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    13:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    14:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    15:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    16:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-1">
+                                                                    17:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    18:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    19:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-2">
+                                                                    20:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    21:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell stat-1">
+                                                                    22:00                                                                </div>
+                                                                                                                            <div class="calendar-table__cell ">
+                                                                    23:00                                                                </div>
+                                                                                                                    </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="profile__btn-save">Сохранить</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Специализация -->
+                    <div class="tab-body" data-tab-body="4">
+                        <div class="tab-specialty">
+                            <div class="profile__second">
+                                <div class="profgeneral">
+                                    <div class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Опишите методы работы</div>
+                                        <textarea name="working-method" placeholder="Опишите методы работы"></textarea>
+                                    </div>
+
+                                    <div class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Возраст клиентов</div>
+                                        <div class="radio-container">
+                                            <label class="radio-container__label">
+                                              
+                                                <input
+                                                  type="radio"
+                                                  name="clients-age"
+                                                  value="16+"
+                                                  v-model="psychologistData.client_age"
+                                                />
+                                                <div class="radio-container__input">16+</div>
+                                            </label>
+                                            <label class="radio-container__label">
+                                              <input
+                                                type="radio"
+                                                name="clients-age"
+                                                value="18+"
+                                                v-model="psychologistData.client_age"
+                                              />  
+                                                <div class="radio-container__input">18+</div>
+                                            </label>
+                                        </div>
+                                        <div class="profgeneral__input-info">Закон разрешает психологические консультации с 16 лет</div>
+                                    </div>
+
+                                    <div class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Опыт работы с поиском идентичности</div>
+                                        <div class="radio-container">
+                                            <label class="radio-container__label">
+                                              <input
+                                                type="radio"
+                                                name="identity-search"
+                                                value="Да"
+                                                v-model="experienceWithIdentitySearch"
+                                              />
+                                                <div class="radio-container__input">Да</div>
+                                            </label>
+                                            <label class="radio-container__label">
+                                              <input
+                                                type="radio"
+                                                name="identity-search"
+                                                value="Нет"
+                                                v-model="experienceWithIdentitySearch"
+                                              />
+                                                <div class="radio-container__input">Нет</div>
+                                            </label>
+                                        </div>
+                                        <div class="profgeneral__input-info">Используем для ручного подбора по запросу клиентов<br> со сложностью с самоидентификацией и поиском идентичности </div>
+                                    </div>
+
+                                    <div class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Работа с парами</div>
+                                        <div class="radio-container">
+                                            <label class="radio-container__label">
+                                                
+                                                <input
+                                                  type="radio"
+                                                  name="couple-work"
+                                                  value="Да"
+                                                  v-model="coupleWork"
+                                                />
+                                                <div class="radio-container__input">Да</div>
+                                            </label>
+                                            <label class="radio-container__label">
+                                              <input
+                                                type="radio"
+                                                name="couple-work"
+                                                value="Нет"
+                                                v-model="coupleWork"
+                                              />
+                                                <div class="radio-container__input">Нет</div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile__btn-add">Добавить</div>
+                                <div class="profile__btn-save">Сохранить</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Образование -->
+                    <div class="tab-body" data-tab-body="5">
+    <div class="tab-education">
+      <div class="profile__second">
+        <div class="education">
+          <!-- Динамический список образовательных записей -->
+          <div class="education__item" v-for="(edu, index) in psychologistData.education_psychologist" :key="index">
+            <div class="education__place">
+              <div class="education__label">Место получения</div>
+              <div class="education__input">
+                <input
+                  type="text"
+                  v-model="edu.text"
+                  :name="`education-place-${index}`"
+                  placeholder="Введите место получения"
+                />
+              </div>
+            </div>
+            <div class="education__year">
+              <div class="education__label">Год</div>
+              <div class="education__input">
+                <input
+                  type="text"
+                  v-model="edu.year"
+                  :name="`education-year-${index}`"
+                  placeholder="Введите год"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Кнопка "Добавить" -->
+        <div class="profile__btn-add" @click="addEducation">Добавить</div>
+        <!-- Кнопка "Сохранить" -->
+        <div class="profile__btn-save" @click="saveChanges">Сохранить</div>
+      </div>
+    </div>
+  </div>
+
+                    <!-- Договор -->
+                    <div class="tab-body" data-tab-body="6">
+                        <div class="tab-contract">
+                            <div class="contract">
+                                <div class="contract__list">
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">Имя</div>
+                                            <div class="contract__value">Константин</div>
+                                        </div>
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">Фамилия</div>
+                                            <div class="contract__value">Константинопольский</div>
+                                        </div>
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">Налоговый статус</div>
+                                            <div class="contract__value">Самозанятый</div>
+                                        </div>
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">Статус</div>
+                                            <div class="contract__value">Подписан</div>
+                                        </div>
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">Гражданство</div>
+                                            <div class="contract__value">РФ</div>
+                                        </div>
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">Адрес</div>
+                                            <div class="contract__value">Адрес</div>
+                                        </div>
+                                                                            <div class="contract__item">
+                                            <div class="contract__label">ИНН</div>
+                                            <div class="contract__value">0000000000000000</div>
+                                        </div>
+                                                                    </div>
+                                <div class="contract__btns">
+                                    <div class="contract__btns-lbl">Скачать документы:</div>
+                                    <div class="contract__btns-wrp">
+                                        <div class="contract__btns-wrp-first">
+                                            <div class="contract__btn-passport">
+                                                <span class="passport-btn-icon"></span><span>Паспорт</span>
+                                            </div>
+                                            <div class="contract__btn-registration">
+                                                <span>Регистрация</span>
+                                            </div>
+                                        </div>
+                                        <div class="contract__btns-wrp-second">
+                                            <div class="contract__btn-contract">
+                                                <span class="contract-btn-icon"></span><span>Договор</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="profile-popup">
+    <div class="profile-popup__body">
+        <div class="profile-popup__close"></div>
+        <div class="profile-popup__text">
+            <h2>Этический кодекс сообщества психологов сервиса «ПозиТолк»</h2>
+            <br>
+            <p>
+                Данный Этический кодекс сообщества психологов сервиса «ПозиТолк» создан кураторами сервиса и включает в себя основные положения и ценности, которые, по нашему мнению, являются общими для психологов, работающих в методе Позитивной и транскультуральной психотерапии, а также других методах и направлениях.
+            </p>
+            <br>
+            <p>
+                Его целью служит определение этических принципов и правил работы психологов на платформе «ПозиТолк», а именно:
+            </p>
+            <ul>
+                <li>профессиональная компетентность и глубокое понимание психодинамических процессов;</li>
+                <li>признание сложности и уникальности человеческой психики;</li>
+                <li>отсутствие предвзятости и осуждения в профессиональном поле;</li>
+                <li>строгое соблюдение принципа конфиденциальности;</li>
+                <li>построение отношений на доверии и информированности клиентов о правилах и особенности работы;</li>
+                <li>а также об ограничениях, которые могут возникнуть в процессе терапии.</li>
+            </ul>
+            <p>
+                Этический кодекс «ПозиТолк» создает общую основу для разрешения ситуаций этических противоречий. Знание психологами «ПозиТолк» общих положений Этического кодекса должно помогать им самостоятельно определять, какие его положения применимы в той или иной ситуации.
+            </p>
+            <br>
+            <p>
+                В случае возникновения сложностей психолог должен обратиться за супервизионной поддержкой или поддержкой сообщества.
+            </p>
+            <br>
+            <h3>Основные положения</h3>
+            <br>
+            <h4>Компетентность</h4>
+            <ul>
+                <li>Психолог несет ответственность за качество своего образования. В процессе построения профессиональных отношений с клиентом психолог проводит диагностику и последующую работу в рамках той модели, в которой он компетентен, и соизмеряет свои знания и навыки с запросом клиента;</li>
+                <li>Психолог осознает важность повышения уровня своей профессиональной компетентности: находиться в процессе непрерывного развития, совершенствования практических навыков, обогащении своего кругозора и исследовании нового;</li>
+                <li>Психолог понимает важность проработки своих внутренних конфликтов и наличие личной терапии;</li>
+                <li>Жизненные обстоятельства или внутренние процессы, которые влияют на специалиста и его способность оказывать профессиональную психологическую помощь, должны быть учтены, осмыслены и вынесены на обсуждение с супервизором.</li>
+            </ul>
+            <br>
+            <h4>Профессиональная позиция</h4>
+            <p>
+                Недопустима дискриминация клиента по какому-либо признаку (возрасту, полу, гендеру, состоянию здоровья, национальности, вероисповеданию, убеждениям, образованию, экономическому или правовому статусу и т. д.). Психолог признает равноценность каждой личности и уважает уникальность каждого клиента независимо от их различий.
+            </p>
+            <p>
+                Психолог должен осознавать свою систему ценностей, взглядов и убеждений, но в профессиональном поле сохранять нейтральность со взглядами и убеждениями клиента.
+            </p>
+            <p>
+                Психолог руководствуется в своей работе положениями данного этического кодекса и положениями этического кодекса профессионального сообщества, к которому он принадлежит.
+            </p>
+            <br>
+            <h4>Конфиденциальность</h4>
+            <p>
+                В начале работы психолог информирует клиента о конфиденциальности. Это означает, что никакая информация о клиенте не используется вне профессионального поля. Психолог информирует клиента о возможности обсуждать работу на супервизиях. Использование материалов случая в образовательных или научных целях возможно только с согласия клиента - психолог предупреждает клиента о возможности отказаться. Аудио и видео запись сессий не может осуществляться без согласия клиента.
+            </p>
+            <p>
+                При представлении случая клиента в профессиональном пространстве психолог заботится об анонимности клиента, изменяя существенные данные о его личности.
+            </p>
+            <br>
+            <h4>Отношения с клиентом</h4>
+            <p>
+                В процессе работы, а также после ее завершения, не допускается злоупотребление отношениями с клиентом. Психолог не должен поддерживать или инициировать какие-либо отношения с клиентом, кроме профессиональных, в рамках заранее оговоренного сеттинга.
+            </p>
+            <p>
+                Не допускается иметь приятельские, дружеские, деловые, сексуальные и прочие отношения вне зависимости от того завершена работа или продолжается. Так же стоит с большой осторожностью относиться к действиям или словам, которые могут трактоваться как попытки выйти из профессиональной рамки и перевести эти отношения в иную плоскость.
+            </p>
+            <p>
+                Психолог информирует клиента о том, как будет организовано их взаимодействие в случае пересечения в профессиональном или непрофессиональном поле.
+                Если требуется дополнительная консультация с врачом (в том числе, психиатром), то это так же должно открыто обсуждаться в процессе работы.
+            </p>
+            <br>
+            <h4>Информированное согласие</h4>
+            <p>
+                Профессиональные отношения основаны на доверии и информировании клиента о правилах и особенностях работы. Также необходимо информирование об ограничениях, которые могут возникнуть в процессе работы.
+            </p>
+            <p>
+                Психолог информирует клиента о том, как и по каким правилам происходит работа, а также об особенностях метода, в рамках которого практикует. Так же, по запросу клиента, психолог должен предоставить клиенту информацию о своем образовании, опыте и квалификации.
+            </p>
+            <p>
+                Психолог информирует клиента об особенностях сеттинга: продолжительность сессии, условия завершения, график сессий и условия оплаты. О любых изменениях в сеттинге психолог информирует клиента заранее (не менее, чем за 1 месяц).
+            </p>
+            <br>
+            <p>
+                📌 если вы столкнулись с тем, что на ваш взгляд нарушает этику - вы можете обратиться в наш этический комитет или в этический комитет сообщества психолога, с чьим нарушением вы встретились. Контакты этических комитетов находятся в открытом доступе, а также мы можем предоставить их по запросу.
+            </p>
+        </div>
+    </div>
+    <div class="profile-popup__layer"></div>
+</div>
+
+</main>
+</div>
+
+</template>
+<script setup>
 import { useClientStore } from '~/stores/client/store';
  useHead({
     link: [
@@ -14,191 +615,318 @@ import { useClientStore } from '~/stores/client/store';
        },
     ],
  })
+ const store = useClientStore()
+ const psychologistData = ref({
+  age:18,
+  client_age:'',
+  date_of_birth: '',
+  description: '',
+  education_psychologist:[],
+  email: '',
+  experience: 0,
+  experience_with_identity_search:'',
+  id:0,
+  label:'',
+  name: '',
+  notifications_email:'',
+  notifications_phone:'',
+  photo: '',
+  price: 0,
+  psycho_topic:{0:{id:0,name:""}},
+  rating:'',
+  sex:'man'
+});
+
+const fileInput = ref(null);
+
+// Переменная для отображения превью фотографии
+const photoPreview = ref('');
+// Функция для открытия диалога выбора файла
+function triggerFileInput() {
+  fileInput.value.click();
+}
+// Функция для обработки загрузки файла
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    // Сохраняем файл в psychologistData
+    psychologistData.value.photo = file;
+
+    // Создаем превью фотографии для отображения
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      photoPreview.value = e.target.result; // Сохраняем Data URL для превью
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+const experienceWithIdentitySearch = computed({
+  get: () => psychologistData.value.experience_with_identity_search ? "Да" : "Нет",
+  set: (value) => {
+    psychologistData.value.experience_with_identity_search = value === "Да";
+  },
+});
+const coupleWork = computed({
+  get: () => psychologistData.value.couple_work,
+  set: (value) => {
+    psychologistData.value.couple_work = value;
+  },
+});
+function addEducation() {
+  psychologistData.value.education_psychologist.push({ place: '', year: '' });
+}
+const send = async() =>{
+  psychologistData.value.date_of_birth ="2025-02-15T20:11:34.704Z";
+        
+        console.log(psychologistData.value.education_psychologist)
+  psychologistData.value.experience =5;
+  psychologistData.value.email ="asd@asd.asd";
+  psychologistData.value.label ="label";
+         try {
+            // Создаем объект FormData
+            const formData = new FormData();
+      
+            // Добавляем текстовые поля
+            formData.append("psycho_topics", JSON.stringify(psychologistData.value.psycho_topics));
+            //formData.append("education_psychologist_write", JSON.stringify(psychologistData.value.education_psychologist));
+            formData.append("phone_number", psychologistData.value.phone_number);
+            formData.append("name", psychologistData.value.name);
+            formData.append("age", psychologistData.value.age.toString());
+            formData.append("label", psychologistData.value.label);
+            formData.append("experience", psychologistData.value.experience.toString());
+            formData.append("description", psychologistData.value.description);
+            formData.append("sex", psychologistData.value.sex);
+            formData.append("price", psychologistData.value.price.toString());
+            formData.append("email", psychologistData.value.email);
+            formData.append("notifications_phone", psychologistData.value.notifications_phone.toString());
+            formData.append("notifications_email", psychologistData.value.notifications_email.toString());
+            formData.append("date_of_birth", psychologistData.value.date_of_birth);
+            formData.append("language", psychologistData.value.language);
+            formData.append("client_age", psychologistData.value.client_age);
+            formData.append("experience_with_identity_search", psychologistData.value.experience_with_identity_search.toString());
+      
+            // Добавляем файл photo, если он есть
+            if (psychologistData.value.photo instanceof File) {
+               formData.append("photo", psychologistData.value.photo);
+            }
+      
+            // Отправляем запрос
+            const response = await useBaseFetch("/cabinet/change-self-psychologist/", {
+               method: "PATCH",
+               body: formData, // Используем FormData как тело запроса
+               headers: {
+                  Authorization: "Token " + store.token, // Авторизация
+               },
+            });
+      
+            return response; // Возвращаем ответ от сервера
+         } catch (err) {
+            console.error("Ошибка при обновлении данных психолога:", err);
+            throw err; // Пробрасываем ошибку для обработки в вызывающем коде
+         }
+}
+store.getSelfPsychologist()
+  .then(item => {
+    psychologistData.value = item;
+    console.log(psychologistData.value);
+    console.log(psychologistData.value.description);
+  console.log(psychologistData.value.photo);
+  photoPreview.value = psychologistData.value.photo
+  console.log(photoPreview.value);
+  })
+  .catch(error => {
+    console.error('Ошибка при получении данных психолога:', error);
+  });
  onMounted(
     async () => {
+      
         $(document).ready(function () {
 
-// START Переключение табов
-function getTabFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('tab') || '1';
-}
-function setActiveTab(tabId) {
-    $('.tab-ctrl').removeClass('active');
-    $('.tab-body').removeClass('active');
-    $(`.tab-ctrl[data-tab-ctrl="${tabId}"]`).addClass('active');
-    $(`.tab-body[data-tab-body="${tabId}"]`).addClass('active');
-    const newUrl = `${window.location.pathname}?tab=${tabId}`;
-    window.history.replaceState(null, '', newUrl);
-}
-const currentTab = getTabFromUrl();
-setActiveTab(currentTab);
-$('.tab-ctrl').on('click', function () {
-    const tabId = $(this).data('tab-ctrl');
-    setActiveTab(tabId);
-});
-// END Переключение табов
+          // START Переключение табов
+          function getTabFromUrl() {
+              const params = new URLSearchParams(window.location.search);
+              return params.get('tab') || '1';
+          }
+          function setActiveTab(tabId) {
+              $('.tab-ctrl').removeClass('active');
+              $('.tab-body').removeClass('active');
+              $(`.tab-ctrl[data-tab-ctrl="${tabId}"]`).addClass('active');
+              $(`.tab-body[data-tab-body="${tabId}"]`).addClass('active');
+              const newUrl = `${window.location.pathname}?tab=${tabId}`;
+              window.history.replaceState(null, '', newUrl);
+          }
+          const currentTab = getTabFromUrl();
+          setActiveTab(currentTab);
+          $('.tab-ctrl').on('click', function () {
+              const tabId = $(this).data('tab-ctrl');
+              setActiveTab(tabId);
+          });
+          // END Переключение табов
 
-// START "Этический кодекс" popup
-$('.profile__ethical-btn, .profile__ethical').on('click', function () {
-    $('.profile-popup').addClass('active');
-});
-$('.profile-popup__close, .profile-popup__layer').on('click', function () {
-    $('.profile-popup').removeClass('active');
-});
-// END "Этический кодекс" popup
+          // START "Этический кодекс" popup
+          $('.profile__ethical-btn, .profile__ethical').on('click', function () {
+              $('.profile-popup').addClass('active');
+          });
+          $('.profile-popup__close, .profile-popup__layer').on('click', function () {
+              $('.profile-popup').removeClass('active');
+          });
+          // END "Этический кодекс" popup
 
 
-        // start .descmore
-        const maxCharsDescmore = 340;
-        $('.descmore').each(function () {
-            const $container = $(this);
-            const $textContainer = $container.find('.descmore__txt');
-            const $button = $container.find('.btn__more');
-            const fullText = $textContainer.html();
-            if (fullText.length > maxCharsDescmore) {
-                const truncatedText = fullText.substring(0, maxCharsDescmore) + '...';
-                $textContainer.html(truncatedText);
-                $button.on('click', function () {
-                    if ($button.text() === 'Показать больше') {
-                        $textContainer.html(fullText);
-                        $button.text('Показать меньше');
-                    } else {
-                        $textContainer.html(truncatedText);
-                        $button.text('Показать больше');
-                    }
-                });
-            } else {
-                $button.hide();
-            }
+          // start .descmore
+          const maxCharsDescmore = 340;
+          $('.descmore').each(function () {
+              const $container = $(this);
+              const $textContainer = $container.find('.descmore__txt');
+              const $button = $container.find('.btn__more');
+              const fullText = $textContainer.html();
+              if (fullText.length > maxCharsDescmore) {
+                  const truncatedText = fullText.substring(0, maxCharsDescmore) + '...';
+                  $textContainer.html(truncatedText);
+                  $button.on('click', function () {
+                      if ($button.text() === 'Показать больше') {
+                          $textContainer.html(fullText);
+                          $button.text('Показать меньше');
+                      } else {
+                          $textContainer.html(truncatedText);
+                          $button.text('Показать больше');
+                      }
+                  });
+              } else {
+                  $button.hide();
+              }
+          });
+          // end .descmore
+
+          // start .lbltagsmore
+          const maxVisibleTags = 4;
+          $('.lbltagsmore').each(function () {
+              const $container = $(this);
+              const $items = $container.find('.lbltagsmore__item');
+              const $button = $container.find('.btn__more');
+              if ($items.length <= maxVisibleTags) {
+                  $button.hide();
+                  return;
+              }
+              $items.slice(maxVisibleTags).hide();
+              $button.on('click', function () {
+                  const isExpanded = $items.slice(maxVisibleTags).is(':visible');
+                  if (isExpanded) {
+                      $items.slice(maxVisibleTags).hide();
+                      $button.text('Все темы');
+                  } else {
+                      $items.slice(maxVisibleTags).show();
+                      $button.text('Показать меньше');
+                  }
+              });
+          });
+          // end .lbltagsmore
+
+
+          // start .lbldescmore
+          const maxCharsLbldescmore = 115;
+          $('.lbldescmore').each(function () {
+              const $container = $(this);
+              const $textContainer = $container.find('.lbldescmore__desc-txt');
+              const $button = $container.find('.btn__more');
+              const fullText = $textContainer.html();
+              if (fullText.length > maxCharsLbldescmore) {
+                  const truncatedText = fullText.substring(0, maxCharsLbldescmore) + '';
+                  $textContainer.html(truncatedText);
+                  $button.on('click', function () {
+                      if ($button.text() === 'Показать больше') {
+                          $textContainer.html(fullText);
+                          $button.text('Показать меньше');
+                      } else {
+                          $textContainer.html(truncatedText);
+                          $button.text('Показать больше');
+                      }
+                  });
+              } else {
+                  $button.hide();
+              }
+          });
+          // end .lbldescmore
+
+
+          // START Menu
+          $('.nav__burger').on('click', function () {
+              $('.nav__menu').toggleClass('active');
+              $('.nav__mob_layer').toggleClass('active');
+              $('html').toggleClass('hidden');
+              $(this).toggleClass('active');
+          });
+          $('.nav__mob_layer').on('click', function () {
+              $('.nav__menu').removeClass('active');
+              $('.nav__burger').removeClass('active');
+              $('html').removeClass('hidden');
+              $(this).removeClass('active');
+          });
+          // END Menu
+
+          // START PopUp общее 
+          $('.popup__layer').on('click', function () {
+              $('.popup').removeClass('active');
+              $('html').removeClass('hidden');
+          });
+          $('.popup__close').on('click', function () {
+              $('.popup').removeClass('active');
+              $('html').removeClass('hidden');
+          });
+          // END PopUp общее 
+
+
+          // START  PopUp при клике по доступному времени в календаре
+          $('.table__cell.available').on('click', function () {
+              $('.popup.available_time').addClass('active');
+              // $('html').addClass('hidden');
+          });
+          // END  PopUp при клике по доступному времени в календаре
+
+          // START  PopUp при клике по доступному времени в календаре
+          $(".table__cell.chosen").on("click", function (e) {
+              e.stopPropagation();
+              var popup = $(".popup_2.chosen_time");
+              $(this).append(popup);
+              popup.addClass("active");
+          });
+          $(document).on("click", function () {
+              $(".popup_2.chosen_time").removeClass("active");
+          });
+          $(".popup_2.chosen_time").on("click", function (e) {
+              e.stopPropagation();
+          });
+          // END  PopUp при клике по доступному времени в календаре
+
+          // START "PopUp при клике по кнопке "Перенести""
+          $('.chosen_time__btn-switch').on('click', function () {
+              $('.popup.reschedule_time').addClass('active');
+              // $('html').addClass('hidden');
+          });
+          $('.calendar-date__item').on('click', function () {
+              $('.calendar-date__item').removeClass('active');
+              $(this).addClass('active');
+          });
+          // END "PopUp при клике по кнопке "Перенести""
+
+          // START "PopUp при клике по кнопке "Отменить""
+          $('.chosen_time__btn-delete').on('click', function () {
+              $('.popup.delete_time').addClass('active');
+              // $('html').addClass('hidden');
+          });
+          // END "PopUp при клике по кнопке "Отменить""
         });
-        // end .descmore
-
-        // start .lbltagsmore
-        const maxVisibleTags = 4;
-        $('.lbltagsmore').each(function () {
-            const $container = $(this);
-            const $items = $container.find('.lbltagsmore__item');
-            const $button = $container.find('.btn__more');
-            if ($items.length <= maxVisibleTags) {
-                $button.hide();
-                return;
-            }
-            $items.slice(maxVisibleTags).hide();
-            $button.on('click', function () {
-                const isExpanded = $items.slice(maxVisibleTags).is(':visible');
-                if (isExpanded) {
-                    $items.slice(maxVisibleTags).hide();
-                    $button.text('Все темы');
-                } else {
-                    $items.slice(maxVisibleTags).show();
-                    $button.text('Показать меньше');
-                }
-            });
-        });
-        // end .lbltagsmore
-
-
-        // start .lbldescmore
-        const maxCharsLbldescmore = 115;
-        $('.lbldescmore').each(function () {
-            const $container = $(this);
-            const $textContainer = $container.find('.lbldescmore__desc-txt');
-            const $button = $container.find('.btn__more');
-            const fullText = $textContainer.html();
-            if (fullText.length > maxCharsLbldescmore) {
-                const truncatedText = fullText.substring(0, maxCharsLbldescmore) + '';
-                $textContainer.html(truncatedText);
-                $button.on('click', function () {
-                    if ($button.text() === 'Показать больше') {
-                        $textContainer.html(fullText);
-                        $button.text('Показать меньше');
-                    } else {
-                        $textContainer.html(truncatedText);
-                        $button.text('Показать больше');
-                    }
-                });
-            } else {
-                $button.hide();
-            }
-        });
-        // end .lbldescmore
-
-
-        // START Menu
-        $('.nav__burger').on('click', function () {
-            $('.nav__menu').toggleClass('active');
-            $('.nav__mob_layer').toggleClass('active');
-            $('html').toggleClass('hidden');
-            $(this).toggleClass('active');
-        });
-        $('.nav__mob_layer').on('click', function () {
-            $('.nav__menu').removeClass('active');
-            $('.nav__burger').removeClass('active');
-            $('html').removeClass('hidden');
-            $(this).removeClass('active');
-        });
-        // END Menu
-
-        // START PopUp общее 
-        $('.popup__layer').on('click', function () {
-            $('.popup').removeClass('active');
-            $('html').removeClass('hidden');
-        });
-        $('.popup__close').on('click', function () {
-            $('.popup').removeClass('active');
-            $('html').removeClass('hidden');
-        });
-        // END PopUp общее 
-
-
-        // START  PopUp при клике по доступному времени в календаре
-        $('.table__cell.available').on('click', function () {
-            $('.popup.available_time').addClass('active');
-            // $('html').addClass('hidden');
-        });
-        // END  PopUp при клике по доступному времени в календаре
-
-        // START  PopUp при клике по доступному времени в календаре
-        $(".table__cell.chosen").on("click", function (e) {
-            e.stopPropagation();
-            var popup = $(".popup_2.chosen_time");
-            $(this).append(popup);
-            popup.addClass("active");
-        });
-        $(document).on("click", function () {
-            $(".popup_2.chosen_time").removeClass("active");
-        });
-        $(".popup_2.chosen_time").on("click", function (e) {
-            e.stopPropagation();
-        });
-        // END  PopUp при клике по доступному времени в календаре
-
-        // START "PopUp при клике по кнопке "Перенести""
-        $('.chosen_time__btn-switch').on('click', function () {
-            $('.popup.reschedule_time').addClass('active');
-            // $('html').addClass('hidden');
-        });
-        $('.calendar-date__item').on('click', function () {
-            $('.calendar-date__item').removeClass('active');
-            $(this).addClass('active');
-        });
-        // END "PopUp при клике по кнопке "Перенести""
-
-        // START "PopUp при клике по кнопке "Отменить""
-        $('.chosen_time__btn-delete').on('click', function () {
-            $('.popup.delete_time').addClass('active');
-            // $('html').addClass('hidden');
-        });
-        // END "PopUp при клике по кнопке "Отменить""
-
-
-});
     }
  )
  
-</script> -->
-<!-- <style scoped>
+</script>
+<style scoped>
+
+.wrapper{
+  width: 100%;
+}
+
 .dashboard {
   background: #fff;
   padding: 26px 24px;
@@ -1230,4 +1958,77 @@ input[name=profname] {
     max-width: 280px;
   }
 }
-</style> -->
+.wrapper {
+  gap: 6px;
+}
+
+.dashboard {
+  margin-right: 0;
+  background: transparent;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 12px;
+}
+
+.psy-schedule {
+  background-image: url(../img/psy-schedule.svg);
+}
+
+li.active .psy-schedule {
+  background-image: url(../img/psy-schedule-active.svg);
+}
+
+.psy-chats {
+  background-image: url(../img/psy-chats.svg);
+}
+
+li.active .psy-chats {
+  background-image: url(../img/psy-chats-active.svg);
+}
+
+.psy-clients {
+  background-image: url(../img/psy-clients.svg);
+}
+
+li.active .psy-clients {
+  background-image: url(../img/psy-clients-active.svg);
+}
+
+.psy-payments {
+  background-image: url(../img/psy-payments.svg);
+}
+
+li.active .psy-payments {
+  background-image: url(../img/psy-payments-active.svg);
+}
+
+.psy-statistics {
+  background-image: url(../img/psy-statistics.svg);
+}
+
+li.active .psy-statistics {
+  background-image: url(../img/psy-statistics-active.svg);
+}
+
+.psy-events {
+  background-image: url(../img/psy-events.svg);
+}
+
+li.active .psy-events {
+  background-image: url(../img/psy-events-active.svg);
+}
+
+@media (max-width: 1190px) {
+  .wrapper {
+    gap: 4px;
+  }
+  .dashboard {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 8px;
+  }
+}
+</style>
