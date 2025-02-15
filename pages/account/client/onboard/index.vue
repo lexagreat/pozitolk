@@ -166,5 +166,8 @@ onMounted(() => {
    margin-left: 10px;
    user-select: none;
 }
-
+@media (max-width: 1190px) {
+.wrapper{
+   background: #fff;
+}}
 </style>

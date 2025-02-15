@@ -137,3 +137,10 @@ watch(code, async () => {
    }
 })
 </script>
+<style scoped>
+
+@media (max-width: 1190px) {
+.wrapper{
+   background: #fff;
+}}
+</style>
