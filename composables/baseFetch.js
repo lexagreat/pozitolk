@@ -10,12 +10,16 @@ export async function useBaseFetch(request, opts) {
 
       return myRequest;
    } catch (err) {
-      if(err.data.detail=='Invalid token.'){
-         const store = useClientStore();
-         console.log(store.token)
-         store.saveToken('');
-         console.log(store.token)
-            navigateTo("/")
+      if (err.data){
+         if (err.data.detail){
+            if(err.data.detail=='Invalid token.'){
+               const store = useClientStore();
+               console.log(store.token)
+               store.saveToken('');
+               console.log(store.token)
+                  navigateTo("/")
+            }
+         }
       }
       return err;
    }
