@@ -76,6 +76,20 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
+      },
+      async getMe() {
+         try {
+            const response = await useBaseFetch("/cabinet/self/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
       },async getSelfPsychologist() {
          try {
             const response = await useBaseFetch("/cabinet/self-psychologist/", {
