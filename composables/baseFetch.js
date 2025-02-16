@@ -23,6 +23,9 @@ export async function useBaseFetch(request, opts) {
                navigateTo("/")
             }
          }
+         if(err.data.email && err.data.email == 'Анкета with this Эл. почта already exists.'){
+            alert("данный email привязан к другому пользователю, введите другую почту");
+         }
       }
       return err;
    }

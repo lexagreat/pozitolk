@@ -60,7 +60,7 @@
                         <div class="qstn qstn-3 ">
                            <div class="qstn__row">
                               <div class="qstn__input-text">
-                                 <input class="date" type="text" name="qstn-3" placeholder="дд.мм.ггг" maxlength="10"
+                                 <input class="date" type="text" name="qstn-3" placeholder="ггг.мм.дд" maxlength="10" @input="formatDate"
                                     v-model="birth">
                               </div>
                            </div>
@@ -235,7 +235,7 @@
                         <div class="qstn qstn-3 ">
                            <div class="qstn__row">
                               <div class="qstn__input-text">
-                                 <input class="date" type="text" name="qstn-3" placeholder="дд.мм.ггг" v-model="birth"
+                                 <input class="date" type="text" name="qstn-3" placeholder="ггг.мм.дд" v-model="birth" @input="formatDate"
                                     maxlength="10">
                               </div>
                            </div>
@@ -359,6 +359,24 @@ useHead({
    ],
 })
 
+
+const formatDate = (event) => {
+  let value = event.target.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
+  
+  if (value.length > 8) value = value.slice(0, 8); // Ограничение в 8 цифр
+
+  let formatted = '';
+  if (value.length >= 4) {
+    formatted = `${value.slice(0, 4)}.${value.slice(4, 6)}`;
+  } else {
+    formatted = value;
+  }
+  if (value.length >= 6) {
+    formatted += `.${value.slice(6, 8)}`;
+  }
+
+  birth.value = formatted;
+};
 onMounted(() => {
    // Переключение тарифов
    $('.tariff-toggle .tariff-item').on('click', function () {
@@ -374,12 +392,12 @@ onMounted(() => {
    // Форматирование даты
    $('.date').on('input', function () {
       var value = $(this).val().replace(/\D/g, '');
-      if (value.length <= 2) {
+      if (value.length <= 4) {
          $(this).val(value);
-      } else if (value.length <= 4) {
-         $(this).val(value.substring(0, 2) + '.' + value.substring(2));
+      } else if (value.length <= 6) {
+         $(this).val(value.substring(0, 4) + '.' + value.substring(4));
       } else {
-         $(this).val(value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4, 8));
+         $(this).val(value.substring(0, 4) + '.' + value.substring(4, 6) + '.' + value.substring(6, 8));
       }
    });
 
@@ -401,7 +419,7 @@ let data = await useBaseFetch("/cabinet/survey-info/")
 const havExp = ref()
 const tariff = ref(0)
 const name = ref('')
-const birth = ref('21.07.2002')
+const birth = ref('')
 const email = ref('')
 const checkedNotification = ref(false)
 const promo = ref('')
@@ -455,3 +473,11 @@ const minCouplePrice = computed(() => {
    return Math.min(...data.preferable_price.filter(item => item.therapy_type == 'couple').map(item => item.price));
 })
 </script>
+<style scoped>
+@media (max-width: 700px) {
+    .tariff-item__label {
+        white-space:normal;
+    }
+}
+
+</style>
