@@ -113,17 +113,20 @@ const onLogin =async () => {
       let psychologistsList = []
       psychologistsList = await store.getMyPsychologists()
       console.log(psychologistsList[0])
-      let me = store.getMe()
+      let me = await store.getMe()
       if(me.user_type=="psychologist"){
-         router.push('/account/psychologist/onboard/profile-client')
+         router.push('/account/psychologist/onboard/profile-clients')
       }else{
-
-         if(!psychologistsList[0]){
-            router.push('/account/client/onboard/choose')
-            //console.log("ankete")
+         if(me.has_survey==true){
+            if(!psychologistsList[0]){
+               router.push('/account/client/onboard/choose')
+               //console.log("ankete")
+            }else{
+               router.push('/account/client/onboard/schedule')
+               //console.log("scedule")
+            }
          }else{
-            router.push('/account/client/onboard/schedule')
-            //console.log("scedule")
+            router.push('/account/client/onboard/ankete')
          }
       }
 
