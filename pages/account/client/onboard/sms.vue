@@ -124,14 +124,15 @@ const verifyCode = async () => {
    console.log(store.phone);
    store.saveToken(response.token)
    store.user = response.user
+   console.log(isPsychologist);
    if (!response.user.has_survey) {
-      if(isPsychologist){
+      if(isPsychologist=='true'){
          router.push('/account/psychologist/onboard/profile-clients')
       }else{
          router.push('/account/client/onboard/ankete')
       }
    } else {
-      if(isPsychologist){
+      if(isPsychologist=='true'){
          router.push('/account/psychologist/onboard/profile-clients')
       }else{
          router.push('/account/client/onboard/schedule')
