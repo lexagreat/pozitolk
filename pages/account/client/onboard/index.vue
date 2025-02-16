@@ -7,7 +7,7 @@
                <div class="container">
                   <div class="login__inner">
                      <div class="login__inner-first">
-                        <div class="login__title">Введите номер телефона номер телефона номер телефона</div>
+                        <div class="login__title">Введите номер телефона</div>
                         <div class="login__info">Мы отправим код в SMS</div>
                         <div class="login__input">
                            <div class="login__phone">

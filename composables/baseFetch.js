@@ -19,6 +19,9 @@ export async function useBaseFetch(request, opts) {
                console.log(store.token)
                   navigateTo("/")
             }
+            if(err.data.detail=='You do not have permission to perform this action.'){
+               navigateTo("/")
+            }
          }
       }
       return err;
