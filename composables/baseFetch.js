@@ -1,3 +1,4 @@
+import { useClientStore } from "~/stores/client/store";
 export async function useBaseFetch(request, opts) {
    const config = useRuntimeConfig();
 
@@ -9,6 +10,13 @@ export async function useBaseFetch(request, opts) {
 
       return myRequest;
    } catch (err) {
+      if(err.data.detail=='Invalid token.'){
+         const store = useClientStore();
+         console.log(store.token)
+         store.saveToken('');
+         console.log(store.token)
+            navigateTo("/")
+      }
       return err;
    }
 }

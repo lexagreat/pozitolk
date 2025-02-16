@@ -1,6 +1,7 @@
 import { useClientStore } from "~/stores/client/store";
 
 export default defineNuxtRouteMiddleware(async(to) => {
+   const store = useClientStore();
    if (!to.path.startsWith("/account")) {
       to.meta.layout = "site";
       if (process.client) {
@@ -34,11 +35,10 @@ export default defineNuxtRouteMiddleware(async(to) => {
       useHead({
          link: [],
       });
-      const store = useClientStore();
-
+  
       // Если выполняется на клиенте
       if (process.client) {
-         if (!store.token) {
+         if (!store.token || store.token=='') {
             await store.init(); // Дождаться завершения инициализации
 
             // Если пользователь не авторизован, перенаправить на главную
