@@ -1,4 +1,5 @@
 import { useClientStore } from "~/stores/client/store";
+import { toast } from "bulma-toast";
 export async function useBaseFetch(request, opts) {
    const config = useRuntimeConfig();
 
@@ -24,7 +25,15 @@ export async function useBaseFetch(request, opts) {
             }
          }
          if(err.data.email && err.data.email == 'Анкета with this Эл. почта already exists.'){
-            alert("данный email привязан к другому пользователю, введите другую почту");
+            toast({
+                     message: "данный email привязан к другому пользователю, введите другую почту",
+                     type: "is-error", // если збс - то is-success, если плохо то is-error
+                     dismissible: true,
+                     pauseOnHover: true,
+                     duration: 13000,
+                     position: "bottom-right",
+                     className: "toast",
+                  });
          }
       }
       return err;

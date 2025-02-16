@@ -60,7 +60,7 @@
                         <div class="qstn qstn-3 ">
                            <div class="qstn__row">
                               <div class="qstn__input-text">
-                                 <input class="date" type="text" name="qstn-3" placeholder="ггг-мм-дд" maxlength="10" @input="formatDate"
+                                 <input class="date" type="text" name="qstn-3" placeholder="Дата рождения" maxlength="10" @input="formatDate"
                                     v-model="birth">
                               </div>
                            </div>
@@ -235,7 +235,7 @@
                         <div class="qstn qstn-3 ">
                            <div class="qstn__row">
                               <div class="qstn__input-text">
-                                 <input class="date" type="text" name="qstn-3" placeholder="ггг-мм-дд" v-model="birth" @input="formatDate"
+                                 <input class="date" type="text" name="qstn-3" placeholder="Дата рождения" v-model="birth" @input="formatDate"
                                     maxlength="10">
                               </div>
                            </div>
@@ -339,6 +339,8 @@
 </template>
 <script setup>
 import { useClientStore } from '~/stores/client/store';
+import { toast } from "bulma-toast";
+
 const store = useClientStore()
 const router = useRouter()
 definePageMeta({
@@ -366,13 +368,13 @@ const formatDate = (event) => {
   if (value.length > 8) value = value.slice(0, 8); // Ограничение в 8 цифр
 
   let formatted = '';
-  if (value.length >= 4) {
-    formatted = `${value.slice(0, 4)}-${value.slice(4, 6)}`;
+  if (value.length >= 2) {
+    formatted = `${value.slice(0, 2)}.${value.slice(2, 4)}`;
   } else {
     formatted = value;
   }
-  if (value.length >= 6) {
-    formatted += `-${value.slice(6, 8)}`;
+  if (value.length >= 4) {
+    formatted += `.${value.slice(4, 8)}`;
   }
 
   birth.value = formatted;
@@ -392,12 +394,12 @@ onMounted(() => {
    // Форматирование даты
    $('.date').on('input', function () {
       var value = $(this).val().replace(/\D/g, '');
-      if (value.length <= 4) {
+      if (value.length <= 2) {
          $(this).val(value);
-      } else if (value.length <= 6) {
-         $(this).val(value.substring(0, 4) + '-' + value.substring(4));
+      } else if (value.length <= 4) {
+         $(this).val(value.substring(0, 2) + '.' + value.substring(2));
       } else {
-         $(this).val(value.substring(0, 4) + '-' + value.substring(4, 6) + '-' + value.substring(6, 8));
+         $(this).val(value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4, 8));
       }
    });
 
@@ -431,59 +433,122 @@ const couple_therapy = ref([])
 
 
 const onSubmit = async (type) => {
-   
    // Проверка на заполнение имени
    if (!name.value || name.value.trim() === '') {
-      alert('Пожалуйста, введите ваше имя или псевдоним.');
+   toast({
+            message: "Пожалуйста, введите ваше имя или псевдоним.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
 
    // Проверка на заполнение даты рождения
    if (!birth.value || birth.value.trim() === '') {
-      alert('Пожалуйста, введите вашу дату рождения.');
+   toast({
+            message: "Пожалуйста, введите вашу дату рождения.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
    // Проверка на корректность формата даты (гггг-мм-дд)
-   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+   const dateRegex = /^\d{2}.\d{2}.\d{4}$/;
    if (!dateRegex.test(birth.value)) {
-      alert('Пожалуйста, введите дату рождения в формате гггг-мм-дд.');
+   toast({
+            message: "Пожалуйста, введите дату рождения в формате дд.мм.ггг.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
     // Проверка на корректность даты (реальная дата)
-    const [year, month, day] = birth.value.split('-').map(Number);
+    const [day, month, year] = birth.value.split('.').map(Number);
    const date = new Date(year, month - 1, day); // Месяц в JavaScript начинается с 0
-
+   console.log(date)
    if (
       date.getFullYear() !== year ||
       date.getMonth() + 1 !== month ||
       date.getDate() !== day
    ) {
-      alert('Пожалуйста, введите корректную дату рождения.');
+   toast({
+            message: "Пожалуйста, введите корректную дату рождения.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
 
    // Проверка на то, что дата не в будущем (если нужно)
    const currentDate = new Date();
    if (date > currentDate) {
-      alert('Дата рождения не может быть в будущем.');
+   toast({
+            message: "Дата рождения не может быть в будущем.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
    // Проверка на заполнение email
    if (!email.value || email.value.trim() === '') {
-      alert('Пожалуйста, введите ваш email.');
+   toast({
+            message: "Пожалуйста, введите ваш email.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
 
    // Проверка на корректность формата email
    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
    if (!emailRegex.test(email.value)) {
-      alert('Пожалуйста, введите корректный email.');
+   toast({
+            message: "Пожалуйста, введите корректный email.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
 
    // Проверка на выбор предпочтения по стоимости
    if (!tariff.value || !tariff.value.id) {
-      alert('Пожалуйста, выберите предпочтение по стоимости.');
+   toast({
+            message: "Пожалуйста, выберите предпочтение по стоимости.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
 
@@ -492,7 +557,15 @@ const onSubmit = async (type) => {
       (type === 'solo' && feeling.value.length === 0 && relation.value.length === 0 && work_study.value.length === 0 && life_event.value.length === 0) ||
       (type === 'couple' && couple_therapy.value.length === 0)
    ) {
-      alert('Пожалуйста, выберите хотя бы одну тему для обсуждения.');
+   toast({
+            message: "Пожалуйста, выберите хотя бы одну тему для обсуждения.",
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
       return;
    }
 
@@ -500,7 +573,7 @@ const onSubmit = async (type) => {
       "therapy_type": type,
       "nickname": name.value,
       "had_therapy_before": havExp.value,
-      "date_of_birth": birth.value,
+      "date_of_birth":date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
       "email": email.value,
       "promo_code": promo.value,
       "preferable_price": tariff.value.id,
@@ -541,5 +614,4 @@ const minCouplePrice = computed(() => {
         white-space:normal;
     }
 }
-
 </style>
