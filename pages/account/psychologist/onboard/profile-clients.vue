@@ -169,7 +169,7 @@
                                         <div class="profgeneral__input-info">Для смены номера напишите на электронную почту <a href="mailto:pozitalk@mail.ru">pozitalk@mail.ru</a></div>
                                         <div class="subscribe">
                                             <label class="subscribe__item">
-                                                <input type="checkbox" name="subscribe-phone">
+                                                <input type="checkbox" name="subscribe-phone" v-model="psychologistData.notifications_phone">
                                                 <div class="subscribe__item-checkbox"></div>
                                                 <div class="subscribe__item-text">Получать сообщения от клиентов на этот номер</div>
                                             </label>
@@ -177,10 +177,10 @@
                                     </label>
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">Электроная почта</div>
-                                        <input type="text" name="email" :value="psychologistData.email">
+                                        <input type="text" name="email" v-model="psychologistData.email">
                                         <div class="subscribe">
                                             <label class="subscribe__item">
-                                                <input type="checkbox" name="subscribe-mail">
+                                                <input type="checkbox" name="subscribe-mail" v-model="psychologistData.notifications_email">
                                                 <div class="subscribe__item-checkbox"></div>
                                                 <div class="subscribe__item-text">Получать сообщения от клиентов на эту почту</div>
                                             </label>
@@ -325,7 +325,7 @@
                                 <div class="profgeneral">
                                     <div class="profgeneral__input">
                                         <div class="profgeneral__input-label">Опишите методы работы</div>
-                                        <textarea name="working-method" placeholder="Опишите методы работы"></textarea>
+                                        <textarea name="working-method" placeholder="Опишите методы работы" v-model="psychologistData.working_methods"></textarea>
                                     </div>
 
                                     <div class="profgeneral__input">
@@ -404,7 +404,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="profile__btn-add">Добавить</div>
+                                <div style="display: none;" class="profile__btn-add">Добавить</div>
                                 <div class="profile__btn-save">Сохранить</div>
                             </div>
                         </div>
@@ -615,6 +615,7 @@ import { useClientStore } from '~/stores/client/store';
        },
     ],
  })
+ 
  const store = useClientStore()
  const psychologistData = ref({
   age:18,
@@ -625,6 +626,7 @@ import { useClientStore } from '~/stores/client/store';
   email: '',
   experience: 0,
   experience_with_identity_search:'',
+  couple_therapy:'',
   id:0,
   label:'',
   name: '',
@@ -668,30 +670,50 @@ const experienceWithIdentitySearch = computed({
   },
 });
 const coupleWork = computed({
-  get: () => psychologistData.value.couple_work,
+  get: () => psychologistData.value.couple_therapy ? "Да" : "Нет",
   set: (value) => {
-    psychologistData.value.couple_work = value;
+    psychologistData.value.couple_therapy = value === "Да";
   },
 });
 function addEducation() {
-  psychologistData.value.education_psychologist.push({ place: '', year: '' });
+  psychologistData.value.education_psychologist.push({ text: '', year: '' });
+}
+function cleanEducationData() {
+  psychologistData.value.education_psychologist = psychologistData.value.education_psychologist.filter(
+    (edu) => String(edu.text).trim() !== '' && String(edu.year).trim() !== ''
+  );
 }
 const send = async() =>{
-  psychologistData.value.date_of_birth ="2025-02-15T20:11:34.704Z";
-        
-        console.log(psychologistData.value.education_psychologist)
-  psychologistData.value.experience =5;
-  psychologistData.value.email ="asd@asd.asd";
-  psychologistData.value.label ="label";
+  cleanEducationData();
+  store.sendMySchedule([
+    {
+        "id": 7,
+        "day_of_week": 0,
+        "time": "09:00:00",
+        "is_available":true
+    },
+    {
+        "id": 8,
+        "day_of_week": 0,
+        "time": "15:00:00",
+        "is_available":false
+    },
+    {
+        "day_of_week": 1,
+        "time": "14:00:00",
+        "is_available":true
+    }
+])
          try {
             // Создаем объект FormData
             const formData = new FormData();
       
             // Добавляем текстовые поля
             formData.append("psycho_topics", JSON.stringify(psychologistData.value.psycho_topics));
-            //formData.append("education_psychologist_write", JSON.stringify(psychologistData.value.education_psychologist));
-            formData.append("phone_number", psychologistData.value.phone_number);
+            formData.append("education_psychologist_write", JSON.stringify(psychologistData.value.education_psychologist));
+            //formData.append("phone_number", psychologistData.value.phone_number);
             formData.append("name", psychologistData.value.name);
+            formData.append("working_methods", psychologistData.value.working_methods);
             formData.append("age", psychologistData.value.age.toString());
             formData.append("label", psychologistData.value.label);
             formData.append("experience", psychologistData.value.experience.toString());
@@ -705,6 +727,7 @@ const send = async() =>{
             formData.append("language", psychologistData.value.language);
             formData.append("client_age", psychologistData.value.client_age);
             formData.append("experience_with_identity_search", psychologistData.value.experience_with_identity_search.toString());
+            formData.append("couple_therapy", psychologistData.value.couple_therapy.toString());
       
             // Добавляем файл photo, если он есть
             if (psychologistData.value.photo instanceof File) {
@@ -734,6 +757,13 @@ store.getSelfPsychologist()
   console.log(psychologistData.value.photo);
   photoPreview.value = psychologistData.value.photo
   console.log(photoPreview.value);
+  })
+  .catch(error => {
+    console.error('Ошибка при получении данных психолога:', error);
+  });
+store.getMySchedulePsychologist()
+  .then(item => {
+    console.log(item);
   })
   .catch(error => {
     console.error('Ошибка при получении данных психолога:', error);

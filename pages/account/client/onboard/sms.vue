@@ -125,9 +125,17 @@ const verifyCode = async () => {
    store.saveToken(response.token)
    store.user = response.user
    if (!response.user.has_survey) {
-      router.push('/account/client/onboard/ankete')
+      if(isPsychologist){
+         router.push('/account/psychologist/onboard/profile-clients')
+      }else{
+         router.push('/account/client/onboard/ankete')
+      }
    } else {
-      router.push('/account/client/onboard/schedule')
+      if(isPsychologist){
+         router.push('/account/psychologist/onboard/profile-clients')
+      }else{
+         router.push('/account/client/onboard/schedule')
+      }
    }
 }
 watch(code, async () => {

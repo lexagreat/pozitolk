@@ -47,6 +47,22 @@ export const useClientStore = defineStore("client", {
             console.log("err", err);
          }
       },
+      async sendMySchedule(object) {
+         try {
+            const response = await useBaseFetch("/cabinet/adjust-schedule/", {
+               method: "POST",
+               body: object,
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },
       async getPsychologists() {
          try {
             const response = await useBaseFetch("/store/psychologists/", {
@@ -63,6 +79,20 @@ export const useClientStore = defineStore("client", {
       },async getSelfPsychologist() {
          try {
             const response = await useBaseFetch("/cabinet/self-psychologist/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            console.log(response.detail); 
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },async getMySchedulePsychologist() {
+         try {
+            const response = await useBaseFetch("/session/my_schedule/busy/", {
                headers: {
                   // Исправлено на headers
                   "Content-Type": "application/json", // Указываем тип контента
