@@ -870,6 +870,28 @@ const send = async() =>{
                   Authorization: "Token " + store.token, // Авторизация
                },
             });
+            if(response.name=='FetchError'){
+              
+              toast({
+                  message: 'Данные не сохранились',
+                  type: "is-error", // если збс - то is-success, если плохо то is-error
+                  dismissible: true,
+                  pauseOnHover: true,
+                  duration: 13000,
+                  position: "bottom-right",
+                  className: "toast",
+              });
+            }else{
+              toast({
+                  message: 'Данные сохранились',
+                  type: "is-success", // если збс - то is-success, если плохо то is-error
+                  dismissible: true,
+                  pauseOnHover: true,
+                  duration: 13000,
+                  position: "bottom-right",
+                  className: "toast",
+              });
+            }
       
             return response; // Возвращаем ответ от сервера
          } catch (err) {
