@@ -31,6 +31,12 @@ export const useClientStore = defineStore("client", {
 
          localStorage.token = "";
       },
+      exitAccount() {
+         this.token = "";
+
+         localStorage.token = "";
+         navigateTo("/")
+      },
       async sendAnkete(object) {
          try {
             const response = await useBaseFetch("/cabinet/survey/", {

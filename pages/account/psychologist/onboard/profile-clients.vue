@@ -57,7 +57,7 @@
                 <div class="profile__btns">
                     <div class="profile__ethical-btn">Этический кодекс</div>
                     <div class="profile__save-btn" @click="send">Сохранить изменения</div>
-                    <div class="profile__exit-btn">
+                    <div class="profile__exit-btn" @click="exit">
                         <div class="icon-exit-btn"></div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                                     </label>
 
                                 </div>
-                                <div class="profile__btn-save">Сохранить</div>
+                                <div class="profile__btn-save" @click="send">Сохранить</div>
                             </div>
 
                         </div>
@@ -165,7 +165,7 @@
                                 <div class="profgeneral">
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">Телефон</div>
-                                        <input type="text" name="phone" value="88005553535">
+                                        <input type="text" name="phone" :value="psychologistData.phone" disabled>
                                         <div class="profgeneral__input-info">Для смены номера напишите на электронную почту <a href="mailto:pozitalk@mail.ru">pozitalk@mail.ru</a></div>
                                         <div class="subscribe">
                                             <label class="subscribe__item">
@@ -187,7 +187,7 @@
                                         </div>
                                     </label>
                                 </div>
-                                <div class="profile__btn-save">Сохранить</div>
+                                <div class="profile__btn-save" @click="send">Сохранить</div>
                             </div>
 
                         </div>
@@ -202,117 +202,70 @@
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">Часовой пояс</div>
                                         <div class="select-container">
-                                            <select name="timezone">
-                                                <option value="МСК (+3 GMT)">МСК (+3 GMT)</option>
-                                                <option value="МСК (+4 GMT)">МСК (+4 GMT)</option>
-                                                <option value="МСК (+5 GMT)">МСК (+5 GMT)</option>
+                                            <select name="timezone" v-model="psychologistData.timezone">
+                                              <option value="Europe/Moscow">Europe/Moscow (GMT+3)</option>
+                                              <option value="Europe/Samara">Europe/Samara (GMT+4)</option>
+                                              <option value="Asia/Yekaterinburg">Asia/Yekaterinburg (GMT+5)</option>
                                             </select>
                                         </div>
                                     </label>
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">Минимальное количество часов для записи</div>
                                         <div class="select-container">
-                                            <select name="timezone">
+                                            <select name="timezone" v-model="psychologistData.session_duration">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                             </select>
                                         </div>
                                     </label>
+                                    
+  
+                                   
                                     <label class="profgeneral__input">
-                                        <div class="profgeneral__input-label">Свободные слоты для записи клиентов</div>
-                                        <div class="calendar-container">
-
-                                            <div id="reschedule_time">
-
-                                                <div class="reschedule_time__calendar">
-
-                                                    <div class="reschedule_time__calendar-first">
-                                                        <div class="reschedule_time__calendar-date">
-                                                                                                                            <div class="calendar-date__item active">
-                                                                    <div class="calendar-date__item-day">пн</div>
-                                                                </div>
-                                                                                                                            <div class="calendar-date__item ">
-                                                                    <div class="calendar-date__item-day">вт</div>
-                                                                </div>
-                                                                                                                            <div class="calendar-date__item ">
-                                                                    <div class="calendar-date__item-day">ср</div>
-                                                                </div>
-                                                                                                                            <div class="calendar-date__item ">
-                                                                    <div class="calendar-date__item-day">чт</div>
-                                                                </div>
-                                                                                                                            <div class="calendar-date__item ">
-                                                                    <div class="calendar-date__item-day">пт</div>
-                                                                </div>
-                                                                                                                            <div class="calendar-date__item ">
-                                                                    <div class="calendar-date__item-day">сб</div>
-                                                                </div>
-                                                                                                                            <div class="calendar-date__item ">
-                                                                    <div class="calendar-date__item-day">вс</div>
-                                                                </div>
-                                                                                                                    </div>
-                                                    </div>
-                                                    <div class="reschedule_time__calendar-second">
-                                                        <div class="reschedule_time-label">Время</div>
-                                                        <div class="reschedule_time__calendar-table">
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    0:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    1:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    2:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    3:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    4:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    5:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-1">
-                                                                    6:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    7:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    8:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-1">
-                                                                    9:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    10:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    11:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    12:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    13:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    14:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    15:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    16:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-1">
-                                                                    17:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    18:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    19:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-2">
-                                                                    20:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    21:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell stat-1">
-                                                                    22:00                                                                </div>
-                                                                                                                            <div class="calendar-table__cell ">
-                                                                    23:00                                                                </div>
-                                                                                                                    </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </label>
+    <div class="profgeneral__input-label">Свободные слоты для записи клиентов</div>
+    <div class="calendar-container">
+      <div id="reschedule_time">
+        <div class="reschedule_time__calendar">
+          <!-- Дни недели -->
+          <div class="reschedule_time__calendar-first">
+            <div class="reschedule_time__calendar-date">
+              <div
+                v-for="(day, index) in daysOfWeek"
+                :key="index"
+                class="calendar-date__item"
+                :class="{ active: selectedDay === index }"
+                @click="selectDay(index)"
+              >
+                <div class="calendar-date__item-day">{{ day }}</div>
+              </div>
+            </div>
+          </div>
+          <!-- Время -->
+          <div class="reschedule_time__calendar-second">
+            <div class="reschedule_time-label">Время</div>
+            <div class="reschedule_time__calendar-table">
+              <div
+                v-for="timeSlot in timeSlots"
+                :key="timeSlot"
+                class="calendar-table__cell"
+                :class="{
+                  'stat-1': isSlotSelected(timeSlot), // Занятые слоты
+                  'stat-2': isSlotBooked(timeSlot), // Выбранные слоты
+                  'stat-free': isSlotFree(timeSlot), // Свободные слоты
+                }"
+                @click="toggleSlot(timeSlot)"
+              >
+                {{ timeSlot }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </label>
                                 </div>
-                                <div class="profile__btn-save">Сохранить</div>
+                                <div class="profile__btn-save" @click="send">Сохранить</div>
                             </div>
 
                         </div>
@@ -405,7 +358,7 @@
                                     </div>
                                 </div>
                                 <div style="display: none;" class="profile__btn-add">Добавить</div>
-                                <div class="profile__btn-save">Сохранить</div>
+                                <div class="profile__btn-save" @click="send">Сохранить</div>
                             </div>
                         </div>
                     </div>
@@ -444,7 +397,7 @@
         <!-- Кнопка "Добавить" -->
         <div class="profile__btn-add" @click="addEducation">Добавить</div>
         <!-- Кнопка "Сохранить" -->
-        <div class="profile__btn-save" @click="saveChanges">Сохранить</div>
+        <div class="profile__btn-save"  @click="send">Сохранить</div>
       </div>
     </div>
   </div>
@@ -607,6 +560,7 @@
 </template>
 <script setup>
 import { useClientStore } from '~/stores/client/store';
+import { toast } from "bulma-toast";
  useHead({
     link: [
        {
@@ -638,6 +592,183 @@ import { useClientStore } from '~/stores/client/store';
   rating:'',
   sex:'man'
 });
+
+// Дни недели
+const daysOfWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+
+// Временные слоты
+const timeSlots = [
+  '0:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00',
+  '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00',
+  '21:00', '22:00', '23:00',
+];
+const selectedDay = ref(0);
+const backendResponse = ref({
+  slots: [],
+  session_duration: 1,
+});
+const userSelectedSlots = ref([]);
+
+
+
+// Выбранные слоты (объединение данных с бэка и пользовательских)
+const selectedSlots = computed(() => [
+  ...backendResponse.value.slots.filter((slot) => slot.status === 'busy'),
+  ...userSelectedSlots.value,
+]);
+
+// Выбор дня
+function selectDay(dayIndex) {
+  selectedDay.value = dayIndex;
+}
+
+// Проверка, свободен ли слот (получен с бэка)
+function isSlotFree(time) {
+  return backendResponse.value.slots.some(
+    (slot) =>
+      slot.day_of_week === selectedDay.value &&
+      slot.time === formatTime(time) &&
+      slot.status === 'free'
+  );
+}
+
+// Проверка, забронирован ли слот (получен с бэка)
+function isSlotBooked(time) {
+  return backendResponse.value.slots.some(
+    (slot) => slot.day_of_week === selectedDay.value && slot.time === formatTime(time) && slot.status == "busy"
+  );
+}
+
+
+// Проверка, выбран ли слот пользователем
+function isSlotSelected(time) {
+  return userSelectedSlots.value.some(
+    (slot) => slot.day_of_week === selectedDay.value && slot.time === formatTime(time)
+  );
+}
+
+// Добавление/удаление слотов в зависимости от session_duration
+function toggleSlot(time) {
+  const formattedTime = formatTime(time);
+  const sessionDuration = psychologistData.value.session_duration;
+
+  // Проверяем, выбран ли уже слот
+  const isSelected = isSlotSelected(formattedTime);
+
+  if (isSelected) {
+    // Если слот уже выбран, удаляем его и следующие за ним слоты
+    const slotsToRemove = [];
+    let currentTime = formattedTime;
+
+    for (let i = 0; i < sessionDuration; i++) {
+      // Проверяем, есть ли слот в userSelectedSlots
+      const slotIndex = userSelectedSlots.value.findIndex(
+        (slot) => slot.day_of_week === selectedDay.value && slot.time === currentTime
+      );
+
+      if (slotIndex === -1) {
+        
+   toast({
+            message: 'Недостаточно слотов для удаления.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+        return;
+      }
+
+      // Добавляем слот в список для удаления
+      slotsToRemove.push(currentTime);
+
+      // Переходим к следующему слоту (увеличиваем время на 1 час)
+      const [hour] = currentTime.split(':');
+      const nextHour = (parseInt(hour, 10) + 1) % 24; // Переход на следующий час (с учетом 24-часового формата)
+      currentTime = `${nextHour.toString().padStart(2, '0')}:00`;
+    }
+
+    // Удаляем слоты из userSelectedSlots
+    userSelectedSlots.value = userSelectedSlots.value.filter(
+      (slot) => !slotsToRemove.includes(slot.time)
+    );
+    console.log('Слоты удалены:'+ slotsToRemove);
+    
+  } else {
+    // Если слот не выбран, добавляем его и следующие за ним слоты
+    const slotsToAdd = [];
+    let currentTime = formattedTime;
+
+    for (let i = 0; i < sessionDuration; i++) {
+      const slotIndex = userSelectedSlots.value.findIndex(
+        (slot) => slot.day_of_week === selectedDay.value && slot.time === currentTime
+      );
+      console.log(sessionDuration);
+      // Проверяем, свободен ли текущий слот
+      if (slotIndex != -1) {
+   toast({
+            message: 'Слот занят или недоступен:'+ currentTime,
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+        return;
+      }
+
+      // Проверяем, не выбран ли уже слот
+      if (isSlotSelected(currentTime)) {
+   toast({
+            message: 'Слот уже выбран:'+ currentTime,
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+        return;
+      }
+
+      // Добавляем слот в список для добавления
+      slotsToAdd.push({
+        day_of_week: selectedDay.value,
+        time: currentTime,
+      });
+
+      // Переходим к следующему слоту (увеличиваем время на 1 час)
+      const [hour] = currentTime.split(':');
+      const nextHour = (parseInt(hour, 10) + 1) % 24; // Переход на следующий час (с учетом 24-часового формата)
+      currentTime = `${nextHour.toString().padStart(2, '0')}:00`;
+    }
+
+    // Добавляем слоты в userSelectedSlots
+    userSelectedSlots.value.push(...slotsToAdd);
+    console.log('Слоты добавлены:', slotsToAdd);
+  }
+}
+
+// Форматирование времени в "HH:MM"
+function formatTime(time) {
+  const [hour] = time.split(':');
+  return `${hour.padStart(2, '0')}:00`;
+}
+
+
+watch(
+  () => psychologistData.value.session_duration, // Отслеживаемое свойство
+  (newDuration, oldDuration) => {
+    // Если значение изменилось
+    if (newDuration !== oldDuration) {
+      // Очищаем userSelectedSlots
+      userSelectedSlots.value = [];
+      console.log('Длительность сессии изменилась. Очищены выбранные слоты.');
+    }
+  }
+);
 
 const fileInput = ref(null);
 
@@ -684,26 +815,9 @@ function cleanEducationData() {
   );
 }
 const send = async() =>{
+  console.log("Выбранные слоты:", selectedSlots.value);
   cleanEducationData();
-  store.sendMySchedule([
-    {
-        "id": 7,
-        "day_of_week": 0,
-        "time": "09:00:00",
-        "is_available":true
-    },
-    {
-        "id": 8,
-        "day_of_week": 0,
-        "time": "15:00:00",
-        "is_available":false
-    },
-    {
-        "day_of_week": 1,
-        "time": "14:00:00",
-        "is_available":true
-    }
-])
+  store.sendMySchedule(selectedSlots.value)
          try {
             // Создаем объект FormData
             const formData = new FormData();
@@ -716,6 +830,8 @@ const send = async() =>{
             formData.append("working_methods", psychologistData.value.working_methods);
             formData.append("age", psychologistData.value.age.toString());
             formData.append("label", psychologistData.value.label);
+            formData.append("timezone", psychologistData.value.timezone);
+            formData.append("session_duration", psychologistData.value.session_duration);
             formData.append("experience", psychologistData.value.experience.toString());
             formData.append("description", psychologistData.value.description);
             formData.append("sex", psychologistData.value.sex);
@@ -764,6 +880,38 @@ store.getSelfPsychologist()
 store.getMySchedulePsychologist()
   .then(item => {
     console.log(item);
+    // Очищаем предыдущие данные
+    backendResponse.value.slots = [];
+    userSelectedSlots.value = [];
+    //backendResponse.value = item;
+    item.slots.forEach(slot => {
+      if (slot.status === 'busy') {
+        backendResponse.value.slots.push(slot);
+      }
+    });
+    
+    // Добавляем свободные слоты в userSelectedSlots с проверкой на дубликаты
+    item.slots.forEach(slot => {
+      if (slot.status === 'free') {
+        // Проверяем, был ли такой слот уже добавлен
+        const isSlotAlreadyAdded = userSelectedSlots.value.some(
+          (existingSlot) =>
+            existingSlot.day_of_week === slot.day_of_week &&
+            existingSlot.time === slot.time
+        );
+
+        // Если слот не был добавлен, добавляем его
+        if (!isSlotAlreadyAdded) {
+          userSelectedSlots.value.push({
+            day_of_week: slot.day_of_week,
+            time: slot.time,
+            slot_id: slot.slot_id,
+          });
+        }
+      }
+    });
+    console.log(backendResponse.value.slots);
+    console.log(userSelectedSlots.value);
   })
   .catch(error => {
     console.error('Ошибка при получении данных психолога:', error);
@@ -950,6 +1098,9 @@ store.getMySchedulePsychologist()
     }
  )
  
+const exit = () =>{
+  store.exitAccount()
+}
 </script>
 <style scoped>
 
