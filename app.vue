@@ -29,7 +29,11 @@
    } 
 }
 </style>
-
+<style scoped>
+.lock-padding{
+   padding: 0;
+}
+</style>
 <script setup>
 import { useClientStore } from './stores/client/store';
 

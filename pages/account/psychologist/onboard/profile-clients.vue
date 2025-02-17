@@ -9,7 +9,7 @@
                                 <div class="nav__menu">
                     <ul class="nav__menu-first">
                         <li>
-                            <a href="#"><span class="icon psy-schedule"></span>Расписание</a>
+                            <a style="cursor: pointer;" @click="navigateTo('/account/psychologist/onboard/calendar')"><span class="icon psy-schedule"></span>Расписание</a>
                         </li>
                         <li>
                             <a href="#"><span class="icon psy-chats"></span>Чаты</a>
@@ -212,7 +212,8 @@
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">Минимальное количество часов для записи</div>
                                         <div class="select-container">
-                                            <select name="timezone" v-model="psychologistData.session_duration">
+                                            <select name="timezone" v-model="psychologistData.session_duration"
+    @click="isUserChanging = true">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -608,12 +609,13 @@ const backendResponse = ref({
   session_duration: 1,
 });
 const userSelectedSlots = ref([]);
+const isUserChanging = ref(false);
 
 
 
 // Выбранные слоты (объединение данных с бэка и пользовательских)
 const selectedSlots = computed(() => [
-  ...backendResponse.value.slots.filter((slot) => slot.status === 'busy'),
+  // ...backendResponse.value.slots.filter((slot) => slot.status === 'busy'),
   ...userSelectedSlots.value,
 ]);
 
@@ -758,14 +760,14 @@ function formatTime(time) {
 }
 
 
+
 watch(
-  () => psychologistData.value.session_duration, // Отслеживаемое свойство
+  () => psychologistData.value.session_duration,
   (newDuration, oldDuration) => {
-    // Если значение изменилось
-    if (newDuration !== oldDuration) {
-      // Очищаем userSelectedSlots
+    if (newDuration !== oldDuration && isUserChanging.value) {
       userSelectedSlots.value = [];
-      console.log('Длительность сессии изменилась. Очищены выбранные слоты.');
+      console.log('Длительность изменена пользователем. Очищены выбранные слоты.');
+      isUserChanging.value = false; // Сбрасываем флаг
     }
   }
 );
