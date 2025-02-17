@@ -123,6 +123,19 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
+      },async getMySheduleWeek(start_date,end_date) {
+         try {
+            const response = await useBaseFetch("/session/my_schedule/?start_date="+start_date+"&end_date="+end_date, {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
       },async getMySchedulePsychologist() {
          try {
             const response = await useBaseFetch("/session/my_schedule/busy/", {
