@@ -110,6 +110,19 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
+      },async getMyShedule() {
+         try {
+            const response = await useBaseFetch("/session/my_schedule/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
       },async getMySchedulePsychologist() {
          try {
             const response = await useBaseFetch("/session/my_schedule/busy/", {
