@@ -844,8 +844,8 @@ const send = async() =>{
             }
             formData.append("sex", psychologistData.value.sex);
             formData.append("price", psychologistData.value.price.toString());
-            if(psychologistData.value.email){
-              formData.append("email", psychologistData.value.email && psychologistData.value.email!=null && psychologistData.value.email!=undefined && psychologistData.value.description!='');
+            if(psychologistData.value.email  && psychologistData.value.email!=null && psychologistData.value.email!=undefined && psychologistData.value.description!=''){
+              formData.append("email", psychologistData.value.email);
             }
             formData.append("notifications_phone", psychologistData.value.notifications_phone.toString());
             formData.append("notifications_email", psychologistData.value.notifications_email.toString());

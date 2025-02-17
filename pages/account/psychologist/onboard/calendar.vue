@@ -50,9 +50,9 @@
     <div class="schedule__header">
       <div class="schedule__title">Расписание</div>
       <div class="calendar__header-nav">
-        <div class="calendar__header-prev"></div>
-        <div class="calendar__header-inf">{{ getCurrentWeek() }}</div>
-        <div class="calendar__header-next"></div>
+        <div class="calendar__header-prev" @click="goToPreviousWeek"></div>
+        <div class="calendar__header-inf">{{ formattedWeek }}</div>
+        <div class="calendar__header-next" @click="goToNextWeek"></div>
       </div>
     </div>
     
@@ -146,7 +146,15 @@ const now = new Date();
 const monday = new Date(now.setDate(now.getDate() - now.getDay() + 1));
 
 const weekDays = ref(getCurrentWeekDays());
+const formattedWeek = ref(getCurrentWeek());
 
+const formatDateQuery = (date) => date.toISOString().split('T')[0];
+
+const dayOfWeek = now.getDay(); // День недели (0 - воскресенье, 1 - понедельник и т.д.)
+const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Если воскресенье, сдвиг на -6 дней
+monday.setDate(now.getDate() + diffToMonday);
+const sunday = new Date(monday);
+sunday.setDate(monday.getDate() + 6);
 async function fetchSchedule() {
   const data = await store.getMyShedule();
   schedule.value = data.slots;
@@ -167,6 +175,35 @@ function getCurrentWeek() {
   return `${start} - ${end}`;
 }
 
+const goToNextWeek = () => {
+  monday.setDate(monday.getDate() + 7);
+  sunday.setDate(sunday.getDate() + 7);
+  // Обновляем данные для текущей недели
+  weekDays.value = getCurrentWeekDays();
+  formattedWeek.value = getCurrentWeek();
+  console.log(schedule.value)
+
+  const mondayFormatted = formatDateQuery(monday);
+  const sundayFormatted = formatDateQuery(sunday);
+  store.getMySheduleWeek(mondayFormatted, sundayFormatted).then(response => {
+    schedule.value = response.slots;
+  });
+};
+const goToPreviousWeek = () => {
+  monday.setDate(monday.getDate() - 7);
+  sunday.setDate(sunday.getDate() - 7);
+  console.log(schedule.value)
+
+  // Обновляем данные для предыдущей недели
+  weekDays.value = getCurrentWeekDays();
+  formattedWeek.value = getCurrentWeek();
+
+  const mondayFormatted = formatDateQuery(monday);
+  const sundayFormatted = formatDateQuery(sunday);
+  store.getMySheduleWeek( mondayFormatted, sundayFormatted).then(response => {
+    schedule.value = response.slots;
+  });
+};
 function getSlotClass(day, hour) {
   const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
   if (!slot) return "empty";
