@@ -835,17 +835,21 @@ const send = async() =>{
             formData.append("timezone", psychologistData.value.timezone);
             formData.append("session_duration", psychologistData.value.session_duration);
             // formData.append("experience", psychologistData.value.experience.toString());
-            if(psychologistData.value.description || psychologistData.value.description!=null || psychologistData.value.description!=undefined){
+            console.log(psychologistData.value.description)
+            console.log(psychologistData.value.description.length)
+            console.log(typeof psychologistData.value.description)
+            console.log(psychologistData.value.description!='')
+            if(psychologistData.value.description && psychologistData.value.description!=null && psychologistData.value.description!=undefined && psychologistData.value.description!=''){
               formData.append("description", psychologistData.value.description);
             }
             formData.append("sex", psychologistData.value.sex);
             formData.append("price", psychologistData.value.price.toString());
             if(psychologistData.value.email){
-              formData.append("email", psychologistData.value.email || psychologistData.value.email!=null || psychologistData.value.email!=undefined);
+              formData.append("email", psychologistData.value.email && psychologistData.value.email!=null && psychologistData.value.email!=undefined && psychologistData.value.description!='');
             }
             formData.append("notifications_phone", psychologistData.value.notifications_phone.toString());
             formData.append("notifications_email", psychologistData.value.notifications_email.toString());
-            if(psychologistData.value.date_of_birth || psychologistData.value.date_of_birth!=null || psychologistData.value.date_of_birth!=undefined){
+            if(psychologistData.value.date_of_birth && psychologistData.value.date_of_birth!=null && psychologistData.value.date_of_birth!=undefined && psychologistData.value.description!=''){
               formData.append("date_of_birth", psychologistData.value.date_of_birth);
             }
             formData.append("language", psychologistData.value.language);
