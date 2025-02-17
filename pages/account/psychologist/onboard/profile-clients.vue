@@ -825,23 +825,29 @@ const send = async() =>{
             const formData = new FormData();
       
             // Добавляем текстовые поля
-            formData.append("psycho_topics", JSON.stringify(psychologistData.value.psycho_topics));
+            // formData.append("psycho_topics", JSON.stringify(psychologistData.value.psycho_topics));
             formData.append("education_psychologist_write", JSON.stringify(psychologistData.value.education_psychologist));
             //formData.append("phone_number", psychologistData.value.phone_number);
             formData.append("name", psychologistData.value.name);
             formData.append("working_methods", psychologistData.value.working_methods);
             formData.append("age", psychologistData.value.age.toString());
-            formData.append("label", psychologistData.value.label);
+            // formData.append("label", psychologistData.value.label);
             formData.append("timezone", psychologistData.value.timezone);
             formData.append("session_duration", psychologistData.value.session_duration);
-            formData.append("experience", psychologistData.value.experience.toString());
-            formData.append("description", psychologistData.value.description);
+            // formData.append("experience", psychologistData.value.experience.toString());
+            if(psychologistData.value.description || psychologistData.value.description!=null || psychologistData.value.description!=undefined){
+              formData.append("description", psychologistData.value.description);
+            }
             formData.append("sex", psychologistData.value.sex);
             formData.append("price", psychologistData.value.price.toString());
-            formData.append("email", psychologistData.value.email);
+            if(psychologistData.value.email){
+              formData.append("email", psychologistData.value.email || psychologistData.value.email!=null || psychologistData.value.email!=undefined);
+            }
             formData.append("notifications_phone", psychologistData.value.notifications_phone.toString());
             formData.append("notifications_email", psychologistData.value.notifications_email.toString());
-            formData.append("date_of_birth", psychologistData.value.date_of_birth);
+            if(psychologistData.value.date_of_birth || psychologistData.value.date_of_birth!=null || psychologistData.value.date_of_birth!=undefined){
+              formData.append("date_of_birth", psychologistData.value.date_of_birth);
+            }
             formData.append("language", psychologistData.value.language);
             formData.append("client_age", psychologistData.value.client_age);
             formData.append("experience_with_identity_search", psychologistData.value.experience_with_identity_search.toString());
