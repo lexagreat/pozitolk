@@ -31,7 +31,7 @@
                             <a href="#"><span class="icon help"></span>Помощь</a>
                         </li>
                         <li class="__desk ">
-                            <a href="#"><span class="icon settings"></span>Настройки</a>
+                            <a style="cursor: pointer;" @click="navigateTo('/account/psychologist/onboard/profile-clients')"><span class="icon settings"></span>Настройки</a>
                         </li>
                     </ul>
                 </div>
@@ -76,7 +76,7 @@
           :key="`${day}-${hour}`" 
           class="table-cell"
         >
-            <div class="cell-body" :class="{'mark-1': getSlotText(day, hour)},{'mark-2': getSlotClass(day, hour)=='available'}">{{ getSlotText(day, hour) }}</div>
+            <div class="cell-body" :class="{'mark-1': getSlotClass(day, hour)=='free'},{'mark-2': getSlotClass(day, hour)=='available'},{'mark-3': getSlotClass(day, hour)=='busy'}">{{ getSlotText(day, hour) }}</div>
             <div class="cell-btn">
                 <div class="cell-btn__inner">Открыть заметки</div>
             </div>
@@ -170,8 +170,19 @@ function getCurrentWeek() {
 function getSlotClass(day, hour) {
   const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
   if (!slot) return "empty";
+  if (slot) {
+    const slotDate = slot.datetime.split(' ')[0];  // Получаем дату из slot
+    const today = new Date().toISOString().split('T')[0];  // Получаем сегодняшнюю дату в формате YYYY-MM-DD
+
+    console.log(slotDate);
+
+    if (slotDate === today &&slot.status !== "free") {
+      return "free"
+    }
+  }
   return slot.status === "free" ? "available" : slot.status === "busy" ? "busy" : "empty";
 }
+
 
 function getSlotText(day, hour) {
   const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
@@ -193,7 +204,6 @@ onMounted(async () => {
         
         // Таблица
         $('.cell-body.mark-1').on('click', function () {
-            console.log($('укеукеукеукеукеукеукеукеукеукеукекеуккеук'))
             const slotText = $(this).text(); // Получаем текст из .cell-body
             updateSideTitle(slotText); // Обновляем sideTitle
             console.log($('.dashboard__side'))
@@ -247,7 +257,7 @@ onMounted(async () => {
 
 
       });
-    },300)
+    },500)
 })
 </script>
 <style scoped>
