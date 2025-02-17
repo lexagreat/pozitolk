@@ -55,7 +55,7 @@
         <div class="calendar__header-next" @click="goToNextWeek"></div>
       </div>
     </div>
-    
+    <div class="schedule__table-wrp">
     <div class="schedule__table">
       <!-- Заголовки дней -->
       <div class="table-row header">
@@ -83,6 +83,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>  
     </div>
     <div class="dashboard__side empty">
