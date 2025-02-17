@@ -1,6 +1,6 @@
 <template>
    <div class="wrapper">
-      <SidebarAccountClientOnBoard step="choose" />
+      <SidebarAccountClientOnBoard step="choose" :sex="sex" :age="age"  @updateFilters="handleFiltersUpdate" />
       <main class="main">
          <div class="dashboard">
             <div class="container-small">
@@ -198,6 +198,31 @@
 <script setup>
 import { useClientStore } from '~/stores/client/store';
 const store = useClientStore()
+
+
+const sex = [
+   { value: 'man', name: 'Мужской' },
+   { value: 'woman', name: 'Женский' },
+];
+
+const age = [
+   { value: '0-25', name: 'до 25 лет' },
+   { value: '25-35', name: '25-35 лет' },
+   { value: '35-45', name: '35-45 лет' },
+   { value: '45-55', name: '45-55 лет' },
+   { value: '55-100', name: 'от 55 лет' },
+];
+const filters = ref({
+   gender: null,
+   age: null
+});
+const handleFiltersUpdate = (updatedFilters) => {
+   console.log('Обновленные фильтры:', updatedFilters);
+   list.value = updatedFilters;
+   current.value = 0;
+   // filters.value = updatedFilters;
+   // console.log('Обновленные фильтры:', filters.value);
+};
 // const router = useRouter()
 // if (!store.phone.length) {
 //    router.push('/account/client/onboard')
@@ -489,7 +514,12 @@ const pay = async () => {
    transform: translateX(-100%) translateY(-6%) !important;
    top: 46vh !important;
 }
-
+.cart__info-second-btn-img>img{
+   border-radius: 100%;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
 @media (max-width: 755px) {
    .cart .cart__info .cart__info-first {
       -webkit-transform: translateX(0) translateY(-124%) !important;

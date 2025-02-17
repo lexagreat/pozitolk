@@ -35,7 +35,7 @@
                         <div class="filters__item-label">Пол психолога</div>
                         <div class="filters__tags">
                            <label class="filters__tags-item" v-for="item in sex" :key="item">
-                              <input type="radio" name="gender" :value="item.value">
+                              <input type="radio" name="gender" :value="item.value"  @change="updateFilter('gender', item.value)">
                               <div class="filters__tags-item-txt">{{ item.name }}</div>
                            </label>
                         </div>
@@ -45,7 +45,7 @@
                         <div class="filters__item-label">Возраст психолога</div>
                         <div class="filters__tags">
                            <label class="filters__tags-item" v-for="item in age" :key="item">
-                              <input type="radio" name="age" :value="item.value">
+                              <input type="radio" name="age" :value="item.value" @change="updateFilter('age', item.value)">
                               <div class="filters__tags-item-txt">
                                  {{ item.name }}
                               </div>
@@ -108,39 +108,51 @@
    </nav>
 </template>
 <script setup>
+import { useClientStore } from '~/stores/client/store';
+const store = useClientStore()
+
 const props = defineProps({
-   step: String
+   step: String,
+   sex: Array,
+   age: Array,
 })
-const sex = ref([
-   {
-      name: "Мужчина",
-      value: 0
-   },
-   {
-      name: "Женщина",
-      value: 1
-   },
-])
-const age = ref([
-   {
-      name: "до 25 лет",
-      value: 0
-   },
-   {
-      name: "25-35 лет",
-      value: 1
-   },
-   {
-      name: "35-45 лет",
-      value: 2
-   },
-   {
-      name: "45-55 лет",
-      value: 3
-   },
-   {
-      name: "от 55 лет",
-      value: 4
-   },
-])
+const emit = defineEmits(['updateFilters']);
+const selectedFilters = ref({
+   gender: null,
+   age: null,
+});
+let response ;
+
+const updateFilter = async(type, value) => {
+   selectedFilters.value[type] = value;
+
+   if (type === 'age' && selectedFilters.value['age']) {
+      const ageValue = selectedFilters.value[type];
+      // Проверка на null перед split
+      if (ageValue) {
+         const [age_min, age_max] = ageValue.split('-');
+         console.log(age_min, age_max);
+         console.log(selectedFilters.value['gender']);
+         
+         response = await store.getPsychologists({ sex: selectedFilters.value['gender'], age_min, age_max });
+      }
+   } else {
+      // Обрабатываем случай для gender
+      const genderValue = selectedFilters.value['gender'];
+      const ageValue = '0-100';
+      console.log(ageValue);
+
+      if (ageValue) {
+         const [age_min, age_max] = ageValue.split('-');
+         console.log(age_min, age_max);
+         console.log(genderValue);
+         
+         response = await store.getPsychologists({ sex: genderValue, age_min, age_max });
+      }
+   }
+
+   console.log(response);
+   emit('updateFilters', response);
+};
+
 </script>

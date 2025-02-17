@@ -68,14 +68,13 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
-      },
-      async getPsychologists() {
+      },async getPsychologists(filters = { sex: "", age_min: 0, age_max: 100 }) {
          try {
-            const response = await useBaseFetch("/store/psychologists/", {
+            const queryString = new URLSearchParams(filters).toString();
+            const response = await useBaseFetch(`/store/psychologists/?${queryString}`, {
                headers: {
-                  // Исправлено на headers
-                  "Content-Type": "application/json", // Указываем тип контента
-                  Authorization: "Token " + this.token, // Исправлено на Authorization
+                  "Content-Type": "application/json",
+                  Authorization: "Token " + this.token,
                },
             });
             return response;
@@ -83,6 +82,7 @@ export const useClientStore = defineStore("client", {
             console.log("err", err);
          }
       },
+      
       async getMe() {
          try {
             const response = await useBaseFetch("/cabinet/self/", {
