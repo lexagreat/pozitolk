@@ -104,7 +104,7 @@
         <!-- Поля для ввода имени и даты рождения -->
         <div class="profcards__item-inputs">
           <label class="profgeneral__input">
-            <div class="profgeneral__input-label">Имя/Псевдоним</div>
+            <div class="profgeneral__input-label">ФИО</div>
             <input type="text" name="profname" v-model="psychologistData.name" />
           </label>
           <label class="profgeneral__input">
@@ -203,9 +203,9 @@
                                         <div class="profgeneral__input-label">Часовой пояс</div>
                                         <div class="select-container">
                                             <select name="timezone" v-model="psychologistData.timezone">
-                                              <option value="Europe/Moscow">Europe/Moscow (GMT+3)</option>
-                                              <option value="Europe/Samara">Europe/Samara (GMT+4)</option>
-                                              <option value="Asia/Yekaterinburg">Asia/Yekaterinburg (GMT+5)</option>
+                                              
+  <option v-for="tz in timezones" :key="tz" :value="tz">{{ tz }} ({{ getGMTOffset(tz) }})</option>
+
                                             </select>
                                         </div>
                                     </label>
@@ -372,18 +372,18 @@
           <!-- Динамический список образовательных записей -->
           <div class="education__item" v-for="(edu, index) in psychologistData.education_psychologist" :key="index">
             <div class="education__place">
-              <div class="education__label">Место получения</div>
+              <div class="education__label">Образование</div>
               <div class="education__input">
                 <input
                   type="text"
                   v-model="edu.text"
                   :name="`education-place-${index}`"
-                  placeholder="Введите место получения"
+                  placeholder="Введите место получения образования"
                 />
               </div>
             </div>
             <div class="education__year">
-              <div class="education__label">Год</div>
+              <div class="education__label">Год окончания</div>
               <div class="education__input">
                 <input
                   type="text"
@@ -593,6 +593,22 @@ import { toast } from "bulma-toast";
   rating:'',
   sex:'man'
 });
+
+
+const timezones = Intl.supportedValuesOf("timeZone");
+
+const getGMTOffset = (tz) => {
+  try {
+    const now = new Date();
+    const offset = new Intl.DateTimeFormat("en-US", {
+      timeZone: tz,
+      timeZoneName: "shortOffset"
+    }).formatToParts(now).find(part => part.type === "timeZoneName")?.value;
+    return offset ? offset.replace("GMT", "GMT") : "GMT";
+  } catch {
+    return "GMT";
+  }
+};
 
 // Дни недели
 const daysOfWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];

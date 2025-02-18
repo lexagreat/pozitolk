@@ -13,7 +13,7 @@
                         Мы продвигаем ваши услуги и освобождаем вам время на более важные дела: работу с клиентами,
                         образование и получение профессионального опыта.
                      </div>
-                     <div class="btn__begincoop">Начать сотрудничество</div>
+                     <div class="btn__begincoop" @click="navigateTo('/account/client/onboard/')">Начать сотрудничество</div>
                   </div>
                   <div class="top__second">
                      <img src="/site/img/for-psychologists-top.svg" alt="Присоединяйтесь к нашей команде психологов">
@@ -63,7 +63,7 @@
                                        опыте консультирования и методах работы, чтобы мы подбирали вам подходящих и
                                        интересных клиентов</div>
                                  </div>
-                                 <div class="btn__begincoop">Начать сотрудничество</div>
+                                 <div class="btn__begincoop" @click="navigateTo('/account/client/onboard/')">Начать сотрудничество</div>
                               </div>
                               <div class="jointwork__item-img">
                                  <img class="__desk" src="/site/img/jointwork__item_1.png" alt="Заполните анкету">
