@@ -110,6 +110,32 @@ export const useClientStore = defineStore("client", {
          } catch (err) {
             console.log("err", err);
          }
+      },async getChatMessageList(chat_id) {
+         try {
+            const response = await useBaseFetch("/session/message-list/"+chat_id+"/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },async getMyChatList() {
+         try {
+            const response = await useBaseFetch("/session/chat-list/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
       },async getMyShedule() {
          try {
             const response = await useBaseFetch("/session/my_schedule/", {
