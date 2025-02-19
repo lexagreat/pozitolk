@@ -29,7 +29,7 @@
 
             
             <div class="message">
-              <div class="message__list" ref="messageList">
+              <div class="message__list" ref="messageList" @scroll="handleScroll">
                 <div class="message__list-inner">
                   <!-- Группируем сообщения по отправителю -->
                   <div v-for="(group, groupIndex) in groupedMessages" :key="groupIndex" class="message-group">
@@ -100,7 +100,12 @@ let gettingMessage;
 let chatList;
 const inputMessage = ref(''); // Текст сообщения из поля ввода
 const messageList = ref(null); // Ссылка на элемент с сообщениями
+const isUp = ref(false); // Ссылка на элемент с сообщениями
 const coorentChatId=ref(0);
+const nextMessages = ref('')
+const saveScroll = ref('')
+let me = await store.getMe();
+myId.value = me.id;
 const CangeChat = async(number) => {
     coorentChatId.value=number;
     socket.value.close();
@@ -166,13 +171,44 @@ if(messages.value){
   return groups;
 });
 
-
+const pagginationMessage = async(url) =>{
+  
+         try {
+            console.log('1286574692385709234870928734928374982374982374398')
+            console.log(messageList.value.scrollHeight)
+            console.log(messageList.value.scrollTop)
+            console.log('=')
+            console.log(messageList.value.scrollHeight - messageList.value.scrollTop)
+          saveScroll.value=messageList.value.scrollHeight - messageList.value.scrollTop
+          console.log(messageList.value)
+            const result2 = await useBaseFetch(`${url}`, {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + store.token, // Исправлено на Authorization
+               },
+            });
+            console.log(result2)
+            console.log(result2.results)
+            for (const key in result2.results) {
+              messages.value.unshift(result2.results[key])
+            }
+            setTimeout(()=>{
+              
+            messageList.value.scrollTop =messageList.value.scrollHeight - saveScroll.value
+            saveScroll.value=0
+            },100)
+         } catch (err) {
+            console.log("err", err);
+         }
+}
 
 onMounted(async() => {
     chatList = await store.getMyChatList()
     console.log(chatList)
     const result2 = await store.getChatMessageList(chatList[coorentChatId.value].id)
     console.log(result2)
+    nextMessages.value = result2.next
     console.log(result2.results)
     for (const key in result2.results) {
       messages.value.unshift(result2.results[key])
@@ -264,6 +300,23 @@ useHead({
     ],
 });
 
+// Обработчик события scroll
+const handleScroll = () => {
+  if (messageList.value) {
+    const scrollTop = messageList.value.scrollTop; // Текущая позиция прокрутки
+    if(isUp.value==false){
+      // Если пользователь почти долистал до верха (например, осталось 100 пикселей)
+      if (scrollTop < 100) {
+        isUp.value=true;
+        pagginationMessage(nextMessages.value)
+      }
+    }else{
+      if (scrollTop > 100) {
+        isUp.value=false;
+      }
+    }
+  }
+};
 // Прокрутка до конца списка сообщений
 const scrollToBottom = () => {
   if (messageList.value) {
