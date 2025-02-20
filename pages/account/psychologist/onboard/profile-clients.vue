@@ -9,10 +9,12 @@
                                 <div class="nav__menu">
                     <ul class="nav__menu-first">
                         <li>
-                            <a style="cursor: pointer;" @click="navigateTo('/account/psychologist/onboard/calendar')"><span class="icon psy-schedule"></span>Расписание</a>
+                          
+                  <NuxtLink to="/account/psychologist/onboard/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
+                            
                         </li>
                         <li>
-                            <a href="#"><span class="icon psy-chats"></span>Чаты</a>
+                          <NuxtLink to="/account/psychologist/onboard/chats"><span class="icon psy-chats"></span>Чаты</NuxtLink>
                         </li>
                         <li>
                             <a href="#"><span class="icon psy-clients"></span>Клиенты</a>
@@ -32,7 +34,7 @@
                             <a href="#"><span class="icon help"></span>Помощь</a>
                         </li>
                         <li class="__desk active">
-                            <a href="#"><span class="icon settings"></span>Настройки</a>
+                          <NuxtLink to="/account/psychologist/onboard/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -146,8 +148,11 @@
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">О себе</div>
                                         <div class="textarea-container">
-                                            <textarea name="about" v-model="psychologistData.description"></textarea>
+                                            <textarea name="about" v-model="psychologistData.description" 
+   maxlength="1500"
+                                            @input="limitText"></textarea>
                                         </div>
+                                        заполнено {{ psychologistData.description.length }} / 1500 символов
                                     </label>
 
                                 </div>
@@ -366,41 +371,64 @@
 
                     <!-- Образование -->
                     <div class="tab-body" data-tab-body="5">
-    <div class="tab-education">
-      <div class="profile__second">
-        <div class="education">
-          <!-- Динамический список образовательных записей -->
-          <div class="education__item" v-for="(edu, index) in psychologistData.education_psychologist" :key="index">
-            <div class="education__place">
-              <div class="education__label">Образование</div>
-              <div class="education__input">
-                <input
-                  type="text"
-                  v-model="edu.text"
-                  :name="`education-place-${index}`"
-                  placeholder="Введите место получения образования"
-                />
-              </div>
-            </div>
-            <div class="education__year">
-              <div class="education__label">Год окончания</div>
-              <div class="education__input">
-                <input
-                  type="text"
-                  v-model="edu.year"
-                  :name="`education-year-${index}`"
-                  placeholder="Введите год"
-                />
-              </div>
-            </div>
+                      <div class="tab-education">
+  <div class="profile__second">
+    <div class="education">
+      <div 
+        class="education__item" 
+        v-for="(edu, index) in psychologistData.education_psychologist" 
+        :key="index"
+      >
+        <div class="education__place">
+          <div class="education__label">Образование</div>
+          <div class="education__input">
+            <input
+              type="text"
+              v-model="edu.text"
+              :name="`education-place-${index}`"
+              placeholder="Введите место получения образования"
+            />
           </div>
         </div>
-        <!-- Кнопка "Добавить" -->
-        <div class="profile__btn-add" @click="addEducation">Добавить</div>
-        <!-- Кнопка "Сохранить" -->
-        <div class="profile__btn-save"  @click="send">Сохранить</div>
+        <div class="education__year">
+          <div class="education__label">Год окончания</div>
+          <div class="education__input">
+            <input
+              type="text"
+              v-model="edu.year"
+              :name="`education-year-${index}`"
+              placeholder="Введите год"
+            />
+          </div>
+        </div>
+
+        <!-- Кнопка для загрузки диплома -->
+        <div class="education__but">
+          <label class="profile__btn-add green">
+            <input type="file" @change="uploadDiploma($event, index)" hidden>
+            Загрузить диплом
+          </label>
+        </div>
+
+        <!-- Кнопка для просмотра диплома -->
+        <div class="education__but">
+          <button 
+            class="profile__btn-add" 
+            @click="viewDiploma(index)" 
+            
+          >
+            Просмотреть
+          </button>
+        </div>
       </div>
     </div>
+
+    <!-- Кнопка "Добавить" -->
+    <div class="profile__btn-add" @click="addEducation">Добавить</div>
+    <!-- Кнопка "Сохранить" -->
+    <div class="profile__btn-save" @click="send">Сохранить</div>
+  </div>
+</div>
   </div>
 
                     <!-- Договор -->
@@ -409,52 +437,138 @@
                             <div class="contract">
                                 <div class="contract__list">
                                                                             <div class="contract__item">
-                                            <div class="contract__label">Имя</div>
-                                            <div class="contract__value">Константин</div>
-                                        </div>
-                                                                            <div class="contract__item">
-                                            <div class="contract__label">Фамилия</div>
-                                            <div class="contract__value">Константинопольский</div>
+                                            <div class="contract__label">ФИО</div>
+                                            <input class="contract__value" type="text" v-model="psychologistData.name">
                                         </div>
                                                                             <div class="contract__item">
                                             <div class="contract__label">Налоговый статус</div>
-                                            <div class="contract__value">Самозанятый</div>
+                                            <select class="contract__value" name="tax_status" v-model="psychologistData.tax_status">
+                                                <option value="Самозанятый">Самозанятый</option>
+                                                <option value="Ип">Ип</option>
+                                                <option value="ООО">ООО</option>
+                                            </select>
                                         </div>
                                                                             <div class="contract__item">
                                             <div class="contract__label">Статус</div>
-                                            <div class="contract__value">Подписан</div>
+                                            <div class="contract__value">{{(psychologistData.accepted_to_system)?'Подписан':'Не подписан'}}</div>
                                         </div>
                                                                             <div class="contract__item">
                                             <div class="contract__label">Гражданство</div>
-                                            <div class="contract__value">РФ</div>
+                                            <input class="contract__value" type="text" v-model="psychologistData.citizenship">
                                         </div>
                                                                             <div class="contract__item">
                                             <div class="contract__label">Адрес</div>
-                                            <div class="contract__value">Адрес</div>
+                                            <input class="contract__value" type="text" v-model="psychologistData.address">
                                         </div>
                                                                             <div class="contract__item">
                                             <div class="contract__label">ИНН</div>
-                                            <div class="contract__value">0000000000000000</div>
+                                            <input class="contract__value" type="text" v-model="psychologistData.inn">
                                         </div>
                                                                     </div>
-                                <div class="contract__btns">
-                                    <div class="contract__btns-lbl">Скачать документы:</div>
-                                    <div class="contract__btns-wrp">
-                                        <div class="contract__btns-wrp-first">
-                                            <div class="contract__btn-passport">
-                                                <span class="passport-btn-icon"></span><span>Паспорт</span>
-                                            </div>
-                                            <div class="contract__btn-registration">
-                                                <span>Регистрация</span>
-                                            </div>
-                                        </div>
-                                        <div class="contract__btns-wrp-second">
-                                            <div class="contract__btn-contract">
-                                                <span class="contract-btn-icon"></span><span>Договор</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+  <div class="contract__btns">
+    <div class="contract__btns-lbl">Загрузить документы:</div>
+    <div class="contract__btns-wrp">
+      <div class="contract__btns-wrp-first">
+        <!-- Кнопка для загрузки паспорта -->
+        <div class="contract__btn-passport" @click="triggerFileInputPassport">
+          <span class="passport-btn-icon"></span><span>Паспорт</span>
+        </div>
+        <!-- Скрытый input для загрузки паспорта -->
+        <input
+          type="file"
+          ref="passportFileInput"
+          style="display: none"
+          @change="handlePassportFileUpload"
+        />
+
+        <!-- Кнопка для загрузки регистрации -->
+        <div class="contract__btn-registration" @click="triggerFileInputRegistration">
+          <span>Регистрация</span>
+        </div>
+        <!-- Скрытый input для загрузки регистрации -->
+        <input
+          type="file"
+          ref="registrationFileInput"
+          style="display: none"
+          @change="handleRegistrationFileUpload"
+        />
+      </div>
+      
+      <div class="contract__btns-wrp-first">
+        <!-- Кнопка для загрузки паспорта -->
+        <div class="contract__btn-passport" @click="triggerFileInputContract">
+          <span class="passport-btn-icon"></span><span>Договор</span>
+        </div>
+        <!-- Скрытый input для загрузки паспорта -->
+        <input
+          type="file"
+          ref="contractFileInput"
+          style="display: none"
+          @change="handleContractFileUpload"
+        />
+
+        <!-- Кнопка для загрузки регистрации -->
+        <div class="contract__btn-registration" @click="triggerFileInputINN">
+          <span>ИНН</span>
+        </div>
+        <!-- Скрытый input для загрузки регистрации -->
+        <input
+          type="file"
+          ref="INNFileInput"
+          style="display: none"
+          @change="handleINNFileUpload"
+        />
+      </div>
+      <div class="contract__btns-wrp-second">
+        <!-- Кнопка для загрузки договора -->
+        <div class="contract__btn-contract" @click="triggerFileInputRetirement">
+          <span class="contract-btn-icon"></span><span>Свидетельство пенсионного договора</span>
+        </div>
+        <!-- Скрытый input для загрузки договора -->
+        <input
+          type="file"
+          ref="retirementFileInput"
+          style="display: none"
+          @change="handleRetirementFileUpload"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="contract__btns view_dock">
+    <div class="contract__btns-lbl">Просмотреть документы:</div>
+    <div class="contract__btns-wrp">
+      <div class="contract__btns-wrp-first">
+        <!-- Кнопка для просмотра паспорта -->
+        <div class="contract__btn-passport" @click="viewPassport">
+          <span class="passport-btn-icon"></span><span>Паспорт</span>
+        </div>
+
+        <!-- Кнопка для просмотра регистрации -->
+        <div class="contract__btn-registration" @click="viewRegistration">
+          <span>Регистрация</span>
+        </div>
+      </div>
+      <div class="contract__btns-wrp-first">
+        <!-- Кнопка для просмотра паспорта -->
+        <div class="contract__btn-passport" @click="viewContract">
+          <span class="passport-btn-icon"></span><span>Договор</span>
+        </div>
+
+        <!-- Кнопка для просмотра регистрации -->
+        <div class="contract__btn-registration" @click="viewINN">
+          <span>ИНН</span>
+        </div>
+      </div>
+     
+      <div class="contract__btns-wrp-second">
+        <!-- Кнопка для просмотра договора -->
+        <div class="contract__btn-contract" @click="viewRetirement">
+          <span class="contract-btn-icon"></span><span>Свидетельство пенсионного договора</span>
+        </div>
+      </div>
+    </div>
+  </div>
                             </div>
                         </div>
                     </div>
@@ -595,6 +709,189 @@ import { toast } from "bulma-toast";
 });
 
 
+// Ссылки на скрытые input для загрузки файлов
+const passportFileInput = ref(null);
+const retirementFileInput = ref(null);
+const registrationFileInput = ref(null);
+const INNFileInput = ref(null);
+const contractFileInput = ref(null);
+
+// Файлы
+const passportFile = ref(null);
+const retirementFile = ref(null);
+const registrationFile = ref(null);
+const INNFile = ref(null);
+const contractFile = ref(null);
+
+// Функции для открытия диалога выбора файла
+function triggerFileInputPassport() {
+  passportFileInput.value.click();
+}
+
+function triggerFileInputRetirement() {
+  retirementFileInput.value.click();
+}
+function triggerFileInputRegistration() {
+  registrationFileInput.value.click();
+}
+
+function triggerFileInputINN() {
+  INNFileInput.value.click();
+}
+
+function triggerFileInputContract() {
+  contractFileInput.value.click();
+}
+
+// Функции для обработки загрузки файлов
+function handlePassportFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    passportFile.value = file;
+    console.log("Файл паспорта загружен:", file.name);
+  }
+}
+
+function handleRegistrationFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    registrationFile.value = file;
+    console.log("Файл регистрации загружен:", file.name);
+  }
+}
+function handleRetirementFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    retirementFile.value = file;
+    console.log("Файл свидетельства пенсионного договора загружен:", file.name);
+  }
+}
+function handleINNFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    INNFile.value = file;
+    console.log("Файл свидетельства пенсионного договора загружен:", file.name);
+  }
+}
+
+function handleContractFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    contractFile.value = file;
+    console.log("Файл договора загружен:", file.name);
+  }
+}
+
+// Функции для просмотра документов
+function viewPassport() {
+  if (passportFile.value) {
+    const fileURL = URL.createObjectURL(passportFile.value);
+    window.open(fileURL, '_blank');
+  } else {
+    if(psychologistData.value.passport!=''&&psychologistData.value.passport!=null){
+      console.log(psychologistData.value.passport)
+      window.open(psychologistData.value.passport, '_blank');
+    }else{
+      toast({
+            message: 'Файл паспорта не загружен.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+    }
+  }
+}
+
+function viewRegistration() {
+  if (registrationFile.value) {
+    const fileURL = URL.createObjectURL(registrationFile.value);
+    window.open(fileURL, '_blank');
+  } else {
+    if(psychologistData.value.registration!=''&&psychologistData.value.registration!=null){
+      window.open(psychologistData.value.registration, '_blank');
+    }else{
+      toast({
+            message: 'Файл регистрации не загружен.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+    }
+  }
+}
+function viewRetirement() {
+  if (retirementFile.value) {
+    const fileURL = URL.createObjectURL(retirementFile.value);
+    window.open(fileURL, '_blank');
+  } else {
+    if(psychologistData.value.retirement_certificate!=''&&psychologistData.value.retirement_certificate!=null){
+      window.open(psychologistData.value.retirement_certificate, '_blank');
+    }else{
+      toast({
+            message: 'Файл свидетельства пенсионного договора не загружен.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+    }
+  }
+}
+function viewINN() {
+  if (INNFile.value) {
+    const fileURL = URL.createObjectURL(INNFile.value);
+    window.open(fileURL, '_blank');
+  } else {
+    if(psychologistData.value.inn_file!=''&&psychologistData.value.inn_file!=null){
+      window.open(psychologistData.value.inn_file, '_blank');
+    }else{
+      toast({
+            message: 'Файл свидетельства пенсионного договора не загружен.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+    }
+  }
+}
+
+function viewContract() {
+  if (contractFile.value) {
+    const fileURL = URL.createObjectURL(contractFile.value);
+    window.open(fileURL, '_blank');
+  } else {
+    if(psychologistData.value.contract!=''&&psychologistData.value.contract!=null){
+      window.open(psychologistData.value.contract, '_blank');
+    }else{
+      toast({
+            message: 'Файл договора не загружен.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+    }
+  }
+}
+
+const limitText = () => {
+   if (psychologistData.description.length > 1500) {
+      psychologistData.description = psychologistData.description.slice(0, 1500);
+   }
+};
 const timezones = Intl.supportedValuesOf("timeZone");
 
 const getGMTOffset = (tz) => {
@@ -825,8 +1122,38 @@ const coupleWork = computed({
   },
 });
 function addEducation() {
-  psychologistData.value.education_psychologist.push({ text: '', year: '' });
+  psychologistData.value.education_psychologist.push({ text: '', year: '', diplomaFile: null });
 }
+// Функция загрузки файла
+const uploadDiploma = (event, index) => {
+  const file = event.target.files[0];
+  if (file) {
+    psychologistData.value.education_psychologist[index].diplomaFile = file;
+  }
+};
+// Функция просмотра диплома
+const viewDiploma = (index) => {
+  const file = psychologistData.value.education_psychologist[index].diplomaFile;
+  if (file) {
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL, "_blank");
+  } else {
+    if(psychologistData.value.education_psychologist[index].diploma){
+      window.open(psychologistData.value.education_psychologist[index].diploma, "_blank");
+    }else{
+        toast({
+            message: 'Файл диплома не загружен.',
+            type: "is-error", // если збс - то is-success, если плохо то is-error
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 13000,
+            position: "bottom-right",
+            className: "toast",
+         });
+    }
+  }
+};
+
 function cleanEducationData() {
   psychologistData.value.education_psychologist = psychologistData.value.education_psychologist.filter(
     (edu) => String(edu.text).trim() !== '' && String(edu.year).trim() !== ''
@@ -835,21 +1162,70 @@ function cleanEducationData() {
 const send = async() =>{
   console.log("Выбранные слоты:", selectedSlots.value);
   cleanEducationData();
+
+  const eduFormData = new FormData();
+  console.log(psychologistData.value.education_psychologist)
+  psychologistData.value.education_psychologist.forEach((edu, index) => {
+    eduFormData.append(`education[${index}][year]`, edu.year);
+    eduFormData.append(`education[${index}][text]`, edu.text);
+    if (edu.diplomaFile) {
+      eduFormData.append(`education[${index}][diploma]`, edu.diplomaFile);
+    }
+  });
+  let p_e_list=await store.sendPsycologistEducation(eduFormData)
   store.sendMySchedule(selectedSlots.value)
          try {
             // Создаем объект FormData
             const formData = new FormData();
       
             // Добавляем текстовые поля
+            if(psychologistData.value.tax_status  && psychologistData.value.tax_status!=null && psychologistData.value.tax_status!=undefined && psychologistData.value.tax_status!=''){
+              formData.append("tax_status", psychologistData.value.tax_status);
+            }
+            if(psychologistData.value.citizenship  && psychologistData.value.citizenship!=null && psychologistData.value.citizenship!=undefined && psychologistData.value.citizenship!=''){
+              formData.append("citizenship", psychologistData.value.citizenship);
+            }
+            if(psychologistData.value.address  && psychologistData.value.address!=null && psychologistData.value.address!=undefined && psychologistData.value.address!=''){
+              formData.append("address", psychologistData.value.address);
+            }
+            if(psychologistData.value.inn  && psychologistData.value.inn!=null && psychologistData.value.inn!=undefined && psychologistData.value.inn!=''){
+              formData.append("inn", psychologistData.value.inn);
+            }
             // formData.append("psycho_topics", JSON.stringify(psychologistData.value.psycho_topics));
-            formData.append("education_psychologist_write", JSON.stringify(psychologistData.value.education_psychologist));
+            
+
+
+
+            // if(psychologistData.value.education_psychologist  && psychologistData.value.education_psychologist!=null && psychologistData.value.education_psychologist!=undefined && psychologistData.value.education_psychologist!=''){
+            //   formData.append("education_psychologist_write", JSON.stringify(psychologistData.value.education_psychologist));
+            // }
+            if(p_e_list&&p_e_list!=null&&p_e_list!=[]&&p_e_list!=''){
+              const ids = Object.values(p_e_list).map(item => item.id);
+              formData.append("education_psychologist_write", JSON.stringify(ids));
+            }
+
+
+
+
+
             //formData.append("phone_number", psychologistData.value.phone_number);
-            formData.append("name", psychologistData.value.name);
-            formData.append("working_methods", psychologistData.value.working_methods);
-            formData.append("age", psychologistData.value.age.toString());
+            if(psychologistData.value.name  && psychologistData.value.name!=null && psychologistData.value.name!=undefined && psychologistData.value.name!=''){
+              formData.append("name", psychologistData.value.name);
+            }
+            if(psychologistData.value.working_methods  && psychologistData.value.working_methods!=null && psychologistData.value.working_methods!=undefined && psychologistData.value.working_methods!=''){
+              formData.append("working_methods", psychologistData.value.working_methods);
+            }
+            console.log(psychologistData.value.date_of_birth.toString());
+            if(psychologistData.value.date_of_birth.toString()  && psychologistData.value.date_of_birth.toString()!=null && psychologistData.value.date_of_birth.toString()!=undefined && psychologistData.value.date_of_birth.toString()!=''){
+              formData.append("date_of_birth", psychologistData.value.date_of_birth.toString());
+            }
             // formData.append("label", psychologistData.value.label);
-            formData.append("timezone", psychologistData.value.timezone);
-            formData.append("session_duration", psychologistData.value.session_duration);
+            if(psychologistData.value.timezone  && psychologistData.value.timezone!=null && psychologistData.value.timezone!=undefined && psychologistData.value.timezone!=''){
+              formData.append("timezone", psychologistData.value.timezone);
+            }
+            if(psychologistData.value.session_duration  && psychologistData.value.session_duration!=null && psychologistData.value.session_duration!=undefined && psychologistData.value.session_duration!=''){
+              formData.append("session_duration", psychologistData.value.session_duration);
+            }
             // formData.append("experience", psychologistData.value.experience.toString());
             console.log(psychologistData.value.description)
             console.log(psychologistData.value.description.length)
@@ -858,26 +1234,63 @@ const send = async() =>{
             if(psychologistData.value.description && psychologistData.value.description!=null && psychologistData.value.description!=undefined && psychologistData.value.description!=''){
               formData.append("description", psychologistData.value.description);
             }
-            formData.append("sex", psychologistData.value.sex);
-            formData.append("price", psychologistData.value.price.toString());
-            if(psychologistData.value.email  && psychologistData.value.email!=null && psychologistData.value.email!=undefined && psychologistData.value.description!=''){
+            if(psychologistData.value.sex  && psychologistData.value.sex!=null && psychologistData.value.sex!=undefined && psychologistData.value.sex!=''){
+              formData.append("sex", psychologistData.value.sex);
+            }
+            if(psychologistData.value.price.toString()  && psychologistData.value.price.toString()!=null && psychologistData.value.price.toString()!=undefined && psychologistData.value.price.toString()!=''){
+              formData.append("price", psychologistData.value.price.toString());
+            }
+            if(psychologistData.value.email  && psychologistData.value.email!=null && psychologistData.value.email!=undefined && psychologistData.value.email!=''){
               formData.append("email", psychologistData.value.email);
             }
-            formData.append("notifications_phone", psychologistData.value.notifications_phone.toString());
-            formData.append("notifications_email", psychologistData.value.notifications_email.toString());
-            if(psychologistData.value.date_of_birth && psychologistData.value.date_of_birth!=null && psychologistData.value.date_of_birth!=undefined && psychologistData.value.description!=''){
+            if(psychologistData.value.notifications_phone.toString()  && psychologistData.value.notifications_phone.toString()!=null && psychologistData.value.notifications_phone.toString()!=undefined && psychologistData.value.notifications_phone.toString()!=''){
+              formData.append("notifications_phone", psychologistData.value.notifications_phone.toString());
+            }
+            if(psychologistData.value.notifications_email.toString()  && psychologistData.value.notifications_email.toString()!=null && psychologistData.value.notifications_email.toString()!=undefined && psychologistData.value.notifications_email.toString()!=''){
+              formData.append("notifications_email", psychologistData.value.notifications_email.toString());
+            }
+            if(psychologistData.value.date_of_birth && psychologistData.value.date_of_birth!=null && psychologistData.value.date_of_birth!=undefined && psychologistData.value.date_of_birth!=''){
               formData.append("date_of_birth", psychologistData.value.date_of_birth);
             }
-            formData.append("language", psychologistData.value.language);
-            formData.append("client_age", psychologistData.value.client_age);
-            formData.append("experience_with_identity_search", psychologistData.value.experience_with_identity_search.toString());
-            formData.append("couple_therapy", psychologistData.value.couple_therapy.toString());
+            if(psychologistData.value.language  && psychologistData.value.language!=null && psychologistData.value.language!=undefined && psychologistData.value.language!=''){
+              formData.append("language", psychologistData.value.language);
+            }
+            if(psychologistData.value.client_age  && psychologistData.value.client_age!=null && psychologistData.value.client_age!=undefined && psychologistData.value.client_age!=''){
+              formData.append("client_age", psychologistData.value.client_age);
+            }
+            if(psychologistData.value.experience_with_identity_search.toString()  && psychologistData.value.experience_with_identity_search.toString()!=null && psychologistData.value.experience_with_identity_search.toString()!=undefined && psychologistData.value.experience_with_identity_search.toString()!=''){
+              formData.append("experience_with_identity_search", psychologistData.value.experience_with_identity_search.toString());
+            }
+            if(psychologistData.value.couple_therapy.toString()  && psychologistData.value.couple_therapy.toString()!=null && psychologistData.value.couple_therapy.toString()!=undefined && psychologistData.value.couple_therapy.toString()!=''){
+              formData.append("couple_therapy", psychologistData.value.couple_therapy.toString());
+            }
       
             // Добавляем файл photo, если он есть
             if (psychologistData.value.photo instanceof File) {
                formData.append("photo", psychologistData.value.photo);
             }
-      
+            // Добавляем файл договора, если он есть
+            if (contractFile.value instanceof File) {
+              formData.append("contract", contractFile.value);
+            }
+            // Добавляем файл договора, если он есть
+            if (passportFile.value instanceof File) {
+              formData.append("passport", passportFile.value);
+            }
+            // Добавляем файл договора, если он есть
+            if (registrationFile.value instanceof File) {
+              formData.append("registration", registrationFile.value);
+            }
+            console.log(retirementFile.value)
+            // Добавляем файл договора, если он есть
+            if (retirementFile.value instanceof File) {
+              formData.append("retirement_certificate", retirementFile.value);
+            }
+            // Добавляем файл договора, если он есть
+            if (INNFile.value instanceof File) {
+              formData.append("inn_file", INNFile.value);
+            }
+
             // Отправляем запрос
             const response = await useBaseFetch("/cabinet/change-self-psychologist/", {
                method: "PATCH",
@@ -886,6 +1299,7 @@ const send = async() =>{
                   Authorization: "Token " + store.token, // Авторизация
                },
             });
+            console.log(response)
             if(response.name=='FetchError'){
               
               toast({
@@ -1152,8 +1566,67 @@ const exit = () =>{
   store.exitAccount()
 }
 </script>
-<style scoped>
 
+<style scoped> 
+.green{
+  background: #ABD29B !important;
+}
+@media (max-width: 1190px) {
+.green{
+  background: #F7F7F7 !important;
+}
+}
+
+.education__but{
+display: flex;
+align-items: end;
+margin-right: 15px;
+}
+.education__year .education__label{
+  opacity: 1 !important;
+}
+.view_dock>div>div>div{
+  background: #ff6900 !important;
+}
+.education__place, .education__year {
+    justify-content: end;
+}
+/* @media (max-width: 900px) {
+    .education__item {
+        flex-wrap: wrap;
+    }
+} */
+
+
+@media (max-width: 900px) {
+    .education__year {
+        width: 92px !important;
+    }
+}
+@media (max-width: 1190px) {
+    .contract__btns-lbl {
+         display: block !important; 
+    }
+}
+.contract__btns{
+  margin-bottom: 20px;
+}
+input.contract__value{
+  background: none;
+    border: none;
+    font-size: 16px;
+    font-family: "Manrope", sans-serif;
+    color: #342b26;
+    max-width: none;
+    width: -webkit-fill-available;
+}
+select.contract__value{
+  background: none;
+    border: none;
+    font-size: 16px;
+    font-family: "Manrope", sans-serif;
+    color: #342b26;
+}
 .wrapper{
   width: 100%;
 }

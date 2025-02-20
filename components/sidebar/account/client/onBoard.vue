@@ -74,28 +74,28 @@
          </a>
                         <div class="nav__menu">
             <ul class="nav__menu-first">
-               <li class="active">
-                     <a href="#"><span class="icon mysessions"></span>Мои Сессии</a>
+               <li  :class="{ active: route.path.endsWith('schedule') }" >
+                     <a  style="cursor: pointer;" @click="navigateTo('/account/client/onboard/schedule')"><span class="icon mysessions"></span>Мои Сессии</a>
+               </li>
+               <li :class="{ active: route.path.endsWith('chats') }" >
+                     <a  style="cursor: pointer;" @click="navigateTo('/account/client/onboard/chats')"><span class="icon chats"></span>Чаты</a>
                </li>
                <li>
-                     <a href="#"><span class="icon chats"></span>Чаты</a>
+                     <a  style="cursor: pointer;"><span class="icon events"></span>События</a>
                </li>
                <li>
-                     <a href="#"><span class="icon events"></span>События</a>
+                     <a  style="cursor: pointer;"><span class="icon payments"></span>Платежи</a>
                </li>
                <li>
-                     <a href="#"><span class="icon payments"></span>Платежи</a>
-               </li>
-               <li>
-                     <a href="#"><span class="icon invitations"></span>Приглашения</a>
+                     <a  style="cursor: pointer;"><span class="icon invitations"></span>Приглашения</a>
                </li>
             </ul>
             <ul class="nav__menu-second">
                <li>
-                     <a href="#"><span class="icon help"></span>Помощь</a>
+                     <a  style="cursor: pointer;"><span class="icon help"></span>Помощь</a>
                </li>
                <li class="__desk ">
-                     <a href="#"><span class="icon settings"></span>Настройки</a>
+                     <a  style="cursor: pointer;"><span class="icon settings"></span>Настройки</a>
                </li>
             </ul>
          </div>
@@ -110,6 +110,7 @@
 <script setup>
 import { useClientStore } from '~/stores/client/store';
 const store = useClientStore()
+const route = useRoute();
 
 const props = defineProps({
    step: String,

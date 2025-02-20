@@ -1,7 +1,52 @@
 <template>
     <div class="wrapper">
         
-      <SidebarAccountClientOnBoard :step="'main'"/>
+      
+        <nav class="nav">
+            <div class="nav__inner">
+                <a href="#" class="nav__logo">
+                    <img src="/site/img/Logo.svg" alt="Позитолк">
+                </a>
+                                <div class="nav__menu">
+                    <ul class="nav__menu-first">
+                        <li>
+                          
+                  <NuxtLink to="/account/psychologist/onboard/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
+                            
+                        </li>
+                        <li class="active">
+                          <NuxtLink to="/account/psychologist/onboard/chats"><span class="icon psy-chats"></span>Чаты</NuxtLink>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-clients"></span>Клиенты</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-payments"></span>Оплата</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-statistics"></span>Статистика</a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="icon psy-events"></span>События</a>
+                        </li>
+                    </ul>
+                    <ul class="nav__menu-second">
+                        <li>
+                            <a href="#"><span class="icon help"></span>Помощь</a>
+                        </li>
+                        <li class="__desk">
+                          <NuxtLink to="/account/psychologist/onboard/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav__mob">
+                    <a href="#" class="nav__settings_mob"></a>
+                    <div class="nav__burger"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="nav__mob_layer"></div>
         <main class="main">
 <div class="dashboard">
 

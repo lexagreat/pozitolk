@@ -8,10 +8,10 @@
                                 <div class="nav__menu">
                     <ul class="nav__menu-first">
                         <li class="active">
-                            <a href="#"><span class="icon psy-schedule"></span>Расписание</a>
+                          <NuxtLink to="/account/psychologist/onboard/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
                         </li>
                         <li>
-                            <a href="#"><span class="icon psy-chats"></span>Чаты</a>
+                          <NuxtLink to="/account/psychologist/onboard/chats" ><span class="icon psy-chats"></span>Чаты</NuxtLink>
                         </li>
                         <li>
                             <a href="#"><span class="icon psy-clients"></span>Клиенты</a>
@@ -31,7 +31,7 @@
                             <a href="#"><span class="icon help"></span>Помощь</a>
                         </li>
                         <li class="__desk ">
-                            <a style="cursor: pointer;" @click="navigateTo('/account/psychologist/onboard/profile-clients')"><span class="icon settings"></span>Настройки</a>
+                          <NuxtLink to="/account/psychologist/onboard/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -76,7 +76,7 @@
           :key="`${day}-${hour}`" 
           class="table-cell"
         >
-            <div class="cell-body" :class="{'mark-1': getSlotClass(day, hour)=='free'},{'mark-2': getSlotClass(day, hour)=='available'},{'mark-3': getSlotClass(day, hour)=='busy'}">{{ getSlotText(day, hour) }}</div>
+            <div class="cell-body" :class="{'mark-1': getSlotClass(day, hour)=='free'},{'mark-2': getSlotClass(day, hour)=='available'},{'mark-3': getSlotClass(day, hour)=='busy'}" @click="getSlotId(day,hour)">{{ getSlotText(day, hour) }}</div>
             <div class="cell-btn">
                 <div class="cell-btn__inner">Открыть заметки</div>
             </div>
@@ -91,7 +91,7 @@
             <div class="dashboard__side-title">{{ sideTitle }}</div>
             <div class="dashboard__side-info">Специалист ответит в удобное время Вам в чате</div>
             <div class="dashboard__side-btns">
-                <div class="chatwrite-btn">Написать в чате</div>
+                <div class="chatwrite-btn" @click="goToChat">Написать в чате</div>
                 <div class="conswrite-btn">Запустить консультацию</div>
             </div>
         </div>
@@ -142,6 +142,10 @@ const hours = ref([
 
 const fullDayNames = { "Пн": "Понедельник", "Вт": "Вторник", "Ср": "Среда", "Чт": "Четверг", "Пт": "Пятница", "Сб": "Суббота", "Вс": "Воскресенье" };
 const sideTitle = ref("Констатинопольский"); 
+const client_id = ref(0);
+const my_id = ref(0)
+let res = await store.getMe()
+
 
 const now = new Date();
 const monday = new Date(now.setDate(now.getDate() - now.getDay() + 1));
@@ -157,10 +161,10 @@ monday.setDate(now.getDate() + diffToMonday);
 const sunday = new Date(monday);
 sunday.setDate(monday.getDate() + 6);
 async function fetchSchedule() {
-  const data = await store.getMyShedule();
+  const data = await store.getMySheduleWeek(formatDateQuery(monday), formatDateQuery(sunday));
+  console.log(data)
   schedule.value = data.slots;
 }
-
 function getCurrentWeekDays() {
   const days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   return days.map((day, i) => {
@@ -205,14 +209,36 @@ const goToPreviousWeek = () => {
     schedule.value = response.slots;
   });
 };
+const goToChat= async() =>{
+         try {
+            const response = await useBaseFetch("/session/chat/", {
+               method: "POST",
+               body: {
+                'client':client_id.value,
+                'psychologist':my_id.value
+               },
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + store.token, // Исправлено на Authorization
+               },
+            });
+            setTimeout(()=>{
+              navigateTo('/account/psychologist/onboard/chats')
+            },100)
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+    
+}
 function getSlotClass(day, hour) {
   const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
   if (!slot) return "empty";
   if (slot) {
     const slotDate = slot.datetime.split(' ')[0];  // Получаем дату из slot
-    const today = new Date().toISOString().split('T')[0];  // Получаем сегодняшнюю дату в формате YYYY-MM-DD
-
-    console.log(slotDate);
+    const today = new Date().toLocaleDateString('ru-RU').split('.').reverse().join('-'); // Получаем сегодняшнюю дату в формате YYYY-MM-DD
+    
 
     if (slotDate === today &&slot.status !== "free") {
       return "free"
@@ -221,6 +247,13 @@ function getSlotClass(day, hour) {
   return slot.status === "free" ? "available" : slot.status === "busy" ? "busy" : "empty";
 }
 
+function getSlotId(day, hour) {
+  const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
+  if (slot) {
+    client_id.value = slot.client_id
+    console.log(client_id.value)
+  }
+}
 
 function getSlotText(day, hour) {
   const slot = schedule.value.find(slot => slot.day_of_week === getFullDayName(day.slice(0, 2)) && slot.time === hour);
@@ -235,9 +268,12 @@ function getFullDayName(shortDay) {
 function updateSideTitle(text) {
   sideTitle.value = text;
 }
+
 onMounted(async () => {
     fetchSchedule();
+    my_id.value=res.id
     setTimeout(()=>{
+      console.log(schedule.value)
       $(document).ready(function () {
         
         // Таблица

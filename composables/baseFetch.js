@@ -12,6 +12,41 @@ export async function useBaseFetch(request, opts) {
       return myRequest;
    } catch (err) {
       if (err.data){
+         
+
+
+
+
+
+         if (typeof err.data === "string") {
+            // Парсим HTML, чтобы вытащить Exception Value
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(err.data, "text/html");
+            const errorMessage = doc.querySelector(".exception_value")?.textContent?.trim();
+        
+            if (errorMessage == 'this email already exists') {
+               toast({
+                        message: "данный email привязан к другому пользователю, введите другую почту",
+                        type: "is-error", // если збс - то is-success, если плохо то is-error
+                        dismissible: true,
+                        pauseOnHover: true,
+                        duration: 13000,
+                        position: "bottom-right",
+                        className: "toast",
+                     });
+            } else {
+              console.error("Не удалось извлечь ошибку из HTML.");
+            }
+          }
+
+
+
+
+
+
+
+
+
          if (err.data.detail){
             if(err.data.detail=='Invalid token.'){
                const store = useClientStore();
