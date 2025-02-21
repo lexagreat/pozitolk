@@ -152,7 +152,7 @@
    maxlength="1500"
                                             @input="limitText"></textarea>
                                         </div>
-                                        заполнено {{ psychologistData.description.length }} / 1500 символов
+                                        <span>заполнено {{ psychologistData.description.length }} / 1500 символов</span>
                                     </label>
 
                                 </div>
@@ -404,7 +404,7 @@
 
         <!-- Кнопка для загрузки диплома -->
         <div class="education__but">
-          <label class="profile__btn-add green">
+          <label class="education__btn-add green">
             <input type="file" @change="uploadDiploma($event, index)" hidden>
             Загрузить диплом
           </label>
@@ -413,7 +413,7 @@
         <!-- Кнопка для просмотра диплома -->
         <div class="education__but">
           <button 
-            class="profile__btn-add" 
+            class="education__btn-add" 
             @click="viewDiploma(index)" 
             
           >
@@ -1409,9 +1409,11 @@ store.getMySchedulePsychologist()
           // START "Этический кодекс" popup
           $('.profile__ethical-btn, .profile__ethical').on('click', function () {
               $('.profile-popup').addClass('active');
+              $('.nav').addClass('disabled');
           });
           $('.profile-popup__close, .profile-popup__layer').on('click', function () {
               $('.profile-popup').removeClass('active');
+              $('.nav').removeClass('disabled');
           });
           // END "Этический кодекс" popup
 
@@ -1568,15 +1570,39 @@ const exit = () =>{
 </script>
 
 <style scoped> 
+.profgeneral__input>span{
+  font-size: 12px;
+}
+nav.nav{
+  z-index: 2;
+}
+nav.nav.disabled{
+  z-index: 0 !important;
+}
 .green{
   background: #ABD29B !important;
 }
-@media (max-width: 1190px) {
-.green{
-  background: #F7F7F7 !important;
+.dashboard{
+  background: #fff !important;
+  padding: 26px 24px !important;
 }
+.education__btn-add{
+padding: 16px 32px;
+    background: #FF6900;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    transition: all 0.2sease;
+    width: -moz-fit-content;
+    width: fit-content;
+    border: none;
+    font-size: 16px;
+    min-height: 54px;
 }
-
 .education__but{
 display: flex;
 align-items: end;
@@ -1590,6 +1616,37 @@ margin-right: 15px;
 }
 .education__place, .education__year {
     justify-content: end;
+}
+@media (max-width: 1190px) {
+  .education__but{
+  margin-right: 0;
+  }
+  .education__btn-add{
+  padding: 8px 16px;
+  min-height: 48px;
+      border-radius: 8px;
+      font-weight: 500;
+      width: -moz-fit-content;
+      width: fit-content;
+      border: none;
+      font-size: 10px;
+        display: flex;
+        align-items: center;
+  }
+.education__place, 
+.education__year, 
+.education__but {
+    flex: 1 1 calc(50% - 8px); /* Два элемента в ряду */
+    max-width: calc(50% - 8px);
+}
+.education__item {
+    flex-wrap: wrap;
+}
+
+/* Чтобы кнопки не растягивались и шли в одном ряду */
+.education__but {
+    max-width: none;
+}
 }
 /* @media (max-width: 900px) {
     .education__item {

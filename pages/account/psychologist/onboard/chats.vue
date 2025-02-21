@@ -388,6 +388,55 @@ const formatDate = (dateString) => {
 </script>
 
 <style scoped>
+
+.psy-schedule {
+  background-image: url(../img/psy-schedule.svg);
+}
+
+li.active .psy-schedule {
+  background-image: url(../img/psy-schedule-active.svg);
+}
+
+.psy-chats {
+  background-image: url(../img/psy-chats.svg);
+}
+
+li.active .psy-chats {
+  background-image: url(../img/psy-chats-active.svg);
+}
+
+.psy-clients {
+  background-image: url(../img/psy-clients.svg);
+}
+
+li.active .psy-clients {
+  background-image: url(../img/psy-clients-active.svg);
+}
+
+.psy-payments {
+  background-image: url(../img/psy-payments.svg);
+}
+
+li.active .psy-payments {
+  background-image: url(../img/psy-payments-active.svg);
+}
+
+.psy-statistics {
+  background-image: url(../img/psy-statistics.svg);
+}
+
+li.active .psy-statistics {
+  background-image: url(../img/psy-statistics-active.svg);
+}
+
+.psy-events {
+  background-image: url(../img/psy-events.svg);
+}
+
+li.active .psy-events {
+  background-image: url(../img/psy-events-active.svg);
+}
+
 .wrapper{
   width: 100%;
 }

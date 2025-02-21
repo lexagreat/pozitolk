@@ -179,12 +179,10 @@ if(messages.value){
 const pagginationMessage = async(url) =>{
   
          try {
-            console.log('1286574692385709234870928734928374982374982374398')
-            console.log(messageList.value.scrollHeight)
-            console.log(messageList.value.scrollTop)
-            console.log('=')
-            console.log(messageList.value.scrollHeight - messageList.value.scrollTop)
+         if(url!=null){
+
           saveScroll.value=messageList.value.scrollHeight - messageList.value.scrollTop
+          console.log(url)
           console.log(messageList.value)
             const result2 = await useBaseFetch(`${url}`, {
                headers: {
@@ -204,6 +202,8 @@ const pagginationMessage = async(url) =>{
             messageList.value.scrollTop =messageList.value.scrollHeight - saveScroll.value
             saveScroll.value=0
             },100)
+         }
+            
          } catch (err) {
             console.log("err", err);
          }

@@ -14,9 +14,16 @@
                               <input id="phone" name="phone" type="tel" value="" placeholder="999 999 99 99">
                               <span id="valid-msg" class="hide"></span>
                               <span id="error-msg" class="hide"></span>
-                              <div class="checkbox_flex">
-                                 <input type="checkbox" id="checkbox" v-model="isPsychologist">
-                                 <label for="checkbox">я психолог</label>
+                              <div class="checkbox_flex qstn">
+                                 <div class="qstn__row">
+                                    <label class="qstn__info-checkbox">
+                                       <input type="checkbox" name="qstn-4" id="checkbox" v-model="isPsychologist">
+                                       <div class="input_checkbox"></div>
+                                       <span>
+                                          я психолог
+                                       </span>
+                                    </label>
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -165,6 +172,48 @@ onMounted(() => {
    font-size: 20px;
    margin-left: 10px;
    user-select: none;
+}
+.qstn .qstn__row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 6px;
+}
+.qstn .qstn__info-checkbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: center !important;
+    gap: 6px;
+    margin-top: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.qstn .qstn__info-checkbox input {
+    display: none;
+}
+.qstn .qstn__info-checkbox .input_checkbox {
+    background-color: #f7f7f7;
+    border: 2px solid #dddddd;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    margin: 4px;
+    cursor: pointer;
+}
+.qstn {
+    color: #363636;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 32px;
 }
 @media (max-width: 1190px) {
 .wrapper{
