@@ -179,7 +179,7 @@ if(messages.value){
 const pagginationMessage = async(url) =>{
   
          try {
-         if(url!=null){
+         if(url!=null&&url!=undefined){
 
           saveScroll.value=messageList.value.scrollHeight - messageList.value.scrollTop
           console.log(url)

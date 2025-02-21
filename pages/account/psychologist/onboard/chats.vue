@@ -55,7 +55,7 @@
             <div class="chat__list-title">Чаты</div>
             <div class="chat__persons">
                 <div class="chat__persons-item" :class="coorentChatId==index?'active':''" v-for="(chat,index) in chatList" @click="CangeChat(index)">
-                    <div class="chat__persons-img" :style="{ backgroundImage: `url(${chat.psychologist_avatar})` }"></div>
+                    <div class="chat__persons-img" :style="{ backgroundImage: `url(${chat.client_avatar})` }"></div>
                     <div class="chat__persons-body">
                         <div class="chat__persons-name">{{chat.psychologist_nickname}}</div>
                         <div class="chat__persons-msg">{{(chat.last_message)?chat.last_message.text:''}}</div>
@@ -68,7 +68,7 @@
 
             <div class="message-mob">
                 <div class="message-mob-btn">Чаты /</div>
-                <div class="message-mob-img" style="background-image:url(chat.psychologist_avatar);"></div>
+                <div class="message-mob-img" style="background-image:url(chat.client_avatar);"></div>
                 <div class="message-mob-name" v-if="chatList">{{ chatList[coorentChatId].psychologist_nickname }}</div>
             </div>
 
@@ -224,11 +224,8 @@ if(messages.value){
 const pagginationMessage = async(url) =>{
   
          try {
-            console.log('1286574692385709234870928734928374982374982374398')
-            console.log(messageList.value.scrollHeight)
-            console.log(messageList.value.scrollTop)
-            console.log('=')
-            console.log(messageList.value.scrollHeight - messageList.value.scrollTop)
+          if(url!=null&&url!=undefined){
+            
           saveScroll.value=messageList.value.scrollHeight - messageList.value.scrollTop
           console.log(messageList.value)
             const result2 = await useBaseFetch(`${url}`, {
@@ -248,7 +245,7 @@ const pagginationMessage = async(url) =>{
               
             messageList.value.scrollTop =messageList.value.scrollHeight - saveScroll.value
             saveScroll.value=0
-            },100)
+            },100)}
          } catch (err) {
             console.log("err", err);
          }
@@ -260,7 +257,7 @@ onMounted(async() => {
     const result2 = await store.getChatMessageList(chatList[coorentChatId.value].id,1,30)
     console.log(result2)
     nextMessages.value = result2.next
-    srcOpponent.value = chatList[0].psychologist_avatar
+    srcOpponent.value = chatList[0].client_avatar
     console.log(result2.results)
     for (const key in result2.results) {
       messages.value.unshift(result2.results[key])
