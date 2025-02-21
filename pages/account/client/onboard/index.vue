@@ -159,7 +159,9 @@ onMounted(() => {
 
 
 <style scoped>
-
+.wrapper {
+   background: linear-gradient(180deg, #FDFBFB, #F7F7F7); 
+}
 .checkbox_flex{
    display: flex;
    color: black;
