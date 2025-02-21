@@ -68,7 +68,7 @@
 
             <div class="message-mob">
                 <div class="message-mob-btn">Чаты /</div>
-                <div class="message-mob-img" style="background-image:url(./assets/img/chat__persons-img-1.png);"></div>
+                <div class="message-mob-img" style="background-image:url(chat.psychologist_avatar);"></div>
                 <div class="message-mob-name" v-if="chatList">{{ chatList[coorentChatId].psychologist_nickname }}</div>
             </div>
 
@@ -79,11 +79,13 @@
                   <!-- Группируем сообщения по отправителю -->
                   <div v-for="(group, groupIndex) in groupedMessages" :key="groupIndex" class="message-group">
                     <!-- Аватарка для группы сообщений -->
-                    <div
-                      v-if="group.sender !== myId"
-                      class="message-group__avatar"
-                      :style="`background-image: url(${srcOpponent});`"
-                    ></div>
+                     <div class="message-group__avatar_parent">
+                        <div
+                          v-if="group.sender !== myId"
+                          class="message-group__avatar"
+                          :style="`background-image: url(${srcOpponent});`"
+                        ></div>
+                     </div>
                     <!-- Сообщения в группе -->
                     <div
                       v-for="(message, index) in group.messages"
@@ -133,6 +135,7 @@
 </div>
 </template>
 
+
 <script setup>
 import { useClientStore } from '~/stores/client/store';
 
@@ -156,6 +159,7 @@ const CangeChat = async(number) => {
     socket.value.close();
     const result2 = await store.getChatMessageList(chatList[coorentChatId.value].id,1,30)
     console.log(result2)
+    srcOpponent.value = chatList[coorentChatId.value]
     messages.value = [];
     console.log(result2.results)
     for (const key in result2.results) {
@@ -256,6 +260,7 @@ onMounted(async() => {
     const result2 = await store.getChatMessageList(chatList[coorentChatId.value].id,1,30)
     console.log(result2)
     nextMessages.value = result2.next
+    srcOpponent.value = chatList[0].psychologist_avatar
     console.log(result2.results)
     for (const key in result2.results) {
       messages.value.unshift(result2.results[key])
@@ -381,6 +386,7 @@ const formatDate = (dateString) => {
         : date.toLocaleDateString('ru-RU'); // Только дата
 };
 </script>
+
 <style scoped>
 .wrapper{
   width: 100%;
@@ -394,6 +400,7 @@ const formatDate = (dateString) => {
 }
 .incoming{
   justify-self: start;
+  margin-left: 60px;
 }
 .message__item-img {
   position: sticky;
@@ -403,5 +410,25 @@ const formatDate = (dateString) => {
 .chat__persons-time{
    margin-left: auto;
 }
+.message-group{
+  
+  position: relative; /* Важное условие */
+}
+.message-group__avatar_parent{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.chat__persons-img {
+  background-size: cover !important;}
+.message-group__avatar{
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: sticky;
+  top:  0;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+}
 </style>
-
