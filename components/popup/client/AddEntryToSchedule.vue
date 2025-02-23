@@ -47,6 +47,7 @@ const props = defineProps({
     psychologistName: String,
     psychologistId: String,
     psychologistAvatar: String,
+    session_duration: Number,
     time: String,
 });
 const session_id = ref()
@@ -59,7 +60,7 @@ const createSession = async () => {
 const date = new Date(props.time);
 const isoString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`;
 const datePlusOneHour = new Date(date); // Копируем исходную дату
-datePlusOneHour.setHours(date.getHours() + 1);
+datePlusOneHour.setHours(date.getHours() + props.session_duration);
 const isoStringPlusOneHour = `${datePlusOneHour.getFullYear()}-${String(datePlusOneHour.getMonth() + 1).padStart(2, '0')}-${String(datePlusOneHour.getDate()).padStart(2, '0')}T${String(datePlusOneHour.getHours()).padStart(2, '0')}:${String(datePlusOneHour.getMinutes()).padStart(2, '0')}:${String(datePlusOneHour.getSeconds()).padStart(2, '0')}.${String(datePlusOneHour.getMilliseconds()).padStart(3, '0')}`;
     const response = await useBaseFetch('/session/book/'+props.psychologistId+'/', {
         method: "POST",

@@ -2,9 +2,9 @@
     <div class="wrapper">
         <nav class="nav">
             <div class="nav__inner">
-                <a href="#" class="nav__logo">
+                  <NuxtLink class="nav__logo" to="/">
                     <img src="/site/img/Logo.svg" alt="Позитолк">
-                </a>
+                  </NuxtLink>
                                 <div class="nav__menu">
                     <ul class="nav__menu-first">
                         <li class="active">

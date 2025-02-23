@@ -45,7 +45,7 @@
                 </div>
              </div>
              <PopupClientRescheduleAnAppointment :sessionId="chosen_session_id" />
-             <PopupClientAddEntryToSchedule :psychologistName="psychologistName" :psychologistId="psychologistId" :psychologistAvatar="psychologistAvatar" :time="chosen_session_time" />
+             <PopupClientAddEntryToSchedule :session_duration="session_duration" :psychologistName="psychologistName" :psychologistId="psychologistId" :psychologistAvatar="psychologistAvatar" :time="chosen_session_time" />
              <PopupClientDeleteScheduleEntry :sessionId="chosen_session_id" />
           </main>
         <!-- <PopupClientAddCart />
@@ -97,6 +97,7 @@ const chosen_session_id = ref();
 const chosen_session_time = ref();
 const slotsAndPsychologist = ref();
 const psychologistAvatar = ref();
+const session_duration = ref(1);
 
 
 const hours = ref([
@@ -240,6 +241,7 @@ onMounted(async () => {
       const sundayFormatted = formatDateQuery(sunday);
       slotsAndPsychologist.value = await store.getSchedulePsychologist(psychologistId,mondayFormatted,sundayFormatted);
       schedule.value = slotsAndPsychologist.value.slots
+      session_duration.value = slotsAndPsychologist.value.session_duration
       console.log(schedule.value)
       psychologistName.value = slotsAndPsychologist.value.psychologist_info.psychologist_name;
       psychologistAvatar.value = slotsAndPsychologist.value.psychologist_info.psychologist_avatar;

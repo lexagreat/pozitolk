@@ -367,11 +367,12 @@
 
             <SectionsFaq />
 
-            <!-- остались вопросы? -->
+
+            <!-- наши соц.сети -->
             <div class="stillquest">
                <div class="container">
                   <div class="stillquest__inner">
-                     <h2>остались вопросы?</h2>
+                     <h2>наши соц.сети</h2>
                      <div class="stillquest__list">
                         <div class="stillquest__item" v-for="item in stillquest" :key="item">
                            <div class="stillquest__item-img">

@@ -34,7 +34,7 @@
                      </div>
                      <div class="tariff-item__body">
                         <div class="tariff-item__label">Для двоих</div>
-                        <div class="tariff-item__desc">от 4000 ₽ ~ 1,5 часа</div>
+                        <div class="tariff-item__desc">от 4850 ₽ ~ 1,5 часа</div>
                      </div>
                   </div>
                </div>

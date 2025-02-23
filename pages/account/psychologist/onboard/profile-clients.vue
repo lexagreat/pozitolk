@@ -3,9 +3,9 @@
 <div class="wrapper">
         <nav class="nav">
             <div class="nav__inner">
-                <a href="#" class="nav__logo">
+                  <NuxtLink class="nav__logo" to="/">
                     <img src="/site/img/Logo.svg" alt="Позитолк">
-                </a>
+                  </NuxtLink>
                                 <div class="nav__menu">
                     <ul class="nav__menu-first">
                         <li>
@@ -71,7 +71,7 @@
                     <div class="tab-ctrl" data-tab-ctrl="3">Клиенты</div>
                     <div class="tab-ctrl" data-tab-ctrl="4">Специализация</div>
                     <div class="tab-ctrl" data-tab-ctrl="5">Образование</div>
-                    <div class="tab-ctrl" data-tab-ctrl="6">Договор</div>
+                    <div class="tab-ctrl" data-tab-ctrl="6" :class="{'but_disabled': !psychologistData.accepted_to_system}">Договор</div>
                 </div>
                 <div class="profile__tabs-body">
 
@@ -206,12 +206,19 @@
                                 <div class="profgeneral">
                                     <label class="profgeneral__input">
                                         <div class="profgeneral__input-label">Часовой пояс</div>
-                                        <div class="select-container">
-                                            <select name="timezone" v-model="psychologistData.timezone">
-                                              
-  <option v-for="tz in timezones" :key="tz" :value="tz">{{ tz }} ({{ getGMTOffset(tz) }})</option>
-
-                                            </select>
+                                        <div class="select-container"><select name="timezone" v-model="psychologistData.timezone">
+  <option value="Europe/Kaliningrad">Калининград (МСК−1, {{ getGMTOffset('Europe/Kaliningrad') }})</option>
+  <option value="Europe/Moscow">Москва (МСК, {{ getGMTOffset('Europe/Moscow') }})</option>
+  <option value="Europe/Samara">Самара (МСК+1, {{ getGMTOffset('Europe/Samara') }})</option>
+  <option value="Asia/Yekaterinburg">Екатеринбург (МСК+2, {{ getGMTOffset('Asia/Yekaterinburg') }})</option>
+  <option value="Asia/Omsk">Омск (МСК+3, {{ getGMTOffset('Asia/Omsk') }})</option>
+  <option value="Asia/Krasnoyarsk">Красноярск (МСК+4, {{ getGMTOffset('Asia/Krasnoyarsk') }})</option>
+  <option value="Asia/Irkutsk">Иркутск (МСК+5, {{ getGMTOffset('Asia/Irkutsk') }})</option>
+  <option value="Asia/Yakutsk">Якутск (МСК+6, {{ getGMTOffset('Asia/Yakutsk') }})</option>
+  <option value="Asia/Vladivostok">Владивосток (МСК+7, {{ getGMTOffset('Asia/Vladivostok') }})</option>
+  <option value="Asia/Magadan">Магадан (МСК+8, {{ getGMTOffset('Asia/Magadan') }})</option>
+  <option value="Asia/Kamchatka">Камчатка (МСК+9, {{ getGMTOffset('Asia/Kamchatka') }})</option>
+</select>
                                         </div>
                                     </label>
                                     <label class="profgeneral__input">
@@ -406,7 +413,7 @@
         <div class="education__but">
           <label class="education__btn-add green">
             <input type="file" @change="uploadDiploma($event, index)" hidden>
-            Загрузить диплом
+            Загрузить диплом/сертификат
           </label>
         </div>
 
@@ -906,6 +913,7 @@ const getGMTOffset = (tz) => {
     return "GMT";
   }
 };
+
 
 // Дни недели
 const daysOfWeek = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
@@ -1570,6 +1578,11 @@ const exit = () =>{
 </script>
 
 <style scoped> 
+.but_disabled{
+
+  pointer-events: none;
+  opacity: 0.5;
+}
 .profgeneral__input>span{
   font-size: 12px;
 }
