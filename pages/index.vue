@@ -368,6 +368,25 @@
             <SectionsFaq />
 
 
+            <!-- остались вопросы -->
+            <div class="stillquest">
+               <div class="container">
+                  <div class="stillquest__inner">
+                     <h2>остались вопросы?</h2>
+                     <div class="stillquest__list">
+                        <p>Свяжитесь с нами: <br>+7 (989) 525-88-80 <br> 8 800 250 77 73</p>
+                        <!-- <div class="stillquest__item" v-for="item in stillquest" :key="item">
+                           <div class="stillquest__item-img">
+                              <img :src="item.img" :alt="item.lbl">
+                           </div>
+                           <div class="stillquest__item-lbl" v-html="item.lbl"></div>
+                           <NuxtLink :to="item.link" target="_blank" rel="noopener noreferrer nofollow"
+                              class="stillquest__item-link">Перейти</NuxtLink>
+                        </div> -->
+                     </div>
+                  </div>
+               </div>
+            </div>
             <!-- наши соц.сети -->
             <div class="stillquest">
                <div class="container">
