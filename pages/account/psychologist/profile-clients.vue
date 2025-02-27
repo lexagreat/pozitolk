@@ -1385,12 +1385,12 @@ const send = async() =>{
     work_study.value.map(item => item.name),
     life_event.value.map(item => item.name),
     couple_therapy2.value.map(item => item.name)
-);
+).join(";");
             
             console.log(object)
             
-            if(JSON.stringify(object)  && JSON.stringify(object)!=null && JSON.stringify(object)!=undefined && JSON.stringify(object)!='' && JSON.stringify(object)!=[]){
-              formData.append("psycho_topics", JSON.stringify(object));
+            if(object  && object!=null && object!=undefined && object!='' && object!=[]){
+              formData.append("psycho_topics", object);
             }
             // Добавляем файл photo, если он есть
             if (psychologistData.value.photo instanceof File) {
@@ -1461,7 +1461,23 @@ store.getSelfPsychologist()
     psychologistData.value = item;
     console.log(psychologistData.value);
     console.log(psychologistData.value.description);
-  console.log(psychologistData.value.photo);
+    console.log(psychologistData.value.photo);
+    console.log(psychologistData.value.psycho_topic);
+    feeling.value = data.feeling.filter(item => 
+        psychologistData.value.psycho_topic.some(topic => topic.name === item.name)
+    );
+    relation.value = data.relation.filter(item => 
+        psychologistData.value.psycho_topic.some(topic => topic.name === item.name)
+    );
+    work_study.value = data.work_study.filter(item => 
+        psychologistData.value.psycho_topic.some(topic => topic.name === item.name)
+    );
+    life_event.value = data.life_event.filter(item => 
+        psychologistData.value.psycho_topic.some(topic => topic.name === item.name)
+    );
+    couple_therapy2.value = data.couple_therapy.filter(item => 
+        psychologistData.value.psycho_topic.some(topic => topic.name === item.name)
+    );
   photoPreview.value = psychologistData.value.photo
   console.log(photoPreview.value);
   })
