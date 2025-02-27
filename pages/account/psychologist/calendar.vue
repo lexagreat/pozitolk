@@ -8,10 +8,10 @@
                                 <div class="nav__menu">
                     <ul class="nav__menu-first">
                         <li class="active">
-                          <NuxtLink to="/account/psychologist/onboard/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
+                          <NuxtLink to="/account/psychologist/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
                         </li>
                         <li>
-                          <NuxtLink to="/account/psychologist/onboard/chats" ><span class="icon psy-chats"></span>Чаты</NuxtLink>
+                          <NuxtLink to="/account/psychologist/chats" ><span class="icon psy-chats"></span>Чаты</NuxtLink>
                         </li>
                         <li>
                             <a href="#"><span class="icon psy-clients"></span>Клиенты</a>
@@ -31,7 +31,7 @@
                             <a href="#"><span class="icon help"></span>Помощь</a>
                         </li>
                         <li class="__desk ">
-                          <NuxtLink to="/account/psychologist/onboard/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
+                          <NuxtLink to="/account/psychologist/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
                         </li>
                     </ul>
                 </div>

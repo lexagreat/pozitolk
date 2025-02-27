@@ -10,11 +10,11 @@
                     <ul class="nav__menu-first">
                         <li>
                           
-                  <NuxtLink to="/account/psychologist/onboard/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
+                  <NuxtLink to="/account/psychologist/calendar"><span class="icon psy-schedule"></span>Расписание</NuxtLink>
                             
                         </li>
                         <li>
-                          <NuxtLink to="/account/psychologist/onboard/chats"><span class="icon psy-chats"></span>Чаты</NuxtLink>
+                          <NuxtLink to="/account/psychologist/chats"><span class="icon psy-chats"></span>Чаты</NuxtLink>
                         </li>
                         <li>
                             <a href="#"><span class="icon psy-clients"></span>Клиенты</a>
@@ -34,7 +34,7 @@
                             <a href="#"><span class="icon help"></span>Помощь</a>
                         </li>
                         <li class="__desk active">
-                          <NuxtLink to="/account/psychologist/onboard/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
+                          <NuxtLink to="/account/psychologist/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -154,6 +154,22 @@
                                         </div>
                                         <span>заполнено {{ psychologistData.description.length }} / 1500 символов</span>
                                     </label>
+
+<label class="profgeneral__input">
+    <div class="profgeneral__input-label">Ваши ценности и принципы</div>
+    <div class="textarea-container">
+        <textarea name="your_values" v-model="psychologistData.your_values"></textarea>
+    </div>
+</label>
+
+
+<label class="profgeneral__input">
+                                        <div class="profgeneral__input-label">Как пришли в профессию</div>
+                                        <div class="textarea-container">
+                                            <textarea name="how_get_profession" v-model="psychologistData.how_get_profession"></textarea>
+                                        </div>
+                                    </label>
+
 
                                 </div>
                                 <div class="profile__btn-save" @click="send">Сохранить</div>
@@ -369,6 +385,84 @@
                                             </label>
                                         </div>
                                     </div>
+
+                                    
+                        <div class="qstn qstn-6">
+                           <div class="qstn__tags">
+                              <div class="qstn__tags-lbl">
+                                 <div class="qstn__tags-lbl-txt">Моё состояние:</div>
+                              </div>
+                              <label class="qstn__info-checkbox" v-for="item in data.feeling" :key="item">
+                                 <input type="checkbox" name="qstn-6" :value="item" v-model="feeling">
+                                 <div class="input_checkbox"></div>
+                                  <span>
+                                  {{ item.name }}
+                                  </span>
+                              </label>
+                           </div>
+                        </div>
+
+                        <div class="qstn qstn-7">
+                           <div class="qstn__tags">
+                              <div class="qstn__tags-lbl">
+                                 <div class="qstn__tags-lbl-txt">Отношения:</div>
+                              </div>
+                              <label class="qstn__info-checkbox" v-for="item in data.relation" :key="item">
+                                 <input type="checkbox" name="qstn-7" :value="item" v-model="relation">
+                                 <div class="input_checkbox"></div>
+                                  <span>
+                                  {{ item.name }}
+                                  </span>
+                              </label>
+                           </div>
+                        </div>
+                        
+
+                        <div class="qstn qstn-8">
+                           <div class="qstn__tags">
+                              <div class="qstn__tags-lbl">
+                                 <div class="qstn__tags-lbl-txt">Работа, учеба:</div>
+                              </div>
+                              <label class="qstn__info-checkbox" v-for="item in data.work_study" :key="item">
+                                 <input type="checkbox" name="qstn-8" :value="item" v-model="work_study">
+                                 <div class="input_checkbox"></div>
+                                  <span>
+                                  {{ item.name }}
+                                  </span>
+                              </label>
+                           </div>
+                        </div>
+
+                        <div class="qstn qstn-9">
+                           <div class="qstn__tags">
+                              <div class="qstn__tags-lbl">
+                                 <div class="qstn__tags-lbl-txt">События в жизни:</div>
+                              </div>
+                              <label class="qstn__info-checkbox" v-for="item in data.life_event" :key="item">
+                                 <input type="checkbox" name="qstn-9" :value="item" v-model="life_event">
+                                 <div class="input_checkbox"></div>
+                                  <span>
+                                  {{ item.name }}
+                                  </span>
+                              </label>
+                           </div>
+                        </div>
+                        
+                        <div class="qstn qstn-6">
+                           <div class="qstn__tags">
+                              <div class="qstn__tags-lbl">
+                                 <div class="qstn__tags-lbl-txt">Парная терапия:</div>
+                              </div>
+                              <label class="qstn__info-checkbox" v-for="item in data.couple_therapy" :key="item">
+                                 <input type="checkbox" name="qstn-6" :value="item" v-model="couple_therapy2">
+                                 <div class="input_checkbox"></div>
+                                  <span>
+                                  {{ item.name }}
+                                  </span>
+                              </label>
+                           </div>
+                        </div>
+
                                 </div>
                                 <div style="display: none;" class="profile__btn-add">Добавить</div>
                                 <div class="profile__btn-save" @click="send">Сохранить</div>
@@ -692,6 +786,8 @@ import { toast } from "bulma-toast";
     ],
  })
  
+let data = await useBaseFetch("/cabinet/survey-info/")
+console.log(data)
  const store = useClientStore()
  const psychologistData = ref({
   age:18,
@@ -715,6 +811,11 @@ import { toast } from "bulma-toast";
   sex:'man'
 });
 
+const feeling = ref([])
+const relation = ref([])
+const life_event = ref([])
+const work_study = ref([])
+const couple_therapy2 = ref([])
 
 // Ссылки на скрытые input для загрузки файлов
 const passportFileInput = ref(null);
@@ -1242,6 +1343,12 @@ const send = async() =>{
             if(psychologistData.value.description && psychologistData.value.description!=null && psychologistData.value.description!=undefined && psychologistData.value.description!=''){
               formData.append("description", psychologistData.value.description);
             }
+            if(psychologistData.value.your_values && psychologistData.value.your_values!=null && psychologistData.value.your_values!=undefined && psychologistData.value.your_values!=''){
+              formData.append("your_values", psychologistData.value.your_values);
+            }
+            if(psychologistData.value.how_get_profession && psychologistData.value.how_get_profession!=null && psychologistData.value.how_get_profession!=undefined && psychologistData.value.how_get_profession!=''){
+              formData.append("how_get_profession", psychologistData.value.how_get_profession);
+            }
             if(psychologistData.value.sex  && psychologistData.value.sex!=null && psychologistData.value.sex!=undefined && psychologistData.value.sex!=''){
               formData.append("sex", psychologistData.value.sex);
             }
@@ -1272,7 +1379,19 @@ const send = async() =>{
             if(psychologistData.value.couple_therapy.toString()  && psychologistData.value.couple_therapy.toString()!=null && psychologistData.value.couple_therapy.toString()!=undefined && psychologistData.value.couple_therapy.toString()!=''){
               formData.append("couple_therapy", psychologistData.value.couple_therapy.toString());
             }
-      
+            let object = [].concat(
+    feeling.value.map(item => item.name),
+    relation.value.map(item => item.name),
+    work_study.value.map(item => item.name),
+    life_event.value.map(item => item.name),
+    couple_therapy2.value.map(item => item.name)
+);
+            
+            console.log(object)
+            
+            if(JSON.stringify(object)  && JSON.stringify(object)!=null && JSON.stringify(object)!=undefined && JSON.stringify(object)!='' && JSON.stringify(object)!=[]){
+              formData.append("psycho_topics", JSON.stringify(object));
+            }
             // Добавляем файл photo, если он есть
             if (psychologistData.value.photo instanceof File) {
                formData.append("photo", psychologistData.value.photo);
@@ -1517,57 +1636,6 @@ store.getMySchedulePsychologist()
           });
           // END Menu
 
-          // // START PopUp общее 
-          // $('.popup__layer').on('click', function () {
-          //     $('.popup').removeClass('active');
-          //     $('html').removeClass('hidden');
-          // });
-          // $('.popup__close').on('click', function () {
-          //     $('.popup').removeClass('active');
-          //     $('html').removeClass('hidden');
-          // });
-          // // END PopUp общее 
-
-
-          // // START  PopUp при клике по доступному времени в календаре
-          // $('.table__cell.available').on('click', function () {
-          //     $('.popup.available_time').addClass('active');
-          //     // $('html').addClass('hidden');
-          // });
-          // // END  PopUp при клике по доступному времени в календаре
-
-          // // START  PopUp при клике по доступному времени в календаре
-          // $(".table__cell.chosen").on("click", function (e) {
-          //     e.stopPropagation();
-          //     var popup = $(".popup_2.chosen_time");
-          //     $(this).append(popup);
-          //     popup.addClass("active");
-          // });
-          // $(document).on("click", function () {
-          //     $(".popup_2.chosen_time").removeClass("active");
-          // });
-          // $(".popup_2.chosen_time").on("click", function (e) {
-          //     e.stopPropagation();
-          // });
-          // // END  PopUp при клике по доступному времени в календаре
-
-          // // START "PopUp при клике по кнопке "Перенести""
-          // $('.chosen_time__btn-switch').on('click', function () {
-          //     $('.popup.reschedule_time').addClass('active');
-          //     // $('html').addClass('hidden');
-          // });
-          // $('.calendar-date__item').on('click', function () {
-          //     $('.calendar-date__item').removeClass('active');
-          //     $(this).addClass('active');
-          // });
-          // // END "PopUp при клике по кнопке "Перенести""
-
-          // // START "PopUp при клике по кнопке "Отменить""
-          // $('.chosen_time__btn-delete').on('click', function () {
-          //     $('.popup.delete_time').addClass('active');
-          //     // $('html').addClass('hidden');
-          // });
-          // END "PopUp при клике по кнопке "Отменить""
         });
     }
  )
@@ -1578,6 +1646,47 @@ const exit = () =>{
 </script>
 
 <style scoped> 
+.qstn__tags-lbl-txt{
+  font-size: 16px;
+  font-weight: 500;color: #342b26;
+}
+.qstn__tags {
+     margin-left: 0; 
+     margin-right: 0; 
+}
+.qstn__info-checkbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: center !important;
+    gap: 6px;
+    margin-top: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.qstn__info-checkbox .input_checkbox {
+    background-color: #f7f7f7;
+    border: 2px solid #dddddd;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    margin: 4px;
+    cursor: pointer;
+}
+.qstn__tags>label{
+  width: 45%;
+  font-size: 14px;
+  font-weight: 500;
+}
+.qstn__tags-lbl{
+  width: 100%;
+  padding: 0;
+}
 .but_disabled{
 
   pointer-events: none;

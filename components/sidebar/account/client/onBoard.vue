@@ -76,10 +76,11 @@
                         <div class="nav__menu">
             <ul class="nav__menu-first">
                <li  :class="{ active: route.path.endsWith('schedule') }" >
-                     <a  style="cursor: pointer;" @click="navigateTo('/account/client/onboard/schedule')"><span class="icon mysessions"></span>Мои Сессии</a>
+                  
+                  <NuxtLink to="/account/client/schedule"><span class="icon mysessions"></span>Мои Сессии</NuxtLink>
                </li>
                <li :class="{ active: route.path.endsWith('chats') }" >
-                     <a  style="cursor: pointer;" @click="navigateTo('/account/client/onboard/chats')"><span class="icon chats"></span>Чаты</a>
+                  <NuxtLink to="/account/client/chats"><span class="icon chats"></span>Чаты</NuxtLink>
                </li>
                <li>
                      <a  style="cursor: pointer;"><span class="icon events"></span>События</a>
@@ -92,11 +93,11 @@
                </li>
             </ul>
             <ul class="nav__menu-second">
-               <li>
-                     <a  style="cursor: pointer;"><span class="icon help"></span>Помощь</a>
+               <li  :class="{ active: route.path.endsWith('help') }">
+                  <NuxtLink to="/account/client/help"><span class="icon help"></span>Помощь</NuxtLink>
                </li>
-               <li class="__desk ">
-                     <a  style="cursor: pointer;"><span class="icon settings"></span>Настройки</a>
+               <li class="__desk " :class="{ active: route.path.endsWith('profile') }">
+                  <NuxtLink to="/account/client/profile"><span class="icon settings"></span>Настройки</NuxtLink>
                </li>
             </ul>
          </div>

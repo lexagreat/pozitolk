@@ -127,15 +127,15 @@ const verifyCode = async () => {
    console.log(isPsychologist);
    if (!response.user.has_survey) {
       if(isPsychologist=='true'){
-         router.push('/account/psychologist/onboard/profile-clients')
+         router.push('/account/psychologist/profile-clients')
       }else{
          router.push('/account/client/onboard/ankete')
       }
    } else {
       if(isPsychologist=='true'){
-         router.push('/account/psychologist/onboard/profile-clients')
+         router.push('/account/psychologist/profile-clients')
       }else{
-         router.push('/account/client/onboard/schedule')
+         router.push('/account/client/schedule')
       }
    }
 }
