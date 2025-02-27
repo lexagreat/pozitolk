@@ -431,7 +431,7 @@
                         <div class="popup__title __mob">Оплата</div>
                         <div class="popup__header">
                            <div class="popup__header-img">
-                              <img src="../assets/img/Daniil-2.png" alt="Даниил">
+                              <!-- <img src="../assets/img/Daniil-2.png" alt="Даниил"> -->
                            </div>
                            <div class="popup__header-info">
                               <div class="popup__header-name">Даниил</div>
@@ -532,7 +532,7 @@
                         <div class="popup__title __mob">Оплата</div>
                         <div class="popup__header">
                            <div class="popup__img-pay-sistem">
-                              <img src="../assets/img/pay-sistem.svg" alt="yoomoney">
+                              <!-- <img src="../assets/img/pay-sistem.svg" alt="yoomoney"> -->
                            </div>
                         </div>
                         <div class="popup__org">
