@@ -16,7 +16,7 @@
             <div class="psychlist">
                                     <div class="psychlist__item">
                         <div class="psychlist__item-img">
-                            <img src="./assets/img/chat__persons-img-1.png" alt="persons 1">
+                            <!-- <img src="./assets/img/chat__persons-img-1.png" alt="persons 1"> -->
                         </div>
                         <div class="psychlist__item-name">
                             <div class="psychlist__item-name-lbl">Ваш психолог</div>
@@ -26,7 +26,7 @@
                     </div>
                                     <div class="psychlist__item">
                         <div class="psychlist__item-img">
-                            <img src="./assets/img/chat__persons-img-1.png" alt="persons 1">
+                            <!-- <img src="./assets/img/chat__persons-img-1.png" alt="persons 1"> -->
                         </div>
                         <div class="psychlist__item-name">
                             <div class="psychlist__item-name-lbl">Ваш психолог</div>
@@ -36,7 +36,7 @@
                     </div>
                                     <div class="psychlist__item">
                         <div class="psychlist__item-img">
-                            <img src="./assets/img/chat__persons-img-1.png" alt="persons 1">
+                            <!-- <img src="./assets/img/chat__persons-img-1.png" alt="persons 1"> -->
                         </div>
                         <div class="psychlist__item-name">
                             <div class="psychlist__item-name-lbl">Ваш психолог</div>
@@ -57,7 +57,7 @@
                     <div class="profcards__item">
                         <div class="profcards__item-header">
                             <div class="profcards__item-img">
-                                <img src="./assets/img/profcards__item-2.png" alt="prof-1">
+                                <!-- <img src="./assets/img/profcards__item-2.png" alt="prof-1"> -->
                             </div>
                             <div class="profcards__item-btn">Заменить</div>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="profcards__item">
                         <div class="profcards__item-header">
                             <div class="profcards__item-img">
-                                <img src="./assets/img/profcards__item-1.png" alt="prof-1">
+                                <!-- <img src="./assets/img/profcards__item-1.png" alt="prof-1"> -->
                             </div>
                             <div class="profcards__item-btn">Заменить</div>
                         </div>
@@ -105,7 +105,7 @@
                     <div class="profcards__item">
                         <div class="profcards__item-header">
                             <div class="profcards__item-img">
-                                <img src="./assets/img/profcards__item-1.png" alt="prof-1">
+                                <!-- <img src="./assets/img/profcards__item-1.png" alt="prof-1"> -->
                             </div>
                             <div class="profcards__item-btn">Заменить</div>
                         </div>
