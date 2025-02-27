@@ -1756,6 +1756,9 @@ margin-right: 15px;
     justify-content: end;
 }
 @media (max-width: 1190px) {
+.qstn__tags>label{
+  width: 95%;
+}
   .education__but{
   margin-right: 0;
   }

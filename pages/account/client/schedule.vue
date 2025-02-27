@@ -77,15 +77,18 @@ onBeforeUnmount(() => {
     }
   });
     });
-let psychologistsList = []
+const psychologistsList = ref([])
 
 if(store.token==""){
    router.push('/account/client/onboard/ankete')
 }
-psychologistsList = await store.getMyPsychologists()
-console.log('response', psychologistsList);
+// setTimeout(async()=>{
+//    psychologistsList = await store.getMyPsychologists()
+//    console.log('response', psychologistsList);
+// },10)
 onMounted(async() => {
-   //psychologistsList = await store.getMyPsychologists()
+   psychologistsList.value = await store.getMyPsychologists()
+       console.log('response', psychologistsList.value);
 })
 
 const formatDate = (dateString) => {

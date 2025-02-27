@@ -9,75 +9,12 @@
         <div class="support-main">
             <div class="support__title">Здесь у вас есть возможность быстро связаться с сервисом любым удобным способом:</div>
             <div class="support__faq">
-                                    <div class="support__faq-item">
+                    <div class="support__faq-item" v-for="item in helpInfo">
                         <div class="support__faq-question">
-                            <div class="support__faq-text">Что такое консультации с психологом?</div>
+                            <div class="support__faq-text support__faq-text-help" v-html="item.question"></div>
                             <div class="support__faq-arrow active"></div>
                         </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Как работает консультация с психологом?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Зачем это мне?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Как вы набираете терапевтов?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Сколько это стоит?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Можно ли оплатить консультацию картой иностранного банка?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Почему сессия длится именно 50 минут?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Как работает оплата?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Почему деньги списываются до оказания услуги?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
-                    </div>
-                                    <div class="support__faq-item">
-                        <div class="support__faq-question">
-                            <div class="support__faq-text">Что делать, если у меня поменялись планы после списания денег?</div>
-                            <div class="support__faq-arrow"></div>
-                        </div>
-                        <div class="support__faq-answer">Ответить на этот вопрос в рамках FAQ – примерно то же самое, что и в двух словах раскрыть тему любви в творчестве Пушкина. Но если очень грубо, то консультации с психологом – это метод лечения/разрешения психологических проблем/конфликтов. Он направлен на то, чтобы примирить человека с его бессознательным, в котором накоплены разного рода негативные чувства, – обиды, страхи, злость, – и помочь ему от них избавиться.</div>
+                        <div class="support__faq-answer support__faq-answer-help" v-html="item.answer"></div>
                     </div>
                             </div>
         </div>
@@ -104,7 +41,7 @@
             <div class="support-side__second">
                 <div class="support-side__title">Наши соц сети</div>
                 <div class="support__social">
-                    <div class="support__social-item" v-for="item in stillquest"><a href="#"><span class="social-settings"><img :src="item.img" alt=""></span></a></div>
+                    <div class="support__social-item" v-for="item in stillquest"><a :href="item.link"><span class="social-settings"><img :src="item.img" alt=""></span></a></div>
                 </div>
             </div>
         </div>
@@ -147,6 +84,8 @@ import { useClientStore } from '~/stores/client/store';
     ],
  })
 
+ const store = useClientStore();
+ const helpInfo = ref();
  const stillquest = ref([
    // {
    //    img: '/site/img/stillquest_img_1.svg',
@@ -182,6 +121,8 @@ import { useClientStore } from '~/stores/client/store';
 
  onMounted(
     async () => {
+ helpInfo.value = await store.getHelp();
+ console.log(helpInfo.value)
       
         $(document).ready(function () {
         // "Ответы на частые вопросы"
@@ -214,6 +155,15 @@ import { useClientStore } from '~/stores/client/store';
     }
  )
 </script>
+<style>
+
+.support__faq-text-help>p{
+    margin: 0;
+}
+.support__faq-answer-help>p{
+    margin: 0;
+}
+</style>
 <style scoped>
 .support__social {
     justify-content: space-between;
@@ -222,5 +172,8 @@ import { useClientStore } from '~/stores/client/store';
     width: auto;
     height: auto;
     background: none;
+}
+.support__faq-item:last-child{
+    margin-bottom: 0;
 }
 </style>

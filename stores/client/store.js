@@ -98,6 +98,20 @@ export const useClientStore = defineStore("client", {
          }
       },
       
+      async getHelp() {
+         try {
+            const response = await useBaseFetch("/wellness/faq/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },
       async getMe() {
          try {
             const response = await useBaseFetch("/cabinet/self/", {
@@ -107,6 +121,20 @@ export const useClientStore = defineStore("client", {
                   Authorization: "Token " + this.token, // Исправлено на Authorization
                },
             });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },async getSelfClient() {
+         try {
+            const response = await useBaseFetch("/cabinet/self-client/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            console.log(response.detail); 
             return response;
          } catch (err) {
             console.log("err", err);
@@ -121,6 +149,20 @@ export const useClientStore = defineStore("client", {
                },
             });
             console.log(response.detail); 
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },async сancelСonnection(connection_id) {
+         try {
+            const response = await useBaseFetch("/session/cancel-connection/"+connection_id+"/", {
+               method: "POST",
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
             return response;
          } catch (err) {
             console.log("err", err);

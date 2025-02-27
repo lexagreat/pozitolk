@@ -70,6 +70,17 @@ export async function useBaseFetch(request, opts) {
                      className: "toast",
                   });
          }
+         else if(err.data.email && err.data.email == 'Enter a valid email address.'){
+            toast({
+                     message: "данный email некоректен, введите почту корректно",
+                     type: "is-error", // если збс - то is-success, если плохо то is-error
+                     dismissible: true,
+                     pauseOnHover: true,
+                     duration: 13000,
+                     position: "bottom-right",
+                     className: "toast",
+                  });
+         }
       }
       return err;
    }
