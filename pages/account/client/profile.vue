@@ -191,7 +191,7 @@
             <div class="dashboard">
                <div class="dashboard__main">
                   <div class="container-small">
-                        <div class="cart">
+                        <div v-if="currentPsycho?.psycho_topic" class="cart">
                            <div class="cart__info">
                               <div class="cart__info-first">
                                     Запись доступна<br>
@@ -310,50 +310,58 @@
 
                             <div class="body__item __err">
 
-                                <div class="schedule">
-                                  <div class="schedule__header">
-                                      <div class="lbltagsmore__lbl">
-                                        <div class="icon calendar"></div>
-                                        <div class="lbltagsmore__lbl-txt">Расписание</div>
-                                      </div>
-                                      <div class="schedule__timezone">
+                              <div class="schedule">
+    <div class="schedule__header">
+      <div class="lbltagsmore__lbl">
+        <div class="icon calendar"></div>
+        <div class="lbltagsmore__lbl-txt">Расписание</div>
+      </div>
+      <div class="schedule__timezone">
                                         <div class="schedule__timezone-select">
                                             <div class="schedule__timezone__option">
-                                              <div class="schedule__timezone-txt">15:21 (Asia/Novosibirsk)</div>
+                                              <div class="schedule__timezone-txt"> ({{ clientData.timezone }})</div>
                                             </div>
                                         </div>
                                         <div class="schedule__timezone-btn">
                                             <div class="icon chevron-down"></div>
                                         </div>
                                       </div>
-                                  </div>
-                                  <div class="schedule__calendar">
-                                      <div class="cldr">
-                                        <div class="cldr__day" v-for="item in schedule" :key="item">
-                                            <div class="cldr__day-lbl">{{ item.name }}</div>
-                                            <div class="cldr__day-hours">
+    </div>
 
-                                              <div class="cldr__hour" :class="{ available: slot.available }"
-                                                  v-for="slot in item.slots" :key="slot">
-                                                  {{ slot.time }}
-                                              </div>
-                                            </div>
-                                        </div>
-                                      </div>
-                                  </div>
-                                  <div class="schedule__info">
-                                      <div class="schedule__info-err">
-                                        <div class="icon circle-exclamation"></div>
-                                        <div class="schedule__info-err-txt">Выберите время для оплаты</div>
-                                      </div>
-                                  </div>
-                                </div>
+    <div class="schedule__calendar">
+      <div class="cldr">
+        <div class="cldr__day" v-for="item in schedule" :key="item.name">
+          <div class="cldr__day-lbl">{{ item.name }}</div>
+          <div class="cldr__day-hours">
+            <div 
+              class="cldr__hour" 
+              :class="{ available: slot.available, active: isSelected(item.name, slot.time) }"
+              v-for="slot in item.slots.filter(s => s.available)" 
+              :key="slot.time" 
+              @click="selectTime(item.name, slot.time)"
+            >
+            {{ slot.time }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="schedule__info">
+      <div class="schedule__info-err" v-if="!selectedTime">
+        <div class="icon circle-exclamation"></div>
+        <div class="schedule__info-err-txt">
+         Выберите время для оплаты
+        </div>
+      </div>
+    </div>
+  </div>
 
                             </div>
 
                           </div>
                           <div class="cart__btn-wrp">
-                            <div class="btn__order btn" @click="pay">Оплатить 2 000 ₽</div>
+                            <div class="btn__order btn" @click="createSession">Оплатить 2 000 ₽</div>
                             <div class="btns" style="display: flex;flex-direction: column;gap: 4px;">
                                 <div class="btn__nextps __mob" v-if="current !== list.length - 1" @click="current++">
                                   <div class="cart__info-second-btn-img">
@@ -372,6 +380,9 @@
                             </div>
 
                           </div>
+                        </div>
+                        <div v-else class="cart">
+                           <h1>{{ currentPsycho?.psycho_topic }} нет подходящего психолога</h1>
                         </div>
                   </div>
                </div>
@@ -421,168 +432,6 @@
 
                </div>
             </div>
-            <!-- PopUp "Добавить карту и записаться" -->
-            <div class="popup addcard-signup">
-               <div class="popup__body">
-                  <div class="popup__close">
-                        <div class="icon popup-close"></div>
-                  </div>
-                  <form id="addcard">
-                        <div class="popup__title __mob">Оплата</div>
-                        <div class="popup__header">
-                           <div class="popup__header-img">
-                              <!-- <img src="../assets/img/Daniil-2.png" alt="Даниил"> -->
-                           </div>
-                           <div class="popup__header-info">
-                              <div class="popup__header-name">Даниил</div>
-                              <div class="popup__header-info">17 июля, среда в 10:00</div>
-                           </div>
-                        </div>
-                        <div class="popup__choosecard">
-                           <div class="popup__choosecard-select">
-                              <div class="popup__choosecard-selected">
-                                    <div class="popup__choosecard-item">
-                                       <div class="icon purse"></div>
-                                       <div class="popup__choosecard-item-txt">Карта РФ или МИР — RUB</div>
-                                    </div>
-                              </div>
-                              <div class="icon cart-arrow"></div>
-                           </div>
-                           <div class="popup__choosecard-list"></div>
-                        </div>
-                        <div class="popup__maininfo">
-                           <div class="popup__maininfo-inner">
-                              <div class="popup__maininfo-item">
-                                    <div class="popup__maininfo-item-lbl">Сессия, 50 мин</div>
-                                    <div class="popup__maininfo-item-price">2 000 ₽</div>
-                              </div>
-                              <div class="popup__maininfo-item">
-                                    <div class="popup__maininfo-item-lbl">Промокод</div>
-                                    <div class="popup__maininfo-item-btn">Добавить</div>
-                              </div>
-                           </div>
-                           <div class="popup__maininfo-promo">
-                              <div class="promo-input">
-                                    <input class="promo" type="text" name="promo" placeholder="COLS45CWU">
-                              </div>
-                              <div class="promo-btn">Добавить</div>
-                           </div>
-                        </div>
-                        <div class="popup__line"></div>
-                        <div class="popup__summ">
-                           <div class="popup__summ-lbl">Итого</div>
-                           <div class="popup__summ-val">2 000 ₽</div>
-                        </div>
-                        <div class="popup__info">
-                           <div class="icon info-orange"></div>
-                           <div class="popup__info-text">Отменить или перенести сессию можно за 24 часа до назначенного времени</div>
-                        </div>
-                        <button class="btn popup__submit" id="addcard_sbm" type="submit">Добавить карту и записаться</button>
-                        <div class="popup__policy">
-                           Записываясь на сессию, вы соглашаетесь<br> <a href="#">с договором оказания услуг</a>
-                        </div>
-                        <div class="popup__faq">
-                                                <div class="popup__faq-item">
-                                    <div class="popup__faq-item-q active">
-                                       <div class="popup__faq-item-q-txt">Как перенести или отменить сессию?</div>
-                                       <div class="icon popup-faq-arrow"></div>
-                                    </div>
-                                    <div class="popup__faq-item-a" style="">Вы можете отменить или перенести сессию с психологом не позднее 24 часов до её начала.Перенос меньше, чем за 24 часа, возможен при согласии психолога в переписке.
-                                    Для переноса сессии воспользуйтесь личным кабинетом на сайте ПозиТолк.</div>
-                              </div>
-                                                <div class="popup__faq-item">
-                                    <div class="popup__faq-item-q">
-                                       <div class="popup__faq-item-q-txt">Что произойдет после добавления карты?</div>
-                                       <div class="icon popup-faq-arrow"></div>
-                                    </div>
-                                    <div class="popup__faq-item-a" style="display: none;">Вы можете отменить или перенести сессию с психологом не позднее 24 часов до её начала.Перенос меньше, чем за 24 часа, возможен при согласии психолога в переписке.
-                                    Для переноса сессии воспользуйтесь личным кабинетом на сайте ПозиТолк.</div>
-                              </div>
-                                                <div class="popup__faq-item">
-                                    <div class="popup__faq-item-q">
-                                       <div class="popup__faq-item-q-txt">В какой момент будет списана стоимость сессии?</div>
-                                       <div class="icon popup-faq-arrow"></div>
-                                    </div>
-                                    <div class="popup__faq-item-a" style="display: none;">Вы можете отменить или перенести сессию с психологом не позднее 24 часов до её начала.Перенос меньше, чем за 24 часа, возможен при согласии психолога в переписке.
-                                    Для переноса сессии воспользуйтесь личным кабинетом на сайте ПозиТолк.</div>
-                              </div>
-                                                <div class="popup__faq-item">
-                                    <div class="popup__faq-item-q">
-                                       <div class="popup__faq-item-q-txt">Можно ли удалить или изменить карту после добавления?</div>
-                                       <div class="icon popup-faq-arrow"></div>
-                                    </div>
-                                    <div class="popup__faq-item-a" style="display: none;">Вы можете отменить или перенести сессию с психологом не позднее 24 часов до её начала.Перенос меньше, чем за 24 часа, возможен при согласии психолога в переписке.
-                                    Для переноса сессии воспользуйтесь личным кабинетом на сайте ПозиТолк.</div>
-                              </div>
-                           
-
-                        </div>
-                  </form>
-
-               </div>
-               <div class="popup__layer"></div>
-            </div>
-            <!-- PopUp "Оплатить" -->
-            <div class="popup topay">
-               <div class="popup__body">
-                  <div class="popup__close">
-                        <div class="icon popup-close"></div>
-                  </div>
-                  <form id="topay">
-                        <div class="popup__title __mob">Оплата</div>
-                        <div class="popup__header">
-                           <div class="popup__img-pay-sistem">
-                              <!-- <img src="../assets/img/pay-sistem.svg" alt="yoomoney"> -->
-                           </div>
-                        </div>
-                        <div class="popup__org">
-                           <div class="popup__org-wrp">
-                              <div class="popup__org-name">OOO “ПОЗИТОЛК”</div>
-                              <div class="popup__org-price">2 ₽</div>
-                           </div>
-                           <div class="popup__org-info">Завершите платеж в течении <span>9:30</span></div>
-                        </div>
-                        <div class="popup__line"></div>
-
-                        <div class="popup__card">
-                           <div class="popup__card-info">Введите данные карты для оплаты</div>
-                           <div class="popup__card-req">
-                              <div class="popup__card-number">
-                                    <label class="popup__card-label">
-                                       <div class="popup__card-text">Номер карты:</div>
-                                       <input type="text" name="card-number">
-                                    </label>
-                              </div>
-                              <div class="popup__card-other">
-                                    <div class="popup__card-date">
-                                       <label class="popup__card-label">
-                                          <div class="popup__card-text">Месяц</div>
-                                          <input type="text" name="card-month">
-                                       </label>
-                                       <span class="popup__card-sep">/</span>
-                                       <label class="popup__card-label">
-                                          <div class="popup__card-text">Год</div>
-                                          <input type="text" name="card-year">
-                                       </label>
-                                    </div>
-                                    <div class="popup__card-cvc">
-                                       <label class="popup__card-label">
-                                          <div class="popup__card-text">CVV/CVC</div>
-                                          <input type="text" name="card-cvc">
-                                       </label>
-                                    </div>
-                              </div>
-                           </div>
-                           <button class="btn popup__submit" id="topay_sbm" type="submit">Оплатить</button>
-                           <div class="popup__policy">
-                              Совершая платеж здесь, вы разрешаете <br> <a href="#">автоматическое списание денег</a>
-                           </div>
-                        </div>
-
-                  </form>
-               </div>
-               <div class="popup__layer"></div>
-            </div>
         </main>
 <footer class="footer">
     <div class="footer__inner">
@@ -623,9 +472,18 @@ const cuple = ref(false);
   nickname: '',
 });
 
+const selectedTime = ref(null);
+
+const selectTime = (day, time) => {
+  selectedTime.value = { day, time };
+};
+
+const isSelected = (day, time) => {
+  return selectedTime.value && selectedTime.value.day === day && selectedTime.value.time === time;
+};
 function cancelConnection(id, index) {
   store.сancelСonnection(id).then(() => {
-    clientData.psychologists.splice(index, 1);
+    clientData.value.psychologists.splice(index, 1);
   }).catch(error => {
     console.error("Ошибка при удалении:", error);
   });
@@ -639,6 +497,7 @@ const list = ref([])
 const response =ref()
 
 const current = ref(0)
+watch(current, () => updateCurrent());
 const currentPsycho = computed(() => {
    return list.value[current.value]
 })
@@ -646,6 +505,35 @@ response.value = await store.getPsychologists()
 console.log('response', response.value);
 list.value = response.value;
 
+async function updateCurrent() {
+   
+   const response2 = await store.getSchedulePsychologist(
+        list.value[current.value].id,
+        tomorrow.toISOString().split('T')[0],
+        dayAfterTomorrow.toISOString().split('T')[0]
+    );
+
+    if (response2 && response2.slots) {
+        // Группируем слоты по датам
+        const groupedSlots = response2.slots.reduce((acc, slot) => {
+            const date = slot.datetime.split(" ")[0]; // Получаем дату
+            if (!acc[date]) {
+                acc[date] = {
+                    name: `${date} (${slot.day_of_week})`,
+                    slots: []
+                };
+            }
+            acc[date].slots.push({
+                time: slot.time,
+                available: slot.status === "free"
+            });
+            return acc;
+        }, {});
+
+        // Преобразуем объект в массив и берем только первые 2 дня
+        schedule.value = Object.values(groupedSlots).slice(0, 2);
+    }
+}
 function updateStyles() {
   // Удаляем старые стили
   document.getElementById('calendar-page')?.remove();
@@ -680,8 +568,35 @@ store.getSelfClient()
     console.error('Ошибка при получении данных психолога:', error);
   });;
   
-function FindPsychologist(){
+  async function FindPsychologist (){
   choose.value = !choose.value
+  
+  const response2 = await store.getSchedulePsychologist(
+        list.value[current.value].id,
+        tomorrow.toISOString().split('T')[0],
+        dayAfterTomorrow.toISOString().split('T')[0]
+    );
+
+    if (response2 && response2.slots) {
+        // Группируем слоты по датам
+        const groupedSlots = response2.slots.reduce((acc, slot) => {
+            const date = slot.datetime.split(" ")[0]; // Получаем дату
+            if (!acc[date]) {
+                acc[date] = {
+                    name: `${date} (${slot.day_of_week})`,
+                    slots: []
+                };
+            }
+            acc[date].slots.push({
+                time: slot.time,
+                available: slot.status === "free"
+            });
+            return acc;
+        }, {});
+
+        // Преобразуем объект в массив и берем только первые 2 дня
+        schedule.value = Object.values(groupedSlots).slice(0, 2);
+    }
 }
 function CancelСonnection(id,index) {
     store.сancelСonnection(id)
@@ -978,6 +893,8 @@ const updateFilter = async(type, value) => {
          response.value = await store.getPsychologists({ sex: genderValue, age_min, age_max });
       }
    }
+    list.value = response.value;
+   console.log(response.value);
 
    
 
@@ -1007,39 +924,259 @@ const updateFilter = async(type, value) => {
         // Преобразуем объект в массив и берем только первые 2 дня
         schedule.value = Object.values(groupedSlots).slice(0, 2);
     }
-   console.log(response.value);
 };
 
-const pay = async () => {
-   console.log(store.phone)
-   const response = await useBaseFetch('/sales/payment-link', {
+
+const pay = async (sessionId) => {
+   const response = await useBaseFetch('/sales/payment-link/', {
       method: "POST",
+      headers: {
+         // Исправлено на headers
+         "Content-Type": "application/json", // Указываем тип контента
+         Authorization: "Token " + store.token, // Исправлено на Authorization
+      },
       body: {
-         "customer_phone": store.phone,
-         "title": currentPsycho.value.name,
-         "object_id": currentPsycho.value.id,
-         "price": "2000"
+         "title": "Сессия с психологом",
+         "object_id": sessionId,
       }
    })
    if (response.success) {
       window.location.href = response.link;
    }
 }
+
+const createSession = async () => {
+   if(!selectedTime.value){
+      
+      toast({
+                  message: 'Вы не выбрали время для записи',
+                  type: "is-error", // если збс - то is-success, если плохо то is-error
+                  dismissible: true,
+                  pauseOnHover: true,
+                  duration: 13000,
+                  position: "bottom-right",
+                  className: "toast",
+              });
+   }else{
+      const date = new Date(selectedTime.value.day + selectedTime.value.time);
+      const isoString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`;
+      const datePlusOneHour = new Date(date); // Копируем исходную дату
+      datePlusOneHour.setHours(date.getHours() + currentPsycho.value.session_duration);
+      const isoStringPlusOneHour = `${datePlusOneHour.getFullYear()}-${String(datePlusOneHour.getMonth() + 1).padStart(2, '0')}-${String(datePlusOneHour.getDate()).padStart(2, '0')}T${String(datePlusOneHour.getHours()).padStart(2, '0')}:${String(datePlusOneHour.getMinutes()).padStart(2, '0')}:${String(datePlusOneHour.getSeconds()).padStart(2, '0')}.${String(datePlusOneHour.getMilliseconds()).padStart(3, '0')}`;
+      const response = await useBaseFetch('/session/book/'+currentPsycho.value.id+'/', {
+         method: "POST",
+         body: {
+            "start_time": isoString,
+            "end_time": isoStringPlusOneHour,
+         },
+         headers: {
+            // Исправлено на headers
+            "Content-Type": "application/json", // Указываем тип контента
+            Authorization: "Token " + store.token, // Исправлено на Authorization
+         },
+      })
+      if (response.status==="success") {
+         console.log(response)
+         pay(response.session_id)
+      }
+   }
+}
 const exit = () =>{
   store.exitAccount()
 }
+onMounted(
+   async () =>{
+      $(document).ready(function () {
 
+// start .descmore
+const maxCharsDescmore = 340;
+$('.descmore').each(function () {
+
+
+
+        // Filter
+        $('.filters-btn').on('click', function (e) {
+            e.stopPropagation();
+            $(this).toggleClass('active');
+            $('.filters').toggleClass('active');
+        });
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.filters-btn, .filters').length) {
+                $('.filters-btn').removeClass('active');
+                $('.filters').removeClass('active');
+            }
+        });
+
+
+    const $container = $(this);
+    const $textContainer = $container.find('.descmore__txt');
+    const $button = $container.find('.btn__more');
+    const fullText = $textContainer.html();
+    if (fullText.length > maxCharsDescmore) {
+        const truncatedText = fullText.substring(0, maxCharsDescmore) + '...';
+        $textContainer.html(truncatedText);
+        $button.on('click', function () {
+            if ($button.text() === 'Показать больше') {
+                $textContainer.html(fullText);
+                $button.text('Показать меньше');
+            } else {
+                $textContainer.html(truncatedText);
+                $button.text('Показать больше');
+            }
+        });
+    } else {
+        $button.hide();
+    }
+});
+// end .descmore
+
+// start .lbltagsmore
+const maxVisibleTags = 4;
+$('.lbltagsmore').each(function () {
+    const $container = $(this);
+    const $items = $container.find('.lbltagsmore__item');
+    const $button = $container.find('.btn__more');
+    if ($items.length <= maxVisibleTags) {
+        $button.hide();
+        return;
+    }
+    $items.slice(maxVisibleTags).hide();
+    $button.on('click', function () {
+        const isExpanded = $items.slice(maxVisibleTags).is(':visible');
+        if (isExpanded) {
+            $items.slice(maxVisibleTags).hide();
+            $button.text('Все темы');
+        } else {
+            $items.slice(maxVisibleTags).show();
+            $button.text('Показать меньше');
+        }
+    });
+});
+// end .lbltagsmore
+
+
+// start .lbldescmore
+const maxCharsLbldescmore = 115;
+$('.lbldescmore').each(function () {
+    const $container = $(this);
+    const $textContainer = $container.find('.lbldescmore__desc-txt');
+    const $button = $container.find('.btn__more');
+    const fullText = $textContainer.html();
+    if (fullText.length > maxCharsLbldescmore) {
+        const truncatedText = fullText.substring(0, maxCharsLbldescmore) + '';
+        $textContainer.html(truncatedText);
+        $button.on('click', function () {
+            if ($button.text() === 'Показать больше') {
+                $textContainer.html(fullText);
+                $button.text('Показать меньше');
+            } else {
+                $textContainer.html(truncatedText);
+                $button.text('Показать больше');
+            }
+        });
+    } else {
+        $button.hide();
+    }
+});
+// end .lbldescmore
+
+
+// START Menu
+$('.nav__burger').on('click', function () {
+    $('.nav__menu').toggleClass('active');
+    $('.nav__mob_layer').toggleClass('active');
+    $('html').toggleClass('hidden');
+    $(this).toggleClass('active');
+});
+$('.nav__mob_layer').on('click', function () {
+    $('.nav__menu').removeClass('active');
+    $('.nav__burger').removeClass('active');
+    $('html').removeClass('hidden');
+    $(this).removeClass('active');
+});
+// END Menu
+
+// START PopUp общее 
+$('.popup__layer').on('click', function () {
+    $('.popup').removeClass('active');
+    $('html').removeClass('hidden');
+});
+$('.popup__close').on('click', function () {
+    $('.popup').removeClass('active');
+    $('html').removeClass('hidden');
+});
+// END PopUp общее 
+
+
+// START  PopUp при клике по доступному времени в календаре
+$('.table__cell.available').on('click', function () {
+    $('.popup.available_time').addClass('active');
+    // $('html').addClass('hidden');
+});
+// END  PopUp при клике по доступному времени в календаре
+
+// START  PopUp при клике по доступному времени в календаре
+$(".table__cell.chosen").on("click", function (e) {
+    e.stopPropagation();
+    var popup = $(".popup_2.chosen_time");
+    $(this).append(popup);
+    popup.addClass("active");
+});
+$(document).on("click", function () {
+    $(".popup_2.chosen_time").removeClass("active");
+});
+$(".popup_2.chosen_time").on("click", function (e) {
+    e.stopPropagation();
+});
+// END  PopUp при клике по доступному времени в календаре
+
+// START "PopUp при клике по кнопке "Перенести""
+$('.chosen_time__btn-switch').on('click', function () {
+    $('.popup.reschedule_time').addClass('active');
+    // $('html').addClass('hidden');
+});
+$('.calendar-date__item').on('click', function () {
+    $('.calendar-date__item').removeClass('active');
+    $(this).addClass('active');
+});
+// END "PopUp при клике по кнопке "Перенести""
+
+// START "PopUp при клике по кнопке "Отменить""
+$('.chosen_time__btn-delete').on('click', function () {
+    $('.popup.delete_time').addClass('active');
+    // $('html').addClass('hidden');
+});
+// END "PopUp при клике по кнопке "Отменить""
+
+});
+   }
+)
 </script>
 <style scoped>
-
+.cart__info-second.prev {
+    left: -24px !important;
+    transform: translateX(-100%) translateY(-6%) !important;
+    top: 46vh !important;
+}
+.cart__info-second-btn-img>img{
+   border-radius: 100%;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
 .wrapper{
   width: 100%;
 }
 main{
-  transition: 1s;
+  transition: 0.2s;
 }
 .hide{
   display: none;
   opacity: 0;
+}
+@media  (max-width: 365px) {
+.cart>h1{
+   transform: translate(10px, -400px);
+}
 }
 </style>
