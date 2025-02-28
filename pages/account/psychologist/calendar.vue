@@ -28,7 +28,7 @@
                     </ul>
                     <ul class="nav__menu-second">
                         <li>
-                            <a href="#"><span class="icon help"></span>Помощь</a>
+                          <NuxtLink to="/account/psychologist/help" ><span class="icon help"></span>Помощь</NuxtLink>
                         </li>
                         <li class="__desk ">
                           <NuxtLink to="/account/psychologist/profile-clients" ><span class="icon settings"></span>Настройки</NuxtLink>

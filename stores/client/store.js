@@ -100,7 +100,21 @@ export const useClientStore = defineStore("client", {
       
       async getHelp() {
          try {
-            const response = await useBaseFetch("/wellness/faq/", {
+            const response = await useBaseFetch("/wellness/faq/client/", {
+               headers: {
+                  // Исправлено на headers
+                  "Content-Type": "application/json", // Указываем тип контента
+                  Authorization: "Token " + this.token, // Исправлено на Authorization
+               },
+            });
+            return response;
+         } catch (err) {
+            console.log("err", err);
+         }
+      },
+      async getHelpPsychologist() {
+         try {
+            const response = await useBaseFetch("/wellness/faq/psychologist/", {
                headers: {
                   // Исправлено на headers
                   "Content-Type": "application/json", // Указываем тип контента
